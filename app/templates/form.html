@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}Form{% endblock %}
+{% block title %} Form {% endblock %}
 
 {% block content %}
-<form action="submit" method="POST">
-        <div>
+<form action="/greet" method="GET">
             <label for="username">Name:</label>
-            <input type="text" id="username" name="username" required>
-        </div>
+            <input autocomplete="off" autofocus="name" type="text" id="username" name="username" required>
+            <button type="submit">Submit</button>
     </form>
 {% endblock %}

@@ -5,9 +5,10 @@
     <title>{% block title %} Home {% endblock %}</title>
 </head>
 <body>
+    
     <header>
         <nav>
-            <a href="/">Home</a> | <a href="/form">Contact Form</a>
+            <a href="/">Home</a> <a href="/form">Contact Form</a>
         </nav>
     </header>
     <hr>
@@ -16,7 +17,6 @@
         {%block content %} {% endblock %}
     </main>
 
-    <h1>Hello, {{name}}</h1>
 </body>
 <link rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}">

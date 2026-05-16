@@ -4,14 +4,13 @@ main = Blueprint("main", __name__)
 
 @main.route("/")
 def home():
-    name = request.args.get("name", "Developer")
-    return render_template("index.html", name=name)
+    return render_template("index.html")
 
 @main.route("/form")
 def form():
     return render_template("form.html")
 
-@main.route("/submit", methods=['POST'])
+@main.route("/greet", methods=['GET'])
 def handle_submit():
-    name = request.form.get('username')
-    return f"<h1>Your name is {name}</h1>"
+    name = request.args.get('username', '"Empty"')
+    return render_template("dashboard.html", name=name)
