@@ -10,7 +10,7 @@ def home():
 def form():
     return render_template("form.html")
 
-@main.route("/greet", methods=['GET'])
+@main.route("/dashboard", methods=['GET'])
 def handle_submit():
     name = request.args.get('username', '"Empty"')
     return render_template("dashboard.html", name=name)
