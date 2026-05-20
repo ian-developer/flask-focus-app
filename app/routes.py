@@ -13,6 +13,7 @@ def form():
 @main.route("/dashboard", methods=['GET', 'POST'])
 def handle_submit():
     name = request.args.get('username')
-    if not request.args.get('username'):
+    email = request.args.get('email')
+    if not name or not email:
         return render_template("error.html")
-    return render_template("dashboard.html", name=name)
+    return render_template("dashboard.html", name=name, email=email)

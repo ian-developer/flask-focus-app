@@ -25,10 +25,13 @@ nav a {
 
 nav a:hover {
     text-decoration: underline;
+    color: lightblue;
 }
 
 /* Forme i unosi */
 form {
+    margin: 0 auto;
+    width: 250px;
     background: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -63,6 +66,10 @@ button {
 
 button:hover {
     background: blue;
+}
+
+img {
+    width: 250px;
 }
 
 /* Podnožje */
