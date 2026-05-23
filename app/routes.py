@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect
+from models_db import *
 
 main = Blueprint("main", __name__)
 
@@ -17,3 +18,15 @@ def handle_submit():
     if not name or not email:
         return render_template("error.html")
     return render_template("dashboard.html", name=name, email=email)
+
+@main.route("/user", methods=['GET', 'POST'])
+def register_user():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        if username:
+            new_username = User(username=username)
+            db.session.add(new_username)
+            db.session.commit(new_username)
+        return redirect('/user')
+    all_users = User.querry.all()
+    return render_template(register_user.html, users=all_users)
