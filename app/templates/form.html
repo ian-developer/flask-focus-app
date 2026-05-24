@@ -3,12 +3,21 @@
 {% block title %} Form {% endblock %}
 
 {% block content %}
-<form action="/dashboard" method="GET">
-            <label for="username">Name:</label>
-            <input autocomplete="off" autofocus="name" type="text" id="username" name="username">
-            <label for="username">Email:</label>
-            <input autocomplete="off" autofocus="email" type="text" id="email" name="email">
-            <br>
-            <button type="submit">Submit</button>
+    <h1>Dodaj novu osobu</h1>
+    
+    <!-- Forma za unos podataka -->
+    <form action="/form" method="POST">
+        <input type="text" name="ime" placeholder="Ime" required>
+        <input type="text" name="prezime" placeholder="Prezime" required>
+        <button type="submit">Spremi u bazu</button>
     </form>
+
+    <h2>Popis osoba u bazi:</h2>
+    <ul>
+        {% for osoba in osobe %}
+            <li>{{ osoba.ime }} {{ osoba.prezime }}</li>
+        {% else %}
+            <li>Nema unesenih osoba.</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

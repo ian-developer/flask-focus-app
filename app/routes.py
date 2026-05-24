@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect
-from models_db import *
+from . import db
+from .models_db import Osoba
 
 main = Blueprint("main", __name__)
 
@@ -19,14 +20,21 @@ def handle_submit():
         return render_template("error.html")
     return render_template("dashboard.html", name=name, email=email)
 
-@main.route("/user", methods=['GET', 'POST'])
-def register_user():
+@main.route('/', methods=['GET', 'POST'])
+def index():
     if request.method == 'POST':
-        username = request.form.get('username')
-        if username:
-            new_username = User(username=username)
-            db.session.add(new_username)
-            db.session.commit(new_username)
-        return redirect('/user')
-    all_users = User.querry.all()
-    return render_template(register_user.html, users=all_users)
+        # Dohvaćanje podataka iz forme
+        ime_osobe = request.form.get('ime')
+        prezime_osobe = request.form.get('prezime')
+        
+        if ime_osobe and prezime_osobe:
+            # Kreiranje novog objekta i spremanje u bazu
+            nova_osoba = Osoba(ime=ime_osobe, prezime=prezime_osobe)
+            db.session.add(nova_osoba)
+            db.session.commit()
+            
+        return redirect('/')
+    
+    # Dohvaćanje svih osoba iz baze za prikaz
+    sve_osobe = Osoba.query.all()
+    return render_template('form.html', osobe=sve_osobe)
