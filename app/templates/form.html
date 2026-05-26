@@ -7,15 +7,15 @@
     
     <!-- Forma za unos podataka -->
     <form action="/form" method="POST">
-        <input type="text" name="name" placeholder="Ime" required>
-        <input type="text" name="surname" placeholder="Prezime" required>
+        <input type="text" name="name" placeholder="Ime" autocomplete="off" required>
+        <input type="text" name="surname" placeholder="Prezime" autocomplete="off" required>
         <button type="submit">Spremi u bazu</button>
     </form>
 
     <h2>Popis osoba u bazi:</h2>
     <ul>
         {% for person in persons %}
-            <li>{{ person.name }} {{ person.surname }}</li>
+            <li>{{ person.id }}. {{ person.name }} {{ person.surname }}</li>
         {% else %}
             <li>Nema unesenih osoba.</li>
         {% endfor %}

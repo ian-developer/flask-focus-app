@@ -71,6 +71,10 @@ img {
     width: 250px;
 }
 
+li {
+    list-style-type: none;
+}
+
 /* Podnožje */
 footer {
     text-align: center;
