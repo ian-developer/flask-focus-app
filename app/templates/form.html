@@ -19,7 +19,16 @@
     <h2>Popis osoba u bazi:</h2>
     <ul>
         {% for person in persons %}
-            <li>{{ person.id }}. {{ person.name }} {{ person.surname }}</li>
+            <li>{{ person.id }}. {{ person.name }} {{ person.surname }}
+
+                <!-- Forma za brisanje koja šalje ID osobe u rutu -->
+                <form action="{{ url_for('main.delete_person', person_id=person.id) }}" method="POST">
+                    
+                    <button type="submit" class="delete_btn">
+                        Obriši
+                    </button>
+                </form>
+            </li>
         {% else %}
             <li>Nema unesenih osoba.</li>
         {% endfor %}

@@ -34,3 +34,12 @@ def index():
     # Dohvaćanje svih osoba iz baze za prikaz
     all_persons = Person.query.all()
     return render_template('form.html', persons=all_persons)
+
+@main.route('/delete/<int:person_id>', methods=['POST'])
+def delete_person(person_id):
+    person_to_delete = Person.query.get_or_404(person_id)
+
+    db.session.delete(person_to_delete)
+    db.session.commit()
+
+    return redirect('/form')
