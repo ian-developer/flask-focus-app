@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %} Home {% endblock %}</title>
+    {% block styles %}{% endblock %}
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
 <body>
     
     <header>
         <nav>
-            <a href="/">Home</a> <a href="/form">Register Person</a> <a href="/dashboard">Dashboard</a>
+            <a href="/">Home</a>
+            <a href="/form">New Person</a>
+            <a href="/goals">New Goal</a>
+            <a href="/dashboard">Dashboard</a>
         </nav>
     </header>
 
