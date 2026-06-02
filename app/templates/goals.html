@@ -5,7 +5,7 @@
 {% block styles %}
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px auto; max-width: 900px; padding: 0 20px; background-color: #f4f7f6; color: #333; }
-        h1, h2 { color: white; border-bottom: 2px solid white; padding-bottom: 10px; }
+        h1, h2 { color: white; padding-bottom: 10px; }
         form { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 40px; }
         .form-group { margin-bottom: 15px; }
         label { display: block; font-weight: bold; margin-bottom: 5px; color: white; }
@@ -30,30 +30,30 @@
 
 {% block content %}
 
-    <h1> Upravljanje Ciljevima</h1>
+    <h1>Adding Goals</h1>
 
     <!-- FORMA ZA UNOS NOVOG CILJA -->
     <form action="/add-goal" method="POST">
-        <h2>Novi Cilj</h2>
+        <h2>My New Goal:</h2>
         
         <div class="form-group">
-            <label for="title">Naslov cilja:</label>
+            <label for="title">Goal name</label>
             <input type="text" id="title" name="title" required placeholder="Npr. Naučiti Flask do kraja mjeseca">
         </div>
 
         <div class="form-group">
-            <label for="description">Opis:</label>
+            <label for="description">Description</label>
             <textarea id="description" name="description" placeholder="Kratki opis onoga što želiš postići..."></textarea>
         </div>
 
         <div class="form-group">
-            <label for="tasks">Zadatci (odvoji ih zarezom):</label>
-            <input type="text" id="tasks" name="tasks" placeholder="Npr. Pogledati tutorial, Napraviti bazu, Dizajnirati formu">
+            <label for="tasks">Tasks (separate with comma):</label>
+            <input type="text" id="tasks" name="tasks" placeholder="example: Wtach a tutorial, Create database, Form design">
         </div>
 
         <div class="row">
             <div class="form-group col">
-                <label for="difficulty">Težina:</label>
+                <label for="difficulty">Difficulty</label>
                 <select id="difficulty" name="difficulty">
                     <option value="Lagano">Lagano</option>
                     <option value="Srednje" selected>Srednje</option>
@@ -62,21 +62,21 @@
             </div>
 
             <div class="form-group col">
-                <label for="priority">Prioritet:</label>
+                <label for="priority">Priority:</label>
                 <select id="priority" name="priority">
-                    <option value="a">A (Visok)</option>
-                    <option value="b" selected>B (Srednji)</option>
-                    <option value="c">C (Nizak)</option>
+                    <option value="a">A (high)</option>
+                    <option value="b" selected>B (medium)</option>
+                    <option value="c">C (low)</option>
                 </select>
             </div>
 
             <div class="form-group col">
-                <label for="progress_percentage">Postotak rješenosti (%):</label>
+                <label for="progress_percentage">Percentage to completion (%):</label>
                 <input type="number" id="progress_percentage" name="progress_percentage" min="0" max="100" value="0">
             </div>
         </div>
 
-        <button type="submit">Spremi Cilj</button>
+        <button type="submit">Save Goal</button>
     </form>
 
     <!-- TABLICA S PRIKAZOM SVIH CILJEVA -->

@@ -84,3 +84,10 @@ def add_goal():
     db.session.commit()
 
     return redirect('/goals')
+
+@main.route('/api', methods=['GET', 'POST'])
+def add_person():
+    new_person = request.form.get('person')
+
+    return render_template('api.html', new_person=new_person)
+
