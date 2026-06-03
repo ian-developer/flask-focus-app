@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, jsonify
 from . import db
-from .models_db import Person, Goal
+from .models_db import Person, Person2, Goal
 
 main = Blueprint("main", __name__)
 
@@ -85,9 +85,28 @@ def add_goal():
 
     return redirect('/goals')
 
+# ------- EXPERIMENTING WITH API ---------
+
 @main.route('/api', methods=['GET', 'POST'])
+def api_form():
+    all_persons = Person2.query.all()
+    return render_template('api.html', persons=all_persons)
+    
+
+@main.route('/add_person', methods=['POST'])
 def add_person():
-    new_person = request.form.get('person')
+    data = request.get_json()
 
-    return render_template('api.html', new_person=new_person)
+    if not data or 'person' not in data:
+        return jsonify({"error":"Missing name"}), 400
+    
+    new_person = Person2(name=data['person'])
 
+    db.session.add(new_person)
+    db.session.commit()
+
+    return jsonify({
+        "id":new_person.id,
+        "name": new_person.name,
+        "status":"success"
+    }), 201
