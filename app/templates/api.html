@@ -4,12 +4,12 @@
     
 </form>
 
-<div id="display_container"></div>
+<div id="display_container">
+    {% for person in persons %}
 
-{% for person in persons %}
+        <p>{{person.name}}</p>
 
-<p>{{person.name}}</p>
-
-{% endfor %}
+    {% endfor %}
+</div>
 
 <script src="../static/form.js"></script>
