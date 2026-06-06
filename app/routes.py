@@ -54,7 +54,7 @@ def show_goals():
 
 @main.route('/add-goal', methods=['POST'])
 def add_goal():
-    title = request.form.get('title')
+    '''title = request.form.get('title')
     description = request.form.get('description')
     
     # Pretvaranje unesenog teksta sa zarezima u pravu Python listu
@@ -84,6 +84,43 @@ def add_goal():
     db.session.commit()
 
     return redirect('/goals')
+    '''
+    data = request.get_json()
+    
+    # 1. Obrada zadataka iz tekstualnog polja u listu (ako ih spremaš kao tekst/zarez)
+    tasks_raw = data.get('tasks', '')
+    # Ovisno o tome kako tvoj model prima zadatke, možeš ih ostaviti kao string ili listu.
+    # Ako ti je u bazi to običan String, ostavi samo: tasks_raw
+    
+    # 2. KREIRANJE MODELA (umjesto rječnika)
+    new_goal = Goal(
+        title=data.get('title'),
+        description=data.get('description'),
+        tasks=tasks_raw, # ili procesirana lista ovisno o tvom modelu
+        difficulty=data.get('difficulty'),
+        priority=data.get('priority'),
+        progress_percentage=int(data.get('progress_percentage', 0)),
+        is_completed=int(data.get('progress_percentage', 0)) == 100
+    )
+    
+    # 3. Spremanje objekta (modela) u bazu podataka
+    db.session.add(new_goal)
+    db.session.commit()
+    
+    # 4. Vraćanje JSON odgovora natrag JavaScriptu
+    # Budući da 'new_goal' sada nije rječnik nego objekt baze, 
+    # moramo ručno posložiti što šaljemo natrag frontend-u
+    return jsonify({
+        'id': new_goal.id, # ako tvoj model ima id
+        'title': new_goal.title,
+        'description': new_goal.description,
+        'tasks': [t.strip() for t in new_goal.tasks.split(',') if t.strip()] if new_goal.tasks else [],
+        'difficulty': new_goal.difficulty,
+        'priority': new_goal.priority,
+        'progress_percentage': new_goal.progress_percentage,
+        'is_completed': new_goal.is_completed
+    })
+
 
 # ------- EXPERIMENTING WITH API ---------
 

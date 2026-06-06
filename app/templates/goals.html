@@ -33,7 +33,7 @@
     <h1>Adding Goals</h1>
 
     <!-- FORMA ZA UNOS NOVOG CILJA -->
-    <form action="/add-goal" method="POST">
+    <form action="/add-goal" method="POST" id="new_goal_form">
         <h2>My New Goal:</h2>
         
         <div class="form-group">
@@ -104,8 +104,10 @@
                 <td>
                     {% if goal.tasks %}
                     <ul>
-                        {% for task in goal.tasks %}
-                        <li>{{ task }}</li>
+                        {% for task in goal.tasks.split(',') %}
+                            {% if task.strip() %}
+                                <li>{{ task.strip() }}</li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                     {% else %}
@@ -129,4 +131,5 @@
             {% endfor %}
         </tbody>
     </table>
+    <script src="{{ url_for('static', filename='goals.js') }}"></script>
 {% endblock %}
