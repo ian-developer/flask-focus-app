@@ -38,14 +38,14 @@ nav a:hover {
 
 h1 {
     margin: 10px 0px;
-    font-size: large;
-    font-style: normal;
+    font-weight: bold;
+    font-size: larger;
 }
 
 /* Forme i unosi */
 form {
     width: 100%;
-    margin: 0 left;
+    margin: 15px 0px;
     background: #fff;
     padding: 15px;
     border-radius: 8px;
