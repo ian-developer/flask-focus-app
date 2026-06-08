@@ -1,4 +1,5 @@
 from . import db
+from sqlalchemy.orm import validates
 
 class Person(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -11,19 +12,28 @@ class Person(db.Model):
 class Goal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.Text, nullable=True)
-
-    # Tasks saved as a JSON list (ex. ["Task 1", "Task 2"])
+    description = db.Column(db.Text, nullable=False)
     tasks = db.Column(db.JSON, nullable=True, default=[])
-
     is_completed = db.Column(db.Boolean, default=False)
     progress_percentage = db.Column(db.Float, default=0.0)
-
-    # Goal difficulty (ex. Easy, Medium, Hard)
     difficulty = db.Column(db.String(20), nullable=False, default='Medium')
-
-    # Goal priority: a, b, c
     priority = db.Column(db.String(1), nullable=False, default='b')
+
+    @validates('title', 'description', 'difficulty', 'priority')
+    def validate_text_fields(self, key, value):
+        if not value or str(value).strip() == "":
+            raise ValueError(f"Field '{key}' cannot be empty.")
+        return value.strip()
+    
+    @validates('progress_percentage')
+    def validate_progress(self, key, value):
+        try:
+            val = int(value)
+            if not (0 <= val <= 100):
+                raise ValueError()
+        except (ValueError, TypeError):
+            raise ValueError("Percentage must be between 0 and 100.")
+        return val
 
     def __repr__(self):
         return f'<Goal {self.title}'

@@ -1,42 +1,44 @@
-document.getElementById('new_goal_form').addEventListener('submit', async (e) => {
-  e.preventDefault(); // This stops the page reload
 
-  const goalData = {
-        title: document.getElementById('title').value,
-        description: document.getElementById('description').value,
-        tasks: document.getElementById('tasks').value,
-        difficulty: document.getElementById('difficulty').value,
-        priority: document.getElementById('priority').value,
-        progress_percentage: document.getElementById('progress_percentage').value
-  };
+// Fetch data from goals and send to flask
 
-    fetch('/add-goal', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(goalData)
-    })
-    .then(response => response.json())
-    .then(goal => {
-        // Pronalaženje tbody elementa u tablici
-        const tbody = document.querySelector('table tbody');
+const addGoal = async (goalData) => {
+        try {
+
+        const hasEmptyFields = Object.entries(goalData).some(([key, value]) => {
+            if (key === 'tasks') return false;
+            return !String(value).trim();
+        });
         
-        // Ako postoji poruka "Trenutno nema spremljenih ciljeva", obriši je
+        if (hasEmptyFields) {
+            alert('Form cannot be submitted! Please fill all fields')
+            return;
+        }
+
+        const response = await fetch('/add-goal', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(goalData)
+        });
+
+        if(!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Server error');
+        }
+
+        const goal = await response.json();
+        const tbody = document.querySelector('table tbody');
+
         if (tbody.rows.length === 1 && tbody.rows[0].cells.length === 1) {
             tbody.innerHTML = '';
         }
 
-        let tasksHtml = '<small style="color: #b2bec3;">Nema zadataka</small>';
-        if (goal.tasks && goal.tasks.length > 0) {
-            tasksHtml = '<ul>';
-            goal.tasks.forEach(task => {
-                tasksHtml += `<li>${task}</li>`;
-            });
-            tasksHtml += '</ul>';
-        }
-
-        const statusText = goal.is_completed ? 'Rješeno' : 'U tijeku';
+        const tasksHtml = goal.tasks?.length 
+            ? `<ul>${goal.tasks.map(task => `<li>${task}</li>`).join('')}</ul>`
+            : '<small style="color: #b2bec3;">Nema zadataka</small>';
+        
+        const statusText = goal.is_completed ? 'Completed' : 'Not Completed';
         const statusClass = goal.is_completed ? 'status-done' : 'status-pending';
 
         const row = document.createElement('tr');
@@ -52,12 +54,23 @@ document.getElementById('new_goal_form').addEventListener('submit', async (e) =>
             <td><span class="${statusClass}">${statusText}</span></td>
         `;
 
-        // Dodavanje novog retka na kraj tablice
+        // adding a new row to table
         tbody.appendChild(row);
 
-        // Resetiranje forme za sljedeći unos
+        // Reset form for next input
         document.getElementById('new_goal_form').reset();
-    })
-    .catch(error => console.error('Greška:', error));
 
+        } catch (error) {
+            alert(`Server error: ${error.message}`)
+            console.error('Error', error);
+        }
+    };
+
+document.getElementById('new_goal_form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.target)
+  const goalData = Object.fromEntries(formData.entries());
+
+  await addGoal(goalData)
 });
