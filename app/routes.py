@@ -9,12 +9,10 @@ def home():
     return render_template("index.html")
 
 @main.route("/dashboard", methods=['GET', 'POST'])
-def handle_submit():
-    name = request.args.get('username')
-    email = request.args.get('email')
-    if not name or not email:
-        return render_template("error.html")
-    return render_template("dashboard.html", name=name, email=email)
+def dashboard():
+    #Get goals sorted by priority: "a, b, c"
+    goals = Goal.query.order_by(Goal.priority.asc()).all()
+    return render_template('goals.html', goals=goals)
 
 @main.route('/form', methods=['GET', 'POST'])
 def index():
@@ -48,16 +46,16 @@ def delete_person(person_id):
 
 @main.route('/goals')
 def show_goals():
-    #Get goals sorted by priority: "a, b, c"
     goals = Goal.query.order_by(Goal.priority.asc()).all()
+    
     return render_template('goals.html', goals=goals)
 
 @main.route('/add-goal', methods=['POST'])
+
 def add_goal():
     data = request.get_json() or {}
 
     try:
-
         tasks_raw = data.get('tasks', '')
 
         new_goal = Goal(
@@ -85,39 +83,9 @@ def add_goal():
         }), 201
     
     except ValueError as e:
-        # Hvata ValueError koji je bacio @validates dekorator iz modela
         db.session.rollback()
         return jsonify({"error": str(e)}), 400
         
     except Exception as e:
         db.session.rollback()
-        return jsonify({"error": "Došlo je do neočekivane greške na serveru."}), 500
-
-    
-
-
-# ------- EXPERIMENTING WITH API ---------
-
-@main.route('/api', methods=['GET', 'POST'])
-def api_form():
-    all_persons = Person2.query.all()
-    return render_template('api.html', persons=all_persons)
-    
-
-@main.route('/add_person', methods=['POST'])
-def add_person():
-    data = request.get_json()
-
-    if not data or 'person' not in data:
-        return jsonify({"error":"Missing name"}), 400
-    
-    new_person = Person2(name=data['person'])
-
-    db.session.add(new_person)
-    db.session.commit()
-
-    return jsonify({
-        "id":new_person.id,
-        "name": new_person.name,
-        "status":"success"
-    }), 201
+        return jsonify({"error": "Unexpected server error."}), 500

@@ -50,7 +50,7 @@ const addGoal = async (goalData) => {
             </td>
             <td>${tasksHtml}</td>
             <td>${goal.difficulty}</td>
-            <td>${goal.progress_percentage}%</td>
+            <td>${Math.round(goal.progress_percentage)}%</td>
             <td><span class="${statusClass}">${statusText}</span></td>
         `;
 

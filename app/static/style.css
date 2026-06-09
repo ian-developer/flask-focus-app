@@ -1,137 +1,289 @@
-/* Osnovni stilovi za cijelu stranicu */
+/* 1. Globalni stilovi i moderna paleta boja */
+:root {
+    --bg-color: #f8fafc;
+    --card-bg: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --primary: #4f46e5;       /* Moderna Indigo plava */
+    --primary-hover: #4338ca;
+    --success: #22c55e;       /* Zelena za završeno */
+    --pending: #f59e0b;       /* Narančasta za u tijeku */
+}
+
 body {
-    display: block !important;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    background-color: #f4f7f6;
-    color: #333;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-
-    @media (prefers-color-scheme: dark){
-    background-color: #1A1A2E;
-    color: white;
-    }
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    margin: 0;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
 }
 
-
-
-/* Navigacija */
-nav {
-    background: #424261;
-    padding: 15px;
-    border-radius: 5px;
-}
-
-nav a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    margin-right: 15px;
-}
-
-nav a:hover {
-    text-decoration: underline;
-    color: lightblue;
-}
-
-h1 {
-    margin: 10px 0px;
-    font-weight: bold;
-    font-size: larger;
-}
-
-/* Forme i unosi */
-form {
+/* Kontejner koji drži cijeli sadržaj */
+.container {
     width: 100%;
-    margin: 15px 0px;
-    background: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-
-    @media (prefers-color-scheme: dark){
-    background-color: #2c2c40;
-    color: grey;
-    box-shadow: 0 4px 6px rgb(13, 19, 41);
-    }
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Forma lijevo, tablica desno */
+    gap: 2rem;
 }
 
-.list-each-person-box{
+@media (max-width: 768px) {
+    .container { grid-template-columns: 1fr; } /* Na mobitelu jedno ispod drugog */
+}
+
+/* 2. Stil za Formu i Kartice (Moderan podignuti izgled) */
+.card {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--border-color);
+}
+
+.card h2 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+/* Input polja i labele */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+input[type="text"], select, textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    font-family: inherit;
+    font-size: 0.95rem;
+    background-color: #fff;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Gumb */
+button[type="submit"] {
+    width: 100%;
+    background-color: var(--primary);
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--primary-hover);
+}
+
+/* 3. Stil za Tablicu */
+.table-container {
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+    overflow: hidden; /* Zaobljeni rubovi na tablici */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+th {
+    background-color: #f8fafc;
+    color: var(--text-muted);
+    padding: 1rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border-color);
+}
+
+td {
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover {
+    background-color: #f8fafc; /* Blago isticanje retka na hover */
+}
+
+/* Liste unutar tablice (Zadaci) */
+table ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+/* 4. Badges (Značke za prioritet i status) */
+.status-done {
+    background-color: #dcfce7;
+    color: #166534;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.status-pending {
+    background-color: #fef3c7;
+    color: #92400e;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Primjeri za različite prioritete */
+.badge-high, .badge-visok { background-color: #fee2e2; color: #991b1b; }
+.badge-medium, .badge-srednji { background-color: #e0f2fe; color: #075985; }
+.badge-low, .badge-nizak { background-color: #f1f5f9; color: #475569; }
+
+
+/* 5. Stil za Navigacijsku Traku (Navbar) */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Osigurava da je navigacija uvijek iznad sadržaja */
+}
+
+.navbar-container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 50%;
-    margin: 5px;
+    box-sizing: border-box;
 }
 
-.btn-delete-form{
-    all: unset;
+/* Logotip / Naziv aplikacije */
+.navbar-brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-decoration: none;
+    letter-spacing: -0.025em;
 }
 
-.btn-delete {
-    margin: 0 !important;
-    padding: 0px;
-    width: 100px;
-    background-color: grey;
-    border: white solid 1px;
-    display: inline;
-    color: white;
+/* Linkovi u navigaciji */
+.navbar-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-.btn-delete:hover {
-    background-color: red !important;
+.navbar-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    transition: color 0.2s, background-color 0.2s;
 }
 
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+/* Efekt kada se mišem prijeđe preko linka */
+.navbar-links a:hover {
+    color: var(--primary);
+    background-color: #f1f5f9;
 }
 
-input[type="text"], input[type="email"] {
-    font-size: smaller;
-    background: rgb(40, 40, 40);
-    color: #fff;
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box; /* Sprečava širenje izvan okvira */
+/* Aktivni link (stranica na kojoj se korisnik trenutno nalazi) */
+.navbar-links a.active {
+    color: var(--primary);
+    background-color: rgba(79, 70, 229, 0.08);
 }
 
-/* BUTTONS */
-
-.add_user_btn {
-    padding: 5px 0px;
-    width: 200px;
-    background: #424261;
-    color: white;
-    border: white solid 1px;
-    border-radius: 0px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.add_user_btn:hover {
-    background: blue;
+/* VAŽNA PRILAGODBA: Spuštanje glavnog sadržaja ispod fiksne navigacije */
+body {
+    padding-top: calc(64px + 2rem); /* Dodaje prostor da navigacija ne prekrije formu */
 }
 
 img {
-    width: 250px;
-    margin: 20px 0px;
+    width: 200px;
 }
 
-li {
-    list-style-type: none;
+/* Novi stil za redak s dva polja (Prioritet i Težina) */
+.form-row {
+    display: flex;
+    gap: 1rem;       /* Razmak između dva polja */
+    margin-bottom: 1.25rem;
 }
 
-/* Podnožje */
-footer {
-    text-align: center;
-    margin-top: 30px;
-    font-size: 14px;
-    color: #7f8c8d;
+/* Osigurava da oba polja unutar retka zauzimaju jednako mjesta (50% - 50%) */
+.form-row .form-group {
+    flex: 1;
+    margin-bottom: 0; /* Poništavamo donju marginu jer redak već ima marginu */
+}
+
+/* IZMIJENJENI GUMB: Smanjen i poravnat udesno */
+button[type="submit"] {
+    width: auto;             /* Maknuto '100%' da gumb ne bude preko cijele kartice */
+    min-width: 120px;        /* Minimalna širina da gumb izgleda stabilno */
+    padding: 0.75rem 1.5rem; /* Više prostora s lijeve i desne strane teksta */
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    
+    /* Gurnite gumb udesno (opcionalno, ako želite da bude na desnoj strani forme) */
+    display: block;
+    margin-left: auto; 
 }
