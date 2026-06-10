@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, jsonify
 from . import db
-from .models_db import Person, Person2, Goal
+from .models_db import Goal
 
 main = Blueprint("main", __name__)
 
@@ -13,34 +13,6 @@ def dashboard():
     #Get goals sorted by priority: "a, b, c"
     goals = Goal.query.order_by(Goal.priority.asc()).all()
     return render_template('goals.html', goals=goals)
-
-@main.route('/form', methods=['GET', 'POST'])
-def index():
-    if request.method == 'POST':
-        # fetching data from the form
-        person_name = request.form.get('name')
-        person_surname = request.form.get('surname')
-        
-        if person_name and person_surname:
-            # Creating new object and storing it in the database
-            new_person = Person(name=person_name, surname=person_surname)
-            db.session.add(new_person)
-            db.session.commit()
-            
-        return redirect('/form')
-    
-    # Dohvaćanje svih osoba iz baze za prikaz
-    all_persons = Person.query.all()
-    return render_template('form.html', persons=all_persons)
-
-@main.route('/delete/<int:person_id>', methods=['POST'])
-def delete_person(person_id):
-    person_to_delete = Person.query.get_or_404(person_id)
-
-    db.session.delete(person_to_delete)
-    db.session.commit()
-
-    return redirect('/form')
 
 # ----------------GOALS-----------------
 

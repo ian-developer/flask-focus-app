@@ -21,18 +21,28 @@ body {
     justify-content: center;
 }
 
-/* Kontejner koji drži cijeli sadržaj */
+/* Kada je forma skrivena, tablica zauzima cijeli prostor (1 stupac) */
 .container {
     width: 100%;
     max-width: 1200px;
     display: grid;
-    grid-template-columns: 1fr 2fr; /* Forma lijevo, tablica desno */
+    grid-template-columns: 1fr; 
     gap: 2rem;
 }
 
-@media (max-width: 768px) {
-    .container { grid-template-columns: 1fr; } /* Na mobitelu jedno ispod drugog */
+/* Ako kontejner sadrži element koji nema klasu .hidden (forma je vidljiva),
+   tada postavi omjer 1fr 2fr (forma je dvaput manja od tablice) */
+.container:has(#form_container:not(.hidden)) {
+    grid-template-columns: 2fr 3fr;
 }
+
+/* Na mobitelima uvijek držimo jedno ispod drugog bez obzira na sve */
+@media (max-width: 768px) {
+    .container, .container:has(#form_container:not(.hidden)) { 
+        grid-template-columns: 1fr; 
+    } 
+}
+
 
 /* 2. Stil za Formu i Kartice (Moderan podignuti izgled) */
 .card {
@@ -286,4 +296,16 @@ button[type="submit"] {
     /* Gurnite gumb udesno (opcionalno, ako želite da bude na desnoj strani forme) */
     display: block;
     margin-left: auto; 
+}
+
+/* Klasa koja skriva formu */
+.hidden {
+    display: none !important;
+}
+
+.goals_header {
+    color: var(--text-main);
+    font-size: 1.5em;
+    font-weight: 300;
+    margin: 0;
 }

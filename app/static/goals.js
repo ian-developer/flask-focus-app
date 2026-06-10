@@ -74,3 +74,25 @@ document.getElementById('new_goal_form').addEventListener('submit', async (e) =>
 
   await addGoal(goalData)
 });
+
+//-------------------Open and close form window functionalities------------------
+
+// Dohvaćanje elemenata s ekrana
+const openFormBtn = document.getElementById('open_form_btn');
+const closeFormBtn = document.getElementById('close_form_btn');
+const formContainer = document.getElementById('form_container');
+
+// 1. Klikom na "+ Dodaj cilj" prikaži formu
+openFormBtn.addEventListener('click', () => {
+    formContainer.classList.remove('hidden');
+});
+
+// 2. Klikom na "X" ponovno sakrij formu
+closeFormBtn.addEventListener('click', () => {
+    formContainer.classList.add('hidden');
+});
+
+// 3. Automatski sakrij formu NAKON što je cilj uspješno spremljen
+// (Ovaj dio koda stavite na sam kraj vašeg 'try' bloka unutar addGoal funkcije, odmah nakon resetiranja forme)
+formContainer.classList.add('hidden');
+
