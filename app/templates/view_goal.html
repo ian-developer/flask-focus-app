@@ -1,0 +1,78 @@
+{% extends "base.html" %} {# Ili kako god se zove vaš glavni layout s navigacijom #}
+
+{% block content %}
+<div class="container">
+    
+    <!-- Link za povratak -->
+    <a href="{{ url_for('main.show_goals') }}" style="text-decoration: none; color: var(--primary); display: inline-flex; align-items: center; margin-bottom: 1.5rem; font-weight: 500;">
+            ← Povratak na tablicu
+    </a>
+
+    <!-- Kartica pojedinačnog cilja -->
+    <div class="card">
+        
+        <!-- Prioritet i Težina -->
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <span class="badge badge-{{ goal.priority }}">{{ goal.priority | upper }} prioritet</span>
+            <span style="background: #edf2f7; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem; font-weight: 500;">
+                Težina: {{ goal.difficulty }}
+            </span>
+        </div>
+
+        <!-- Naslov i Opis -->
+        <div>
+            <h1 style="margin: 0 0 0.5rem 0; font-size: 1.8rem; color: #2d3748;">{{ goal.title }}</h1>
+            <p style="margin: 0; color: #718096; line-height: 1.6;">{{ goal.description or 'Nema opisa.' }}</p>
+        </div>
+
+        <!-- Napredak (Zaokružen) -->
+        <div style="background: #f7fafc; padding: 1rem; border-radius: 6px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 600;">
+                <span>Napredak:</span>
+                <span>{{ goal.progress_percentage | round | int }}%</span>
+            </div>
+            <!-- Vizualna progres traka (Opcionalno) -->
+            <div style="width: 100%; background: #e2e8f0; height: 8px; border-radius: 4px; overflow: hidden;">
+                <div style=`width: {{ goal.progress_percentage ~ '%' }}; background: var(--primary); height: 100%;`></div>
+            </div>
+        </div>
+
+        <!-- Zadaci -->
+        <div>
+            <h3 style="margin: 0 0 0.75rem 0; font-size: 1.1rem;">Zadaci:</h3>
+            {% if tasks %}
+                <ul style="margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                    {% for task in tasks %}
+                        <li style="color: #4a5568;">{{ task }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p style="margin: 0; color: #a0aec0; font-style: italic;">Nema dodanih zadataka.</p>
+            {% endif %}
+        </div>
+
+        <!-- Status -->
+        <div>
+            Status: 
+            {% if goal.is_completed %}
+                <span style="color: #38a169; font-weight: bold;">Završeno</span>
+            {% else %}
+                <span style="color: #dd6b20; font-weight: bold;">U tijeku</span>
+            {% endif %}
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 0.5rem 0;">
+
+        <!-- Akcije (Gumb za brisanje) -->
+        <div style="display: flex; justify-content: flex-end;">
+            <form action="{{ url_for('main.delete_goal', goal_id=goal.id) }}" method="POST" onsubmit="return confirm('Jeste li sigurni da želite obrisati ovaj cilj?');">
+                <button type="submit" style="background-color: #e53e3e; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 500;">
+                    Obriši cilj
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+

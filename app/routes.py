@@ -1,18 +1,23 @@
-from flask import Blueprint, render_template, request, redirect, jsonify
+from flask import Blueprint, render_template, request, redirect, jsonify, flash, url_for
 from . import db
 from .models_db import Goal
 
 main = Blueprint("main", __name__)
 
+# ---------------HOMEPAGE----------------
+
 @main.route("/")
 def home():
     return render_template("index.html")
 
+# ---------------DASHBOARD----------------
+
 @main.route("/dashboard", methods=['GET', 'POST'])
 def dashboard():
     #Get goals sorted by priority: "a, b, c"
-    goals = Goal.query.order_by(Goal.priority.asc()).all()
-    return render_template('goals.html', goals=goals)
+    #goals = Goal.query.order_by(Goal.priority.asc()).all()
+    #return render_template('goals.html', goals=goals)
+    return render_template('dashboard.html')
 
 # ----------------GOALS-----------------
 
@@ -61,3 +66,25 @@ def add_goal():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": "Unexpected server error."}), 500
+    
+@main.route('/goals/<int:goal_id>')
+def view_goal(goal_id):
+    goal = Goal.query.get_or_404(goal_id)
+
+    tasks_list = [t.strip() for t in goal.tasks.split(',') if t.strip()] if goal.tasks else []
+
+    return render_template('view_goal.html', goal=goal, tasks=tasks_list)
+
+@main.route('/goals/<int:goal_id>/delete', methods=['POST'])
+def delete_goal(goal_id):
+    goal = Goal.query.get_or_404(goal_id)
+    
+    try:
+        db.session.delete(goal)
+        db.session.commit()
+
+    except Exception as e:
+        db.session.rollback()
+        
+    return redirect(url_for('main.show_goals'))
+

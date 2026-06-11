@@ -43,9 +43,22 @@ body {
     } 
 }
 
+h1, h2, h3, a, .goal-title {
+    white-space: nowrap; /* Sprječava prelazak u novi red */
+    overflow: hidden; /* Skriva tekst koji je izvan granica */
+    text-overflow: ellipsis; /* Dodaje tri točkice (...) na kraj */
+    max-width: 100%; /* Osigurava da poštuje širinu kartice */
+}
+
+p {
+    word-break: break-word; /* Razbija preduge riječi ako ne stanu */
+    overflow-wrap: anywhere; /* Osigurava da tekst nikada ne probije rub */
+    white-space: normal; /* Omogućuje prirodan prelazak u novi red */
+}
 
 /* 2. Stil za Formu i Kartice (Moderan podignuti izgled) */
 .card {
+    max-width: 600px;
     background: var(--card-bg);
     padding: 2rem;
     border-radius: 12px;
@@ -137,6 +150,7 @@ th {
 }
 
 td {
+    border: #991b1b solid 1px;
     padding: 1.25rem 1rem;
     border-bottom: 1px solid var(--border-color);
     vertical-align: middle;
@@ -304,6 +318,7 @@ button[type="submit"] {
 }
 
 .goals_header {
+    text-transform: uppercase;
     color: var(--text-main);
     font-size: 1.5em;
     font-weight: 300;
