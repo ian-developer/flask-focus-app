@@ -41,9 +41,9 @@
         <div>
             <h3 style="margin: 0 0 0.75rem 0; font-size: 1.1rem;">Zadaci:</h3>
             {% if tasks %}
-                <ul style="margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                <ul style="margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; padding-left: 0px;">
                     {% for task in tasks %}
-                        <li style="color: #4a5568;">{{ task }}</li>
+                        <li style="color: #4a5568; padding-left: 0px;">{{ task }}</li>
                     {% endfor %}
                 </ul>
             {% else %}

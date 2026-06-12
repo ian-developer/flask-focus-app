@@ -45,7 +45,9 @@ const addGoal = async (goalData) => {
         row.innerHTML = `
             <td><span class="badge badge-${goal.priority}">${goal.priority}</span></td>
             <td>
-                <strong>${goal.title}</strong><br>
+                <a href="/goals/${goal.id}">
+                    <strong>${goal.title}</strong><br>
+                </a>
                 <small style="color: #7f8c8d;">${goal.description || 'Nema opisa'}</small>
             </td>
             <td>${tasksHtml}</td>

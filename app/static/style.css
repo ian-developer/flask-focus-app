@@ -59,6 +59,7 @@ p {
 /* 2. Stil za Formu i Kartice (Moderan podignuti izgled) */
 .card {
     max-width: 600px;
+    min-width: 400px;
     background: var(--card-bg);
     padding: 2rem;
     border-radius: 12px;
@@ -150,7 +151,6 @@ th {
 }
 
 td {
-    border: #991b1b solid 1px;
     padding: 1.25rem 1rem;
     border-bottom: 1px solid var(--border-color);
     vertical-align: middle;
@@ -167,7 +167,6 @@ tr:hover {
 /* Liste unutar tablice (Zadaci) */
 table ul {
     margin: 0;
-    padding-left: 1.25rem;
     color: var(--text-muted);
     font-size: 0.875rem;
 }
