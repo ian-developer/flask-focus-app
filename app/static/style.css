@@ -30,6 +30,10 @@ body {
     gap: 2rem;
 }
 
+#form_container {
+    max-height: 585px;
+}
+
 /* Ako kontejner sadrži element koji nema klasu .hidden (forma je vidljiva),
    tada postavi omjer 1fr 2fr (forma je dvaput manja od tablice) */
 .container:has(#form_container:not(.hidden)) {
@@ -323,3 +327,14 @@ button[type="submit"] {
     font-weight: 300;
     margin: 0;
 }
+
+
+.clickable-row { 
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.clickable-row:hover {
+    background-color: #f8f9fa;
+}
+

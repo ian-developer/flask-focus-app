@@ -94,10 +94,10 @@
             <tbody>
                 <!-- Petlja prolazi kroz sve ciljeve poslane iz app.py -->
                 {% for goal in goals %}
-                <tr>
+                <tr class="clickable-row" data-href=" {{ url_for('main.view_goal', goal_id=goal.id) }}">
                     <td><span class="badge badge-{{ goal.priority }}">{{ goal.priority }}</span></td>
                     <td style="width: 150px;">
-                        <a href="{{ url_for('main.view_goal', goal_id=goal.id) }}">
+                        <a href="{{ url_for('main.view_goal', goal_id=goal.id) }}" class="goal-link">
                                 <h1><strong>{{ goal.title }}</strong></h1>
                         </a>
                         <br>

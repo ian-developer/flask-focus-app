@@ -24,6 +24,7 @@ const addGoal = async (goalData) => {
 
         if(!response.ok) {
             const errorData = await response.json();
+            
             throw new Error(errorData.error || 'Server error');
         }
 
@@ -42,6 +43,9 @@ const addGoal = async (goalData) => {
         const statusClass = goal.is_completed ? 'status-done' : 'status-pending';
 
         const row = document.createElement('tr');
+        row.classList.add('clickable-row');
+        row.dataset.href = `/goals/${goal.id}`;
+
         row.innerHTML = `
             <td><span class="badge badge-${goal.priority}">${goal.priority}</span></td>
             <td>
@@ -98,3 +102,22 @@ closeFormBtn.addEventListener('click', () => {
 // (Ovaj dio koda stavite na sam kraj vašeg 'try' bloka unutar addGoal funkcije, odmah nakon resetiranja forme)
 formContainer.classList.add('hidden');
 
+
+// Globalni osluškivač klikova na tablicu (hvata i stare i nove retke)
+document.querySelector('table tbody').addEventListener('click', (e) => {
+    // Ako je korisnik kliknuo unutar retka koji ima klasu 'clickable-row'
+    const row = e.target.closest('.clickable-row');
+    
+    if (row) {
+        // Ako je korisnik kliknuo točno na ugrađeni <a> link, pusti preglednik da odradi svoje (npr. otvaranje u novom tabu)
+        if (e.target.closest('.goal-link')) {
+            return;
+        }
+        
+        // Inače, dohvati URL iz data-href atributa i preusmjeri korisnika
+        const url = row.dataset.href;
+        if (url) {
+            window.location.href = url;
+        }
+    }
+});
