@@ -13,7 +13,7 @@
         
         <!-- Prioritet i Težina -->
         <div style="display: flex; gap: 0.5rem; align-items: center;">
-            <span class="badge badge-{{ goal.priority }}">{{ goal.priority | upper }} prioritet</span>
+            <span class="badge badge-{{ goal.priority }} ">{{ goal.priority | upper }} prioritet</span>
             <span style="background: #edf2f7; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem; font-weight: 500;">
                 Težina: {{ goal.difficulty }}
             </span>
@@ -28,7 +28,7 @@
         <!-- Napredak (Zaokružen) -->
         <div style="background: #f7fafc; padding: 1rem; border-radius: 6px;">
             <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 600;">
-                <span>Napredak:</span>
+                <span>Progress:</span>
                 <span>{{ goal.progress_percentage | round | int }}%</span>
             </div>
             <!-- Vizualna progres traka (Opcionalno) -->
@@ -39,7 +39,7 @@
 
         <!-- Zadaci -->
         <div>
-            <h3 style="margin: 0 0 0.75rem 0; font-size: 1.1rem;">Zadaci:</h3>
+            <h3 style="margin: 0 0 0.75rem 0; font-size: 1.1rem;">Tasks:</h3>
             {% if tasks %}
                 <ul style="margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; padding-left: 0px;">
                     {% for task in tasks %}
@@ -65,9 +65,9 @@
 
         <!-- Akcije (Gumb za brisanje) -->
         <div style="display: flex; justify-content: flex-end;">
-            <form action="{{ url_for('main.delete_goal', goal_id=goal.id) }}" method="POST" onsubmit="return confirm('Jeste li sigurni da želite obrisati ovaj cilj?');">
+            <form action="{{ url_for('main.delete_goal', goal_id=goal.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete {{goal.title}}?');">
                 <button type="submit" style="background-color: #e53e3e; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 500;">
-                    Obriši cilj
+                    Delete
                 </button>
             </form>
         </div>

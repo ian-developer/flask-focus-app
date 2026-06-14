@@ -60,6 +60,15 @@ p {
     white-space: normal; /* Omogućuje prirodan prelazak u novi red */
 }
 
+/*PRIORITY BADGE*/
+
+.badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
+        .badge-a { background-color: #e74c3c; color: white; }
+        .badge-b { background-color: #f39c12; color: white; }
+        .badge-c { background-color: #3498db; color: white; }
+        .status-done { color: #2ecc71; font-weight: bold; }
+        .status-pending { color: #95a5a6; }
+
 /* 2. Stil za Formu i Kartice (Moderan podignuti izgled) */
 .card {
     max-width: 600px;
