@@ -39,7 +39,7 @@ const addGoal = async (goalData) => {
             ? `<ul>${goal.tasks.map(task => `<li>${task}</li>`).join('')}</ul>`
             : '<small style="color: #b2bec3;">Nema zadataka</small>';
         
-        const statusText = goal.is_completed ? 'Completed' : 'Not Completed';
+        const statusText = goal.is_completed ? 'Completed' : 'Pending';
         const statusClass = goal.is_completed ? 'status-done' : 'status-pending';
 
         const row = document.createElement('tr');
