@@ -289,7 +289,7 @@ body {
 }
 
 img {
-    width: 200px;
+    width: 300px;
 }
 
 /* Novi stil za redak s dva polja (Prioritet i Težina) */
@@ -346,4 +346,27 @@ button[type="submit"] {
 .clickable-row:hover {
     background-color: #f8f9fa;
 }
+
+/* Kontejner za cijeli dashboard */
+.dashboard-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Rešetka koja drži točno 2 kartice u redu */
+.goals-grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 stupca jednake širine */
+    gap: 1.5rem; /* Razmak između kartica */
+    width: 100%;
+}
+
+/* Responzivnost za mobitele - prebaci u 1 stupac ako je ekran uži od 768px */
+@media (max-width: 768px) {
+    .goals-grid-container {
+        grid-template-columns: 1fr;
+    }
+}
+
 

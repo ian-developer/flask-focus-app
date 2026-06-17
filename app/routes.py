@@ -8,16 +8,21 @@ main = Blueprint("main", __name__)
 
 @main.route("/")
 def home():
-    return render_template("index.html")
+    goals = Goal.query.order_by(Goal.priority.asc()).all()
+    number_of_goals = 0
+
+    for goal in goals:
+        number_of_goals = number_of_goals + 1
+    
+    return render_template("index.html", number_of_goals=number_of_goals)
 
 # ---------------DASHBOARD----------------
 
 @main.route("/dashboard", methods=['GET', 'POST'])
 def dashboard():
-    #Get goals sorted by priority: "a, b, c"
-    #goals = Goal.query.order_by(Goal.priority.asc()).all()
-    #return render_template('goals.html', goals=goals)
-    return render_template('dashboard.html')
+    goals = Goal.query.order_by(Goal.priority.asc()).all()
+
+    return render_template('dashboard.html', goals=goals)
 
 # ----------------GOALS-----------------
 
