@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, jsonify, flash, url_for
+from flask import Blueprint, render_template, request, redirect, jsonify, url_for
 from . import db
 from .models_db import Goal
 
