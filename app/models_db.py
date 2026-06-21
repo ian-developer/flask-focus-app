@@ -1,4 +1,5 @@
 from . import db
+from datetime import datetime, timezone
 from sqlalchemy.orm import validates
 
 class Person(db.Model):
@@ -18,6 +19,8 @@ class Goal(db.Model):
     progress_percentage = db.Column(db.Float, default=0.0)
     difficulty = db.Column(db.String(20), nullable=False, default='Medium')
     priority = db.Column(db.String(1), nullable=False, default='b')
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), nullable=False)
+    
 
     @validates('title', 'description', 'difficulty', 'priority')
     def validate_text_fields(self, key, value):
@@ -37,7 +40,3 @@ class Goal(db.Model):
 
     def __repr__(self):
         return f'<Goal {self.title}'
-    
-class Person2(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)

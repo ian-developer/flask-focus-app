@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, jsonify, url_for
 from . import db
+from datetime import datetime, timezone
 from .models_db import Goal
 
 main = Blueprint("main", __name__)
@@ -47,7 +48,8 @@ def add_goal():
             difficulty=data.get('difficulty'),
             priority=data.get('priority'),
             progress_percentage=int(data.get('progress_percentage', 0)),
-            is_completed=int(data.get('progress_percentage', 0)) == 100
+            is_completed=int(data.get('progress_percentage', 0)) == 100,
+            created_at=datetime.now(timezone.utc)
         )
     
         db.session.add(new_goal)
@@ -61,7 +63,8 @@ def add_goal():
             'difficulty': new_goal.difficulty,
             'priority': new_goal.priority,
             'progress_percentage': new_goal.progress_percentage,
-            'is_completed': new_goal.is_completed
+            'is_completed': new_goal.is_completed,
+            'created_at': new_goal.created_at.replace(tzinfo=timezone.utc).isoformat()
         }), 201
     
     except ValueError as e:

@@ -35,6 +35,18 @@ const addGoal = async (goalData) => {
             tbody.innerHTML = '';
         }
 
+        // fromat date and time
+
+        const formattedDate = goal.created_at.toLocaleString('hr-HR', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        // SHOW INFORMATION IN GOAL ROW
+
         const tasksHtml = goal.tasks?.length 
             ? `<ul>${goal.tasks.map(task => `<li>${task}</li>`).join('')}</ul>`
             : '<small style="color: #b2bec3;">Nema zadataka</small>';
@@ -51,6 +63,7 @@ const addGoal = async (goalData) => {
             <td>
                 <a href="/goals/${goal.id}">
                     <strong>${goal.title}</strong><br>
+                    <small>${formattedDate}</small>
                 </a>
                 <small style="color: #7f8c8d;">${goal.description || 'Nema opisa'}</small>
             </td>

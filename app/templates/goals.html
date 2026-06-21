@@ -87,7 +87,8 @@
                     <td><span class="badge badge-{{ goal.priority }}">{{ goal.priority }}</span></td>
                     <td style="width: 150px;">
                         <a href="{{ url_for('main.view_goal', goal_id=goal.id) }}" class="goal-link">
-                                <h1><strong>{{ goal.title }}</strong></h1>
+                                <h1><strong>{{ goal.title }}</strong></h1><br>
+                                <small>{{ goal.created_at }}</small>
                         </a>
                         <br>
                         <p style="color: #7f8c8d; width: 100px;">{{ goal.description or 'Nema opisa' }}</p>
