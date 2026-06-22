@@ -29,21 +29,22 @@ const addGoal = async (goalData) => {
         }
 
         const goal = await response.json();
+
+        dateObj = new Date(goal.created_at);
+
+        prettyDate = dateObj.toLocaleString('hr-HR', {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
         const tbody = document.querySelector('table tbody');
 
         if (tbody.rows.length === 1 && tbody.rows[0].cells.length === 1) {
             tbody.innerHTML = '';
         }
-
-        // fromat date and time
-
-        const formattedDate = goal.created_at.toLocaleString('hr-HR', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
 
         // SHOW INFORMATION IN GOAL ROW
 
@@ -63,9 +64,9 @@ const addGoal = async (goalData) => {
             <td>
                 <a href="/goals/${goal.id}">
                     <strong>${goal.title}</strong><br>
-                    <small>${formattedDate}</small>
                 </a>
-                <small style="color: #7f8c8d;">${goal.description || 'Nema opisa'}</small>
+                <small style="color: #7f8c8d;">${goal.description || 'Nema opisa'}</small><br>
+                <small class="date">${prettyDate}</small>
             </td>
             <td>${tasksHtml}</td>
             <td>${goal.difficulty}</td>

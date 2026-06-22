@@ -292,6 +292,11 @@ img {
     width: 300px;
 }
 
+.date{
+    color: #6c757d;
+    font-size: 0.7em;
+}
+
 /* Novi stil za redak s dva polja (Prioritet i Težina) */
 .form-row {
     display: flex;
