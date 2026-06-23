@@ -61,6 +61,11 @@
             {% endif %}
         </div>
 
+        <!-- Date -->
+        <div>
+            <small class="date">created at: {{ goal.created_at.strftime('%d. %m. %Y. %H:%M') }}</small>
+        </div>
+
         <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 0.5rem 0;">
 
         <!-- Akcije (Gumb za brisanje) -->
