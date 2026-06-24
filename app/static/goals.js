@@ -65,7 +65,7 @@ const addGoal = async (goalData) => {
                 <a href="/goals/${goal.id}">
                     <strong>${goal.title}</strong><br>
                 </a>
-                <small style="color: #7f8c8d;">${goal.description || 'Nema opisa'}</small><br>
+                <p style="color: #7f8c8d;">${goal.description || 'Nema opisa'}</p><br>
                 <small class="date">${prettyDate}</small>
             </td>
             <td>${tasksHtml}</td>

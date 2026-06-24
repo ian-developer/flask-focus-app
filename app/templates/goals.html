@@ -89,7 +89,7 @@
                         <a href="{{ url_for('main.view_goal', goal_id=goal.id) }}" class="goal-link">
                                 <h1><strong>{{ goal.title }}</strong></h1>
                         </a>
-                        <small style="color: #7f8c8d; width: 100px;">{{ goal.description or 'Nema opisa' }}</small><br>
+                        <p style="color: #7f8c8d; width: 100px;">{{ goal.description or 'Nema opisa' }}</p><br>
                         <small class="date">{{ goal.created_at.strftime('%d. %m. %Y. %H:%M') }}</small>
                     </td>
                     <td>
