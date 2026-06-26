@@ -19,6 +19,8 @@ body {
     padding: 2rem;
     display: flex;
     justify-content: center;
+    /* VAŽNA PRILAGODBA: Spuštanje glavnog sadržaja ispod fiksne navigacije */
+    padding-top: calc(64px + 2rem); /* Dodaje prostor da navigacija ne prekrije formu */
 }
 
 /* Kada je forma skrivena, tablica zauzima cijeli prostor (1 stupac) */
@@ -60,6 +62,12 @@ h1 {
     font-size: 1.5em;
     font-weight: 300;
     margin: 0;
+}
+
+h2 {
+    text-transform: capitalize;
+    font-size: 1.1em;
+    font-weight: bold;
 }
 
 p {
@@ -289,11 +297,6 @@ table ul {
 .navbar-links a.active {
     color: var(--primary);
     background-color: rgba(79, 70, 229, 0.08);
-}
-
-/* VAŽNA PRILAGODBA: Spuštanje glavnog sadržaja ispod fiksne navigacije */
-body {
-    padding-top: calc(64px + 2rem); /* Dodaje prostor da navigacija ne prekrije formu */
 }
 
 img {

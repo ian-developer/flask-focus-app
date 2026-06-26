@@ -63,7 +63,7 @@ const addGoal = async (goalData) => {
             <td><span class="badge badge-${goal.priority}">${goal.priority}</span></td>
             <td>
                 <a href="/goals/${goal.id}">
-                    <strong>${goal.title}</strong><br>
+                    <h2>${goal.title}</h2><br>
                 </a>
                 <p style="color: #7f8c8d;">${goal.description || 'Nema opisa'}</p><br>
                 <small class="date">${prettyDate}</small>
