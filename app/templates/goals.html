@@ -65,7 +65,7 @@
     <div class="table-container">
 
         <div style="padding: 1.25rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
-            <h1 class="goals_header">active goals</h1>
+            <h1>active goals</h1>
             <button id="open_form_btn" style="background-color: var(--primary); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 500;">+ ADD GOAL</button>
         </div>
 
@@ -87,7 +87,7 @@
                     <td><span class="badge badge-{{ goal.priority }}">{{ goal.priority }}</span></td>
                     <td style="width: 150px;">
                         <a href="{{ url_for('main.view_goal', goal_id=goal.id) }}" class="goal-link">
-                                <h1><strong>{{ goal.title }}</strong></h1>
+                                <h2><strong>{{ goal.title }}</strong></h2>
                         </a>
                         <p style="color: #7f8c8d; width: 100px;">{{ goal.description or 'Nema opisa' }}</p><br>
                         <small class="date">{{ goal.created_at.strftime('%d. %m. %Y. %H:%M') }}</small>

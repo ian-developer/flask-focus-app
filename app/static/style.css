@@ -54,6 +54,14 @@ h1, h2, h3, a, .goal-title {
     max-width: 100%; /* Osigurava da poštuje širinu kartice */
 }
 
+h1 {
+    text-transform: uppercase;
+    color: var(--text-main);
+    font-size: 1.5em;
+    font-weight: 300;
+    margin: 0;
+}
+
 p {
     word-break: break-word; /* Razbija preduge riječi ako ne stanu */
     overflow-wrap: anywhere; /* Osigurava da tekst nikada ne probije rub */
@@ -333,15 +341,6 @@ button[type="submit"] {
 .hidden {
     display: none !important;
 }
-
-.goals_header {
-    text-transform: uppercase;
-    color: var(--text-main);
-    font-size: 1.5em;
-    font-weight: 300;
-    margin: 0;
-}
-
 
 .clickable-row { 
     cursor: pointer;
