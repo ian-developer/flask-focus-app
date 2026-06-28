@@ -40,3 +40,5 @@ class Goal(db.Model):
 
     def __repr__(self):
         return f'<Goal {self.title}'
+    
+#ADD TASKS MODEL HERE
