@@ -4,7 +4,7 @@
 <div class="container">
     
     <!-- Link za povratak -->
-    <a href="{{ url_for('main.show_goals') }}" style="text-decoration: none; color: var(--primary); display: inline-flex; align-items: center; margin-bottom: 1.5rem; font-weight: 500;">
+    <a href="{{ url_for('main.show_goals') }}" style="text-decoration: none; color: var(--primary); display: inline-flex; align-items: center; margin-bottom: 0.0rem; font-weight: 500;">
             ← Go back to My Goals
     </a>
 
@@ -29,21 +29,40 @@
         <div style="background: #f7fafc; padding: 1rem; border-radius: 6px;">
             <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 600;">
                 <span>Progress:</span>
-                <span>{{ goal.progress_percentage | round | int }}%</span>
+                <span class="progress-percentage">{{ goal.progress_percentage | round | int }}%</span>
             </div>
             <!-- Vizualna progres traka (Opcionalno) -->
-            <div style="width: 100%; background: #e2e8f0; height: 8px; border-radius: 4px; overflow: hidden;">
-                <div style=`width: {{ goal.progress_percentage ~ '%' }}; background: var(--primary); height: 100%;`></div>
+            <div class="progress-bar" style="width: 100%; background: #e2e8f0; height: 8px; border-radius: 4px; overflow: hidden;">
+                <!-- Postotak spremamo u --progress, a width čita tu varijablu -->
+                <div style="--progress: {{ goal.progress_percentage|int }}%; width: var(--progress); background: lightgreen; height: 100%; transition: width 0.3s ease;"></div>
             </div>
         </div>
 
         <!-- Zadaci -->
-        <div>
+        <div class="tasks-container">
             <h3 style="margin: 0 0 0.75rem 0; font-size: 1.1rem;">Tasks:</h3>
             {% if tasks %}
-                <ul style="margin: 0; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; padding-left: 0px;">
+                <ul style="list-style-type: none;">
                     {% for task in tasks %}
-                        <li style="color: #4a5568; padding-left: 0px;">{{ task }}</li>
+                        <li class="task-item" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                            <input type="checkbox" 
+                                                class="task-toggle" 
+                                                data-task-id="{{ task.id }}" 
+                                                {% if task.is_completed %}checked{% endif %}>
+                                            
+                                            <span class="{% if task.is_completed %}completed-task{% endif %}">
+                                                {{ task.text }}
+                                            </span>
+                                        </label>
+                                        
+                                        <button type="button" 
+                                                class="delete-task-btn" 
+                                                data-task-id="{{ task.id }}" 
+                                                style="background: none; border: 1px; color: #e74c3c; cursor: pointer; padding: 0 4px;">
+                                            x
+                                        </button>
+                                    </li>
                     {% endfor %}
                 </ul>
             {% else %}
@@ -52,21 +71,21 @@
         </div>
 
         <!-- Status -->
-        <div>
-            Status: 
+        <div class="goal-status">
+            Goal status: 
             {% if goal.is_completed %}
-                <span style="color: #38a169; font-weight: bold;">Završeno</span>
+                <span style="color: #38a169; font-weight: bold;">Completed</span>
             {% else %}
-                <span style="color: #dd6b20; font-weight: bold;">U tijeku</span>
+                <span style="color: #dd6b20; font-weight: bold;">In Progress</span>
             {% endif %}
         </div>
+
+        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 0.5rem 0;">
 
         <!-- Date -->
         <div>
             <small class="date">created at: {{ goal.created_at.strftime('%d. %m. %Y. %H:%M') }}</small>
         </div>
-
-        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 0.5rem 0;">
 
         <!-- Akcije (Gumb za brisanje) -->
         <div style="display: flex; justify-content: flex-end;">
@@ -79,5 +98,6 @@
 
     </div>
 </div>
+<script src="{{ url_for('static', filename='view_goal.js') }}"></script>
 {% endblock %}
 

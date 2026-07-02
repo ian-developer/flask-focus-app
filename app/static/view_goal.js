@@ -22,6 +22,8 @@ if(tasksContainer){
                 body: JSON.stringify({ is_completed: isCompleted })
             });
             const data = await response.json();
+
+            progressPercentage.innerText = data.progress_percentage + '%';
             
             if (taskText) {
                 taskText.classList.toggle('completed-task', isCompleted);
@@ -31,11 +33,11 @@ if(tasksContainer){
                     </div>`
                 if(data.progress_percentage == 100){
                     statusCell.style.color = "#38a169";
-                    statusCell.innerText = "Završeno"
+                    statusCell.innerText = "Completed";
                 }
                 else{
                     statusCell.style.color = "#dd6b20";
-                    statusCell.innerText = "U Tijeku"
+                    statusCell.innerText = "In Progress";
                 }
             }
 

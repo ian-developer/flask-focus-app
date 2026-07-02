@@ -1,3 +1,11 @@
+// html gumb za dodavanje novog zadatka za implementirati uview_goal.js
+
+        /*<div style="margin-top: 8px; display: flex; gap: 4px;">
+            <input type="text" class="quick-task-input" placeholder="Novi zadatak..." style="flex: 1; padding: 2px 4px; font-size: 0.85rem;">
+            <button type="button" class="quick-task-add-btn" data-goal-id="${goalId}" style="padding: 2px 6px; font-size: 0.85rem;">+</button>
+        </div>*/
+
+
 // Pomoćna funkcija za formatiranje datuma (čisti kod od ponavljanja)
 const formatDate = (dateString) => {
     const dateObj = new Date(dateString);
@@ -19,29 +27,17 @@ const createTasksHtml = (goalId, tasks = []) => {
     return `
         <ul class="task-list" data-goal-id="${goalId}" style="list-style: none; padding: 0; margin: 0;">
             ${tasks.map(task => `
-                <li style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
-                    <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                        <input type="checkbox" 
-                               class="task-toggle" 
-                               data-task-id="${task.id}" 
-                               ${task.is_completed ? 'checked' : ''}>
+                <li style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0px;">
+                    <label style="display: flex; align-items: center; gap: 0px; cursor: pointer;">
+
                         <span style="${task.is_completed ? 'text-decoration: line-through; color: #7f8c8d;' : ''}">
                             ${task.text}
                         </span>
                     </label>
-                    <button type="button" 
-                            class="delete-task-btn" 
-                            data-task-id="${task.id}" 
-                            style="background: none; border: none; color: #e74c3c; cursor: pointer; padding: 0 4px;">
-                        &times;
-                    </button>
+
                 </li>
             `).join('')}
         </ul>
-        <div style="margin-top: 8px; display: flex; gap: 4px;">
-            <input type="text" class="quick-task-input" placeholder="Novi zadatak..." style="flex: 1; padding: 2px 4px; font-size: 0.85rem;">
-            <button type="button" class="quick-task-add-btn" data-goal-id="${goalId}" style="padding: 2px 6px; font-size: 0.85rem;">+</button>
-        </div>
     `;
 };
 
@@ -136,6 +132,7 @@ document.querySelector('table tbody').addEventListener('click', async (e) => {
     const row = target.closest('.clickable-row');
     if (!row) return;
 
+    /*
     // 1. Ako je kliknut checkbox za TOGGLE zadatka
     if (target.classList.contains('task-toggle')) {
         e.stopPropagation(); // Sprječava otvaranje linka kartice cilja
@@ -153,8 +150,7 @@ document.querySelector('table tbody').addEventListener('click', async (e) => {
             // Vizualno prekriži tekst
             const textSpan = target.nextElementSibling;
             if (textSpan) {
-                textSpan.style.textDecoration = isCompleted ? 'line-through' : 'none';
-                textSpan.style.color = isCompleted ? '#7f8c8d' : 'inherit';
+                textSpan.classList.toggle('completed-task', isCompleted);
             }
             // Ažuriraj postotak i status u tablici za taj redak
             row.querySelector('.progress-cell').textContent = `${Math.round(data.progress_percentage)}%`;
@@ -166,7 +162,7 @@ document.querySelector('table tbody').addEventListener('click', async (e) => {
             console.error(err);
         }
         return;
-    }
+    }*/
 
     // 2. Ako je kliknut gumb za BRISANJE zadatka
     if (target.classList.contains('delete-task-btn')) {
