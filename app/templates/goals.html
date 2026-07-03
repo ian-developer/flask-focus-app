@@ -10,7 +10,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
             <h2 style="margin: 0;">Novi Cilj</h2>
             <!-- Gumb za zatvaranje forme -->
-            <button type="button" id="close_form_btn" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.2rem;">&times;</button>
+            <button type="button" id="close_form_btn" style=" color: white; background: rgba(255, 0, 0, 0.255); border: none; border-radius: 2px; cursor: pointer; font-size: 1.2rem;">&times;</button>
         </div>
 
         <form action="/add-goal" method="POST" id="new_goal_form">
@@ -92,17 +92,14 @@
                     </td>
                     <td>
                         {% if goal.tasks %}
-                        <ul type="1">
+                        <ul>
                             {% for task in goal.tasks %}
                                 {% if task %}
-                                    <li style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
-                                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">     
-
+                                    <li style="display: flex; justify-content: flex-start; text-align: left;">
                                             <span class="{% if task.is_completed %}completed-task{% endif %}">
                                                 {{ task.text }}
                                             </span>
                                         </label>
-
                                     </li>
                                 {% endif %}
                             {% endfor %}

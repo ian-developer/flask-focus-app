@@ -184,9 +184,8 @@ th {
 }
 
 td {
-    padding: 1.25rem 1rem;
+    padding: 0.7rem 1rem;
     border-bottom: 1px solid var(--border-color);
-    vertical-align: middle;
 }
 
 tr:last-child td {
@@ -199,14 +198,15 @@ tr:hover {
 
 /* Liste unutar tablice (Zadaci) */
 table ul {
+    text-align: center;
     margin: 0;
     color: var(--text-muted);
     font-size: 0.875rem;
 }
 
 ul {
+    text-align: left;
     margin: 0;
-    padding-left: 1.25rem;
     padding-bottom: 10px;
     display: flex; flex-direction:
     column; gap: 0rem;
@@ -214,10 +214,8 @@ ul {
 }
 
 li {
-    padding-top: 0px;
-    padding-right: 0px;
-    padding-bottom: 0px;
-    padding-left: 15px;
+    padding: 0%;
+
 }
 
 /* 4. Badges (Značke za prioritet i status) */
@@ -392,6 +390,25 @@ button[type="submit"] {
 .completed-task {
     text-decoration: line-through;
     color: #7f8c8d;
+}
+
+.task-box {
+
+    width: fit-content;
+    /* Pozadina: vrlo svijetla siva (skoro bijela) */
+    background-color: #f8f9fa; 
+    
+    /* Zaobljeni rubovi (8px daje mekan, moderan izgled) */
+    border-radius: 8px; 
+    
+    /* Mala, mekana i diskretna sjena */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.05);
+    
+    /* Unutarnji razmak da tekst ne dira rubove kutije */
+    padding: 10px; 
+    
+    /* Neobavezno: tanki rub koji dodatno definira kutiju na skroz bijeloj pozadini */
+    border: 1px solid #e9ecef; 
 }
 
 /* Responzivnost za mobitele - prebaci u 1 stupac ako je ekran uži od 768px */

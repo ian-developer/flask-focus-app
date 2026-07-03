@@ -87,8 +87,7 @@ const addGoal = async (goalData) => {
             <td><span class="badge badge-${goal.priority}">${goal.priority}</span></td>
             <td>
                 <h2>${goal.title}</h2>
-                <br>
-                <p style="color: #7f8c8d;">${goal.description || 'Nema opisa'}</p><br>
+                <p style="color: #7f8c8d;">${goal.description || 'Nema opisa'}</p>
                 <small class="date">${prettyDate}</small>
             </td>
             <td class="tasks-cell">${createTasksHtml(goal.id, goal.tasks)}</td>

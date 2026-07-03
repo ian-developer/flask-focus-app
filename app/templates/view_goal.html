@@ -21,30 +21,18 @@
 
         <!-- Naslov i Opis -->
         <div>
-            <h2 style="margin: 0 0 0.5rem 0; font-size: 1.8rem; color: #2d3748;">{{ goal.title }}</h2>
-            <p style="margin: 0; color: #718096; line-height: 1.6;">{{ goal.description or 'Nema opisa.' }}</p>
-        </div>
-
-        <!-- Napredak (Zaokružen) -->
-        <div style="background: #f7fafc; padding: 1rem; border-radius: 6px;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 600;">
-                <span>Progress:</span>
-                <span class="progress-percentage">{{ goal.progress_percentage | round | int }}%</span>
-            </div>
-            <!-- Vizualna progres traka (Opcionalno) -->
-            <div class="progress-bar" style="width: 100%; background: #e2e8f0; height: 8px; border-radius: 4px; overflow: hidden;">
-                <!-- Postotak spremamo u --progress, a width čita tu varijablu -->
-                <div style="--progress: {{ goal.progress_percentage|int }}%; width: var(--progress); background: lightgreen; height: 100%; transition: width 0.3s ease;"></div>
-            </div>
+            <h2 style="margin: 0 0 0.5rem 0; font-size: 1.8rem; color: #2d3748; padding-top: 10px;">{{ goal.title }}</h2>
+            Goal description: 
+            <span style="margin: 0; color: #718096; line-height: 1.6;">{{ goal.description or 'Nema opisa.' }}</span>
         </div>
 
         <!-- Zadaci -->
-        <div class="tasks-container">
-            <h3 style="margin: 0 0 0.75rem 0; font-size: 1.1rem;">Tasks:</h3>
+        <div class="tasks-container" style="margin-top: 10px;">
+            <h3 style="margin: 0 0 0.75rem 0; font-size: 1.0rem; font-weight: 400;">Goal tasks:</h3>
             {% if tasks %}
                 <ul style="list-style-type: none;">
                     {% for task in tasks %}
-                        <li class="task-item" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+                        <li class="task-item task-box" style="display: flex; align-items: center; justify-content: space-between;">
                                         <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
                                             <input type="checkbox" 
                                                 class="task-toggle" 
@@ -81,6 +69,19 @@
         </div>
 
         <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 0.5rem 0;">
+
+                <!-- Napredak (Zaokružen) -->
+        <div style="background: #f7fafc; padding: 1rem; border-radius: 6px; margin-top: 10px; margin-bottom: 10px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 600;">
+                <span>Progress:</span>
+                <span class="progress-percentage">{{ goal.progress_percentage | round | int }}%</span>
+            </div>
+            <!-- Vizualna progres traka (Opcionalno) -->
+            <div class="progress-bar" style="width: 100%; background: #e2e8f0; height: 8px; border-radius: 4px; overflow: hidden;">
+                <!-- Postotak spremamo u --progress, a width čita tu varijablu -->
+                <div style="--progress: {{ goal.progress_percentage|int }}%; width: var(--progress); background: lightgreen; height: 100%; transition: width 0.3s ease;"></div>
+            </div>
+        </div>
 
         <!-- Date -->
         <div>
