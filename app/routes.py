@@ -31,7 +31,7 @@ def dashboard():
 @main.route('/goals')
 def show_goals():
     goals = Goal.query.order_by(Goal.priority.asc()).all()
-    
+
     return render_template('goals.html', goals=goals)
 
 @main.route('/add-goal', methods=['POST'])
