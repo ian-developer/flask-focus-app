@@ -184,8 +184,11 @@ th {
 }
 
 td {
+    max-width: 300px;
     padding: 0.7rem 1rem;
     border-bottom: 1px solid var(--border-color);
+    white-space: normal;     /*Omogućuje prelamanje teksta */
+    word-break: break-word;  /*Razbija dugačke riječi ako ne stanu */
 }
 
 tr:last-child td {
@@ -214,7 +217,7 @@ ul {
 }
 
 li {
-    padding: 0%;
+    padding-right: 10px;
 }
 
 /* 4. Badges (Značke za prioritet i status) */
@@ -392,8 +395,11 @@ button[type="submit"] {
 }
 
 .task-box {
-
     width: fit-content;
+    max-width: 300px;
+    white-space: normal;   /*Omogućuje prelamanje teksta */
+    word-break: break-word;  /*Razbija dugačke riječi ako ne stanu */
+
     /* Pozadina: vrlo svijetla siva (skoro bijela) */
     background-color: #f8f9fa; 
     

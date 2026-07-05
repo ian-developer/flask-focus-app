@@ -28,7 +28,6 @@ const createTasksHtml = (goalId, tasks = []) => {
         <ul class="task-list" data-goal-id="${goalId}" style="list-style: none; padding: 0; margin: 0;">
             ${tasks.map(task => `
                 <li style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0px;">
-                    <label style="display: flex; align-items: center; gap: 0px; cursor: pointer;">
 
                         <span style="${task.is_completed ? 'text-decoration: line-through; color: #7f8c8d;' : ''}">
                             ${task.text}
@@ -84,7 +83,7 @@ const addGoal = async (goalData) => {
         row.id = `goal-row-${goal.id}`; // Dodan ID za lakše dinamičko osvježavanje retka
 
         row.innerHTML = `
-            <td><span class="badge badge-${goal.priority}">${goal.priority}</span></td>
+            <td style="text-align: center;"><span class="badge badge-${goal.priority}">${goal.priority}</span></td>
             <td>
                 <h2>${goal.title}</h2>
                 <p style="color: #7f8c8d;">${goal.description || 'Nema opisa'}</p>
