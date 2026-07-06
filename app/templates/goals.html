@@ -4,12 +4,13 @@
 
 {% block content %}
 
-    <!-- FORMA ZA UNOS NOVOG CILJA -->
 <div class="container">
-    <div id="form_container" class="card hidden">
+    
+    <!-- ADD NEW GOAL FORM -->
+    <div id="form_container" class="hidden">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
             <h2 style="margin: 0;">Add new goal: </h2>
-            <!-- Gumb za zatvaranje forme -->
+            <!-- Close form button -->
             <button type="button" id="close_form_btn" style=" color: white; background: rgba(255, 0, 0, 0.255); border: none; border-radius: 2px; cursor: pointer; font-size: 1.2rem;">&times;</button>
         </div>
 
@@ -48,20 +49,13 @@
                         <option value="c">C (low)</option>
                     </select>
                 </div>
-                
-                <!-- ADD COMPLETION PERCENTAGE BY USER
-                    
-                <div class="form-group col">
-                    <label for="progress_percentage">Percentage to completion (%):</label>
-                    <input type="number" id="progress_percentage" name="progress_percentage" min="0" max="100" value="0">
-                </div> -->
             </div>
 
             <button type="submit">Save Goal</button>
         </form>
     </div>
 
-        <!-------------------- SHOW GOALS TABLE ------------------------>
+    <!-------------------- SHOW GOALS TABLE ------------------------>
     <div class="table-container">
 
         <div style=" padding: 1.25rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
@@ -85,17 +79,17 @@
                 {% for goal in goals %}
                 <tr class="clickable-row" data-href=" {{ url_for('main.view_goal', goal_id=goal.id) }}">
                     <td style="text-align: center;"><span class="badge badge-{{ goal.priority }}">{{ goal.priority }}</span></td>
-                    <td style="width: 150px;">
-                        <h2>{{ goal.title }}</h2>
+                    <td style="max-width: 120px; white-space: wrap;">
+                        <h2>{{ goal.title | truncate(30)}}</h2>
                         <p style="color: #7f8c8d; width: 100px;">{{ goal.description or 'Nema opisa' }}</p>
                         <small class="date">{{ goal.created_at.strftime('%d. %m. %Y. %H:%M') }}</small>
                     </td>
-                    <td>
+                    <td style="min-width: 100px;">
                         {% if goal.tasks %}
                         <ul>
                             {% for task in goal.tasks[:3] %}
                                 {% if task %}
-                                    <li style="display: flex; justify-content: flex-start; text-align: left;">
+                                    <li style="display: flex; justify-content: flex-start; text-align: left; border: #eaeaea 1px solid;">
                                             <span class="{% if task.is_completed %}completed-task{% endif %}">
                                                 {{ task.text }}
                                             </span>
@@ -133,5 +127,6 @@
         </table>
     </div>
 </div>
-    <script src="{{ url_for('static', filename='goals.js') }}"></script>
+
+<script src="{{ url_for('static', filename='goals.js') }}"></script>
 {% endblock %}

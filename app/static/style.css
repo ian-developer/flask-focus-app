@@ -32,14 +32,32 @@ body {
     gap: 2rem;
 }
 
+#goal_card {
+    max-width: 100%;
+    min-width: 450px;
+    overflow: hidden;
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--border-color);
+}
+
 #form_container {
-    max-height: 585px;
+    max-width: 100%;
+    min-width: 350px;
+    overflow: hidden;
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--border-color);
 }
 
 /* Ako kontejner sadrži element koji nema klasu .hidden (forma je vidljiva),
    tada postavi omjer 1fr 2fr (forma je dvaput manja od tablice) */
 .container:has(#form_container:not(.hidden)) {
-    grid-template-columns: 2fr 3fr;
+    grid-template-columns: 1fr 2fr;
 }
 
 /* Na mobitelima uvijek držimo jedno ispod drugog bez obzira na sve */
@@ -85,16 +103,6 @@ p {
         .status-done { color: #2ecc71; font-weight: bold; }
         .status-pending { color: #95a5a6; }
 
-/* 2. Stil za Formu i Kartice (Moderan podignuti izgled) */
-.card {
-    max-width: 100%;
-    min-width: 450px;
-    background: var(--card-bg);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    border: 1px solid var(--border-color);
-}
 
 .card h2 {
     margin-top: 0;
@@ -158,6 +166,7 @@ button[type="submit"]:hover {
 
 /* 3. Stil za Tablicu */
 .table-container {
+    max-width: 100%;
     background: var(--card-bg);
     border-radius: 12px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -214,10 +223,6 @@ ul {
     display: flex; flex-direction:
     column; gap: 0rem;
     padding-left: 0px;
-}
-
-li {
-    padding-right: 10px;
 }
 
 /* 4. Badges (Značke za prioritet i status) */
@@ -392,6 +397,18 @@ button[type="submit"] {
 .completed-task {
     text-decoration: line-through;
     color: #7f8c8d;
+}
+
+li {
+    padding-right: 10px;
+    display: flex;
+    justify-content: flex-start;
+    text-align: left;
+    border: #eaeaea 1px solid;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 4px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .task-box {
