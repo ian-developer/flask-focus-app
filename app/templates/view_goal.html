@@ -1,12 +1,19 @@
 {% extends "base.html" %} {# Ili kako god se zove vaš glavni layout s navigacijom #}
 
 {% block content %}
+
 <div class="container">
     
-    <!-- Link za povratak -->
-    <a href="{{ url_for('main.show_goals') }}" style="text-decoration: none; color: var(--primary); display: inline-flex; align-items: center; margin-bottom: 0.0rem; font-weight: 500;">
+    <a href="{{ url_for('main.show_goals') }}"
+        style="text-decoration: none; color: var(--primary);
+        display: inline-flex;
+        align-items: center;
+        margin-bottom: 0 auto;
+        font-weight: 500;
+        width: fit-content;">
             ← Go back to My Goals
     </a>
+
 
     <!-- Kartica pojedinačnog cilja -->
     <div id="goal_card">
@@ -20,15 +27,15 @@
         </div>
 
         <!-- Naslov i Opis -->
-        <div>
+        <div style="overflow: wrap; max-width: 500px;">
             <h2 style="margin: 0 0 0.5rem 0; font-size: 1.8rem; color: #2d3748; padding-top: 10px;">{{ goal.title }}</h2>
-            Goal description: 
+            <h3>Goal description: </h3>
             <span style="margin: 0; color: #718096; line-height: 1.6;">{{ goal.description or 'Nema opisa.' }}</span>
         </div>
 
         <!-- Zadaci -->
         <div class="tasks-container" style="margin-top: 10px; overflow: hidden;">
-            <h3 style="margin: 0 0 0.75rem 0; font-size: 1.0rem; font-weight: 400;">Goal tasks:</h3>
+            <h3>Goal tasks:</h3>
             {% if tasks %}
                 <ul style="list-style-type: none;">
                     {% for task in tasks %}
@@ -60,7 +67,7 @@
 
         <!-- Status -->
         <div class="goal-status">
-            Goal status: 
+            <h3>Goal status: </h3>
             {% if goal.is_completed %}
                 <span style="color: #38a169; font-weight: bold;">Completed</span>
             {% else %}

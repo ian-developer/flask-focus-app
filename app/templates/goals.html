@@ -78,18 +78,18 @@
                 <!-- Petlja prolazi kroz sve ciljeve poslane iz app.py -->
                 {% for goal in goals %}
                 <tr class="clickable-row" data-href=" {{ url_for('main.view_goal', goal_id=goal.id) }}">
-                    <td style="text-align: center;"><span class="badge badge-{{ goal.priority }}">{{ goal.priority }}</span></td>
-                    <td style="max-width: 120px; white-space: wrap;">
-                        <h2>{{ goal.title | truncate(30)}}</h2>
-                        <p style="color: #7f8c8d; width: 100px;">{{ goal.description or 'Nema opisa' }}</p>
+                    <td><span class="badge badge-{{ goal.priority }}">{{ goal.priority }}</span></td>
+                    <td style="text-align: left; max-width: 150px;">
+                        <h2 style="white-space: wrap; overflow: wrap;">{{ goal.title | truncate(30)}}</h2>
+                        <p style="color: #7f8c8d; max-width: 150px;">{{ goal.description or 'Nema opisa' }}</p>
                         <small class="date">{{ goal.created_at.strftime('%d. %m. %Y. %H:%M') }}</small>
                     </td>
-                    <td style="min-width: 100px;">
+                    <td style="max-width: 150px;">
                         {% if goal.tasks %}
                         <ul>
                             {% for task in goal.tasks[:3] %}
                                 {% if task %}
-                                    <li style="display: flex; justify-content: flex-start; text-align: left; border: #eaeaea 1px solid;">
+                                    <li style="display: flex; justify-content: flex-start; text-align: left;">
                                             <span class="{% if task.is_completed %}completed-task{% endif %}">
                                                 {{ task.text }}
                                             </span>
@@ -110,7 +110,7 @@
                     </td>
                     <td>{{ goal.difficulty }}</td>
                     <td>{{ goal.progress_percentage | round | int }}%</td>
-                    <td>
+                    <td style="overflow: hidden; white-space: nowrap; padding: 3px;">
                         {% if goal.is_completed %}
                         <span class="status-done">Completed</span>
                         {% else %}

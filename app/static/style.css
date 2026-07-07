@@ -88,6 +88,15 @@ h2 {
     font-weight: bold;
 }
 
+h3 {
+    font-style: italic;
+    color: #464646;
+    margin: 5px 0px;
+    font-size: 1.1em;
+    font-weight: 600;
+    padding: 0 auto;
+}
+
 p {
     word-break: break-word; /* Razbija preduge riječi ako ne stanu */
     overflow-wrap: anywhere; /* Osigurava da tekst nikada ne probije rub */
@@ -193,6 +202,7 @@ th {
 }
 
 td {
+    text-align: center;
     max-width: 300px;
     padding: 0.7rem 1rem;
     border-bottom: 1px solid var(--border-color);
