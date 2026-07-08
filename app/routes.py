@@ -34,6 +34,8 @@ def show_goals():
 
     return render_template('goals.html', goals=goals)
 
+# ----- ADD GOAL IN GOALS ------------
+
 @main.route('/add-goal', methods=['POST'])
 def add_goal():
     data = request.get_json() or {}
@@ -88,7 +90,8 @@ def add_goal():
         traceback.print_exc()
         return jsonify({"error": "Unexpected server error."}), 500
 
-# 2. Toggle Task Checkbox status
+#---- TOGGLE TASK CHECKBOX STATUS -------
+
 @main.route('/api/tasks/<int:task_id>/toggle', methods=['PATCH'])
 def toggle_task(task_id):
     data = request.get_json() or {}
@@ -107,7 +110,8 @@ def toggle_task(task_id):
         'progress_percentage': task.goal.progress_percentage
     })
 
-# 3. Modify Task Text inline
+#------ (NOT IN FUNCTION) MODIFY TASK TEXT -----
+
 @main.route('/api/tasks/<int:task_id>', methods=['PUT'])
 def update_task_text(task_id):
     data = request.get_json() or {}
@@ -136,7 +140,9 @@ def add_single_task(goal_id):
         'is_completed': new_task.is_completed,
         'progress_percentage': goal.progress_percentage
     }), 201
-    
+
+#---------- VIEW SPECIFIC GOAL ---------------
+
 @main.route('/goals/<int:goal_id>')
 def view_goal(goal_id):
     goal = Goal.query.get_or_404(goal_id)
@@ -144,6 +150,8 @@ def view_goal(goal_id):
     tasks_list = goal.tasks
 
     return render_template('view_goal.html', goal=goal, tasks=tasks_list)
+
+#---------- DELETE SPECIFIC GOAL ---------------
 
 @main.route('/goals/<int:goal_id>/delete', methods=['POST'])
 def delete_goal(goal_id):
