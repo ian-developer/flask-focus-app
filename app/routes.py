@@ -151,7 +151,7 @@ def view_goal(goal_id):
 
     return render_template('view_goal.html', goal=goal, tasks=tasks_list)
 
-#---------- DELETE SPECIFIC GOAL ----------------
+#---------- DELETE SPECIFIC GOAL ---------------
 
 @main.route('/goals/<int:goal_id>/delete', methods=['POST'])
 def delete_goal(goal_id):
