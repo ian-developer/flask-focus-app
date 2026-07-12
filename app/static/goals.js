@@ -18,7 +18,7 @@ const formatDate = (dateString) => {
     });
 };
 
-// Funkcija za kreiranje HTML-a liste zadataka s checkboxovima i gumbima za brisanje
+// Funkcija za kreiranje HTML-a liste zadataka
 const createTasksHtml = (goalId, tasks = []) => {
     if (!tasks.length) {
         return '<small style="color: #b2bec3;">Nema zadataka</small>';
@@ -27,7 +27,7 @@ const createTasksHtml = (goalId, tasks = []) => {
     return `
         <ul class="task-list" data-goal-id="${goalId}" style="list-style: none; padding: 0; margin: 0;">
             ${tasks.map(task => `
-                <li style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0px;">
+                <li style="display: flex; align-items: left; justify-content: space-between; margin-bottom: 0px;">
 
                         <span style="${task.is_completed ? 'text-decoration: line-through; color: #7f8c8d;' : ''}">
                             ${task.text}
@@ -84,7 +84,7 @@ const addGoal = async (goalData) => {
 
         row.innerHTML = `
             <td style="text-align: center;"><span class="badge badge-${goal.priority}">${goal.priority}</span></td>
-            <td>
+            <td style="text-align: left;>
                 <h2>${goal.title}</h2>
                 <p style="color: #7f8c8d;">${goal.description || 'Nema opisa'}</p>
                 <small class="date">${prettyDate}</small>

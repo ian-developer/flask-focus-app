@@ -29,13 +29,12 @@
         <!-- Naslov i Opis -->
         <div style="overflow: wrap; max-width: 500px;">
             <h2 style="margin: 0 0 0.5rem 0; font-size: 1.8rem; color: #2d3748; padding-top: 10px;">{{ goal.title }}</h2>
-            <h3>Goal description: </h3>
             <span style="margin: 0; color: #718096; line-height: 1.6;">{{ goal.description or 'Nema opisa.' }}</span>
         </div>
 
         <!-- Zadaci -->
         <div class="tasks-container" style="margin-top: 10px; overflow: hidden;">
-            <h3>Goal tasks:</h3>
+            <h3>tasks</h3>
             {% if tasks %}
                 <ul style="list-style-type: none;">
                     {% for task in tasks %}
@@ -67,7 +66,6 @@
 
         <!-- Status -->
         <div class="goal-status">
-            <h3>Goal status: </h3>
             {% if goal.is_completed %}
                 <span style="color: #38a169; font-weight: bold;">Completed</span>
             {% else %}
