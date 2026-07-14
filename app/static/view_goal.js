@@ -6,6 +6,8 @@ const statusCell = document.querySelector('.goal-status span');
 if(tasksContainer){
     tasksContainer.addEventListener('click', async (e) => {
         const target = e.target;
+        // CHECKBOX TASK
+
         if (target.classList.contains('task-toggle') || target.type === 'checkbox'){
 
             const taskItem = target.closest('.task-item'); // cijeli <li> task redak (checkbox, tekst i x)
@@ -40,17 +42,46 @@ if(tasksContainer){
                     statusCell.innerText = "In Progress";
                 }
             }
-
-            //row.querySelector('.progress-cell').textContent = `${Math.round(data.progress_percentage)}%`;
-            
-            //const statusCell = row.querySelector('.status-cell span');
-            //statusCell.className = data.progress_percentage === 100 ? 'status-done' : 'status-pending';
-            //statusCell.textContent = data.progress_percentage === 100 ? 'Completed' : 'Pending';
             
             } catch (err) {
                 console.error(err);
             }
 
+        }
+        // DELETE TASK
+
+        if (target.classList.contains('delete-task-btn')) {
+            e.stopPropagation();
+            const taskId = target.dataset.taskId;
+            const taskItem = target.closest('.task-item');
+            
+            if (!confirm('Do you want to delete this task?')) return;
+
+            console.log(taskId);
+            try {
+                const response = await fetch(`/api/tasks/${taskId}`, { method: 'DELETE' });
+                const data = await response.json();
+
+                taskItem.remove();
+
+                const remainingTasks = tasksContainer.querySelectorAll('.task-item');
+        
+                if (remainingTasks.length === 0) {
+                    tasksContainer.innerHTML = '';
+                    // Kreiramo novi element za poruku
+                    const noTasksMessage = document.createElement('p');
+                    noTasksMessage.className = 'no-tasks-msg';
+                    noTasksMessage.textContent = 'There is no tasks';
+                    noTasksMessage.innerHTML = '<p style="margin: 0; color: #a0aec0; font-style: italic; padding-bottom: 15px;">There are no tasks here.</p>';
+                    
+                    // Dodajemo poruku u kontejner gdje su bili zadaci
+                    tasksContainer.appendChild(noTasksMessage);
+                }
+                
+            } catch (err) {
+                console.error(err);
+            }
+            return;
         }
     });
 }

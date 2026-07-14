@@ -90,6 +90,31 @@ def add_goal():
         traceback.print_exc()
         return jsonify({"error": "Unexpected server error."}), 500
 
+#---------- VIEW SPECIFIC GOAL ---------------
+
+@main.route('/goals/<int:goal_id>')
+def view_goal(goal_id):
+    goal = Goal.query.get_or_404(goal_id)
+
+    tasks_list = goal.tasks
+
+    return render_template('view_goal.html', goal=goal, tasks=tasks_list)
+
+#---------- DELETE SPECIFIC GOAL ---------------
+
+@main.route('/goals/<int:goal_id>/delete/', methods=['POST'])
+def delete_goal(goal_id):
+    goal = Goal.query.get_or_404(goal_id)
+    
+    try:
+        db.session.delete(goal)
+        db.session.commit()
+
+    except Exception as e:
+        db.session.rollback()
+        
+    return redirect(url_for('main.show_goals'))
+
 #---- TOGGLE TASK CHECKBOX STATUS -------
 
 @main.route('/api/tasks/<int:task_id>/toggle', methods=['PATCH'])
@@ -110,16 +135,30 @@ def toggle_task(task_id):
         'progress_percentage': task.goal.progress_percentage
     })
 
-#------ (NOT IN FUNCTION) MODIFY TASK TEXT -----
+#------ IN VIEW GOAL DELETE SPECIFIC TASK -----
 
-@main.route('/api/tasks/<int:task_id>', methods=['PUT'])
-def update_task_text(task_id):
-    data = request.get_json() or {}
+@main.route('/api/tasks/<int:task_id>', methods=['DELETE'])
+def delete_task(task_id):
+
     task = Task.query.get_or_404(task_id)
+    goal_id = task.goal_id
     
-    task.text = data.get('text', task.text).strip()
-    db.session.commit()
-    return jsonify({'id': task.id, 'text': task.text})
+    try:
+        # 3. Obriši iz baze
+        db.session.delete(task)
+        db.session.commit()
+        
+        # 4. Vrati uspješan JSON odgovor (najbolja praksa za API i JavaScript DELETE zahtjeve)
+        return jsonify({
+            "status": "success", 
+            "message": "Zadatak uspješno obrisan",
+            "redirect_url": url_for('main.view_goal', goal_id=goal_id)
+        }), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"status": "error", "message": "Greška pri brisanju"}), 500
+
 
 # 4. Inline Add a Task directly into the view layout later
 @main.route('/api/goals/<int:goal_id>/tasks', methods=['POST'])
@@ -140,29 +179,3 @@ def add_single_task(goal_id):
         'is_completed': new_task.is_completed,
         'progress_percentage': goal.progress_percentage
     }), 201
-
-#---------- VIEW SPECIFIC GOAL ---------------
-
-@main.route('/goals/<int:goal_id>')
-def view_goal(goal_id):
-    goal = Goal.query.get_or_404(goal_id)
-
-    tasks_list = goal.tasks
-
-    return render_template('view_goal.html', goal=goal, tasks=tasks_list)
-
-#---------- DELETE SPECIFIC GOAL ---------------
-
-@main.route('/goals/<int:goal_id>/delete', methods=['POST'])
-def delete_goal(goal_id):
-    goal = Goal.query.get_or_404(goal_id)
-    
-    try:
-        db.session.delete(goal)
-        db.session.commit()
-
-    except Exception as e:
-        db.session.rollback()
-        
-    return redirect(url_for('main.show_goals'))
-
