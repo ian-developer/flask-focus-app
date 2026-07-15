@@ -173,6 +173,33 @@ button[type="submit"]:hover {
     background-color: var(--primary-hover);
 }
 
+.delete-task-btn{
+    padding: 3px 8px;
+    border: transparent solid 1px;
+    background: none;
+    border-radius: 50px;
+    cursor: pointer; margin-left: 10px;
+    font-size: 1.2em;
+    
+}
+
+.delete-task-btn:hover{
+    color: red;
+    background-color: #f3a2a276;
+    border: #dadada solid 1px;
+    text-shadow: 0 0 3px #ff0000;
+}
+
+.add-task-btn {
+    margin-top: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ebebeb;
+    color: rgb(65, 65, 65);
+    width: fit-content;
+    padding: 5px;
+}
+
 /* 3. Stil za Tablicu */
 .table-container {
     max-width: 100%;
