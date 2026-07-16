@@ -1,4 +1,3 @@
-
 const tasksContainer = document.querySelector('.tasks-container');
 const progressPercentage = document.querySelector('.progress-percentage');
 const statusCell = document.querySelector('.goal-status span');
@@ -83,6 +82,48 @@ if(tasksContainer){
             }
             return;
         }
+
+        // SHOW NEW TASK CONTAINER
+
+        if(target.classList.contains('new-task-btn')){
+            e.stopPropagation();
+
+            const newTaskBtn = target;
+            const addTaskContainer = target.nextElementSibling;
+
+            if (addTaskContainer) {
+                newTaskBtn.classList.add('hidden');          // Sakrij gumb
+                addTaskContainer.classList.remove('hidden'); // Prikaži input i gumb za spremanje
+                
+                // Bonus: Automatski stavi fokus (kurzor) u input polje
+                const inputField = addTaskContainer.querySelector('input');
+                if (inputField) inputField.focus();
+            }
+
+        }
+
+        // CLOSE NEW TASK CONTAINER
+
+        if(target.classList.contains('quit-task-btn')){
+            e.stopPropagation();
+
+            const addTaskContainer = target.closest('.add-task-container');
+            const taskManageBox = target.closest('.task-management-box')
+
+            if (taskManageBox && addTaskContainer) {
+                const newTaskBtn = taskManageBox.querySelector('.new-task-btn');
+                const inputField = addTaskContainer.querySelector('input');
+
+                // Ponovno prikaži početni gumb, sakrij formu
+                if (newTaskBtn) newTaskBtn.classList.remove('hidden');
+                addTaskContainer.classList.add('hidden');
+
+                // Čisti tekst koji je korisnik upisao da ne ostane za idući put
+                if (inputField) inputField.value = '';
+            }
+        }
+
+
     });
 }
 
