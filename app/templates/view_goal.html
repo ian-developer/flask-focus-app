@@ -55,11 +55,18 @@
                                         <button type="button" 
                                                 class="delete-task-btn" 
                                                 data-task-id="{{ task.id }}">
-                                            &#128465
+                                            x
                                         </button>
                                     </li>
                     {% endfor %}
-                    <button class="add-task-btn">+ add task</button>
+                    <div class="task-management-box" data-id={{goal.id}}>
+                        <button class="new-task-btn">+ add task</button>
+                        <div class="add-task-container hidden">
+                            <input class="new-task-input" type="text" placeholder="New task">
+                            <button class="add-task-btn">save</button>
+                            <button class="quit-task-btn">cancel</button>
+                        </div>
+                    </div>
                 </ul>
             {% else %}
                 <p style="margin: 0; color: #a0aec0; font-style: italic; padding-bottom: 15px;">There are no tasks here.</p>
