@@ -108,7 +108,7 @@ if(tasksContainer){
             e.stopPropagation();
 
             const addTaskContainer = target.closest('.add-task-container');
-            const taskManageBox = target.closest('.task-management-box')
+            const taskManageBox = target.closest('.task-management-box');
 
             if (taskManageBox && addTaskContainer) {
                 const newTaskBtn = taskManageBox.querySelector('.new-task-btn');
@@ -120,6 +120,60 @@ if(tasksContainer){
 
                 // Čisti tekst koji je korisnik upisao da ne ostane za idući put
                 if (inputField) inputField.value = '';
+            }
+        }
+
+        // ADD NEW TASK
+
+        if(target.classList.contains('add-task-btn')){
+            e.stopPropagation();
+
+            const addTaskContainer = target.closest('.add-task-container');
+            const taskManageBox = target.closest('.task-management-box'); 
+
+            if (taskManageBox && addTaskContainer) {  
+                const inputField = addTaskContainer.querySelector('.new-task-input');
+                const taskText = inputField.value.trim();
+
+                const goalId = taskManageBox.dataset.id;
+
+                if (taskText === '') {
+                    alert('Molimo upišite tekst zadatka!');
+                    return;
+                }
+
+                // 2. SLANJE PODATAKA NA BACKEND (U BAZU) PREKO FETCH API-JA
+                fetch(`/api/tasks/${goalId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        goal_id: goalId,   // Vaš dohvaćeni ID
+                        task_text: taskText // Tekst zadatka
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Ovdje dodajete kod za prikaz novog zadatka na ekranu bez osvježavanja stranice
+                        console.log('Zadatak uspješno spremljen s ID-em: ' + data.new_task_id);
+                        // OVDJE TREBA DOVRŠITI KOD
+                        
+                        // Sakrijte formu i očistite input nakon uspješnog spremanja
+                        const newTaskBtn = taskManageBox.querySelector('.new-task-btn');
+                        if (newTaskBtn) newTaskBtn.classList.remove('hidden');
+                        addTaskContainer.classList.add('hidden');
+                        inputField.value = '';
+                    } else {
+                        //alert('Greška pri spremanju zadatka u bazu.');
+                        alert('Greška sa servera: ' + (data.message || 'Nepoznata greška'));
+                        console.error('Detalji greške s Flask-a:', data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Greška u komunikaciji s poslužiteljem:', error);
+                });
             }
         }
 
