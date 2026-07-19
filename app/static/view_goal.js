@@ -1,6 +1,7 @@
 const tasksContainer = document.querySelector('.tasks-container');
 const progressPercentage = document.querySelector('.progress-percentage');
 const statusCell = document.querySelector('.goal-status span');
+const taskBox = document.querySelector('.task-list-box');
 
 if(tasksContainer){
     tasksContainer.addEventListener('click', async (e) => {
@@ -56,7 +57,6 @@ if(tasksContainer){
             
             if (!confirm('Do you want to delete this task?')) return;
 
-            console.log(taskId);
             try {
                 const response = await fetch(`/api/tasks/${taskId}`, { method: 'DELETE' });
                 const data = await response.json();
@@ -156,9 +156,28 @@ if(tasksContainer){
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Ovdje dodajete kod za prikaz novog zadatka na ekranu bez osvježavanja stranice
-                        console.log('Zadatak uspješno spremljen s ID-em: ' + data.new_task_id);
-                        // OVDJE TREBA DOVRŠITI KOD
+                        const newTask = document.createElement('li');
+                        newTask.className = "task-item task-box";
+                        newTask.style.cssText = "display: flex; align-items: center; justify-content: space-between;";
+
+                        newTask.innerHTML = `<label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                            <input
+                                                style="margin-right: 10px;"
+                                                type="checkbox" 
+                                                class="task-toggle" 
+                                                data-task-id="${data.new_task_id}">                                            
+                                            <span>
+                                                ${ data.task_text }
+                                            </span>
+                                        </label>
+                                        
+                                        <button type="button" 
+                                                class="delete-task-btn" 
+                                                data-task-id="${data.new_task_id}">
+                                            x
+                                        </button>`;
+
+                        taskBox.append(newTask);
                         
                         // Sakrijte formu i očistite input nakon uspješnog spremanja
                         const newTaskBtn = taskManageBox.querySelector('.new-task-btn');
@@ -180,58 +199,3 @@ if(tasksContainer){
 
     });
 }
-
-/*
-// Provjera postoji li kontejner na trenutnoj stranici (siguran kod)
-if (tasksContainer) {
-    tasksContainer.addEventListener('change', function(e) {
-        // 2. Provjera je li kliknuto baš na kvačicu (checkbox)
-        if (e.target.classList.contains('task-toggle') || e.target.type === 'checkbox') {
-            const checkbox = e.target;
-            
-            // 3. Pronalaženje roditeljskog elementa tog zadatka
-            const taskItem = checkbox.closest('.task-item');
-            
-            if (taskItem) {
-                // 4. Vizualno označavanje (completed)
-                if (checkbox.checked) {
-                    taskItem.classList.add('completed');
-                } else {
-                    taskItem.classList.remove('completed');
-                }
-            }
-            
-            // 5. Pokretanje funkcije za računanje novog postotka
-            azurirajPostotak();
-        }
-    });
-}
-
-// Funkcija koja broji zadatke i računa postotak
-function azurirajPostotak() {
-    // Pronađi sve kvačice unutar kontejnera
-    const sveKvacice = tasksContainer.querySelectorAll('.task-toggle, input[type="checkbox"]');
-    const ukupnoZadataka = sveKvacice.length;
-    
-    // Ako nema zadataka, postotak je 0% i prekidamo funkciju
-    if (ukupnoZadataka === 0) {
-        if (progressText) progressText.innerText = '0%';
-        return;
-    }
-    
-    // Izbroji koliko ih je označeno
-    let oznacenoZadataka = 0;
-    sveKvacice.forEach(kvacica => {
-        if (kvacica.checked) {
-            oznacenoZadataka++;
-        }
-    });
-    
-    // Izračunaj postotak (zaokruženo na cijeli broj)
-    const postotak = Math.round((oznacenoZadataka / ukupnoZadataka) * 100);
-    
-    // Prikži postotak na ekranu (ako element postoji)
-    if (progressText) {
-        progressText.innerText = `${postotak}%`;
-    }
-}*/
