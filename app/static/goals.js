@@ -1,10 +1,3 @@
-// html gumb za dodavanje novog zadatka za implementirati uview_goal.js
-
-        /*<div style="margin-top: 8px; display: flex; gap: 4px;">
-            <input type="text" class="quick-task-input" placeholder="Novi zadatak..." style="flex: 1; padding: 2px 4px; font-size: 0.85rem;">
-            <button type="button" class="quick-task-add-btn" data-goal-id="${goalId}" style="padding: 2px 6px; font-size: 0.85rem;">+</button>
-        </div>*/
-
 
 // Pomoćna funkcija za formatiranje datuma (čisti kod od ponavljanja)
 const formatDate = (dateString) => {
@@ -28,12 +21,9 @@ const createTasksHtml = (goalId, tasks = []) => {
         <ul class="task-list" data-goal-id="${goalId}" style="list-style: none; padding: 0; margin: 0;">
             ${tasks.map(task => `
                 <li style="display: flex; align-items: left; justify-content: space-between; margin-bottom: 0px;">
-
                         <span style="${task.is_completed ? 'text-decoration: line-through; color: #7f8c8d;' : ''}">
                             ${task.text}
                         </span>
-                    </label>
-
                 </li>
             `).join('')}
         </ul>
@@ -84,7 +74,7 @@ const addGoal = async (goalData) => {
 
         row.innerHTML = `
             <td style="text-align: center;"><span class="badge badge-${goal.priority}">${goal.priority}</span></td>
-            <td style="text-align: left;>
+            <td style="text-align: left;">
                 <h2>${goal.title}</h2>
                 <p style="color: #7f8c8d;">${goal.description || 'Nema opisa'}</p>
                 <small class="date">${prettyDate}</small>
@@ -130,87 +120,6 @@ document.querySelector('table tbody').addEventListener('click', async (e) => {
     const row = target.closest('.clickable-row');
     if (!row) return;
 
-    /*
-    // 1. Ako je kliknut checkbox za TOGGLE zadatka
-    if (target.classList.contains('task-toggle')) {
-        e.stopPropagation(); // Sprječava otvaranje linka kartice cilja
-        const taskId = target.dataset.taskId;
-        const isCompleted = target.checked;
-
-        try {
-            const response = await fetch(`/api/tasks/${taskId}/toggle`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ is_completed: isCompleted })
-            });
-            const data = await response.json();
-            
-            // Vizualno prekriži tekst
-            const textSpan = target.nextElementSibling;
-            if (textSpan) {
-                textSpan.classList.toggle('completed-task', isCompleted);
-            }
-            // Ažuriraj postotak i status u tablici za taj redak
-            row.querySelector('.progress-cell').textContent = `${Math.round(data.progress_percentage)}%`;
-            
-            const statusCell = row.querySelector('.status-cell span');
-            statusCell.className = data.progress_percentage === 100 ? 'status-done' : 'status-pending';
-            statusCell.textContent = data.progress_percentage === 100 ? 'Completed' : 'Pending';
-        } catch (err) {
-            console.error(err);
-        }
-        return;
-    }*/
-
-    // 2. Ako je kliknut gumb za BRISANJE zadatka
-    if (target.classList.contains('delete-task-btn')) {
-        e.stopPropagation();
-        const taskId = target.dataset.taskId;
-        
-        if (!confirm('Želite li obrisati ovaj zadatak?')) return;
-
-        try {
-            const response = await fetch(`/api/tasks/${taskId}`, { method: 'DELETE' });
-            const data = await response.json();
-            
-            // Osvježi samo ćeliju sa zadacima i postotak napretka
-            const tasksCell = row.querySelector('.tasks-cell');
-            // Napomena: Za ovo rješenje, pretpostavlja se da delete ruta vraća ažuriranu listu 'tasks' ili radite refetch cijelog cilja.
-            // Ako backend vraća samo progress, jednostavno uklonite <li> element iz DOM-a:
-            target.closest('li').remove();
-            
-            row.querySelector('.progress-cell').textContent = `${Math.round(data.progress_percentage)}%`;
-        } catch (err) {
-            console.error(err);
-        }
-        return;
-    }
-
-    // 3. Ako je kliknut gumb za BRZO DODAVANJE zadatka (+)
-    if (target.classList.contains('quick-task-add-btn')) {
-        e.stopPropagation();
-        const goalId = target.dataset.goalId;
-        const input = target.previousElementSibling;
-        const taskText = input.value.trim();
-
-        if (!taskText) return;
-
-        try {
-            const response = await fetch(`/api/goals/${goalId}/tasks`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text: taskText })
-            });
-            const data = await response.json(); // Backend vraća novi progress_percentage i cijeli novi task objekt
-            
-            // Najčišći pristup: Ponovno iscrtaj cijelu ćeliju s novim podacima (morali bismo povući cijeli novi niz zadataka)
-            // Alternativno: Osvježite cijelu stranicu s window.location.reload() radi jednostavnosti, ili dodajte novi li ručno.
-            window.location.reload(); 
-        } catch (err) {
-            console.error(err);
-        }
-        return;
-    }
 
     // 4. Standardni klik na redak za preusmjeravanje (ako nije kliknut link unutar retka)
     if (!target.closest('.goal-link') && !target.closest('a')) {
