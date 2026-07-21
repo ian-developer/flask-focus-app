@@ -89,7 +89,7 @@
                         <ul>
                             {% for task in goal.tasks[:3] %}
                                 {% if task %}
-                                    <li style="display: flex; justify-content: flex-start; text-align: left;">
+                                    <li class="task-cell">
                                             <span class="{% if task.is_completed %}completed-task{% endif %}">
                                                 {{ task.text }}
                                             </span>
@@ -110,7 +110,7 @@
                     </td>
                     <td>{{ goal.difficulty }}</td>
                     <td>{{ goal.progress_percentage | round | int }}%</td>
-                    <td style="overflow: hidden; white-space: nowrap; padding: 3px;">
+                    <td class="status-cell">
                         {% if goal.is_completed %}
                         <span class="status-done">Completed</span>
                         {% else %}

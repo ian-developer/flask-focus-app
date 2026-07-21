@@ -82,7 +82,7 @@ const addGoal = async (goalData) => {
             <td class="tasks-cell">${createTasksHtml(goal.id, goal.tasks)}</td>
             <td>${goal.difficulty}</td>
             <td class="progress-cell">${Math.round(goal.progress_percentage)}%</td>
-            <td class="status-cell"><span class="${statusClass}">${statusText}</span></td>
+            <td class="status-cell" style="overflow: hidden; white-space: nowrap; padding: 3px;"><span class="${statusClass}">${statusText}</span></td>
         `;
 
         tbody.appendChild(row);

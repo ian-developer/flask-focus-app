@@ -135,7 +135,7 @@ def toggle_task(task_id):
         'progress_percentage': task.goal.progress_percentage
     })
 
-#------ IN VIEW GOAL DELETE SPECIFIC TASK -----
+#------ DELETE SPECIFIC TASK, IN VIEW GOAL CARD -----
 
 @main.route('/api/tasks/<int:task_id>', methods=['DELETE'])
 def delete_task(task_id):
@@ -160,22 +160,40 @@ def delete_task(task_id):
         return jsonify({"status": "error", "message": "Greška pri brisanju"}), 500
 
 
-# 4. Inline Add a Task directly into the view layout later
-@main.route('/api/goals/<int:goal_id>/tasks', methods=['POST'])
+#------ ADD NEW TASK, IN VIEW GOAL CARD -----
+
+@main.route('/api/tasks/<int:goal_id>', methods=['POST'])
 def add_single_task(goal_id):
     data = request.get_json() or {}
-    goal = Goal.query.get_or_404(goal_id)
+
+
+    if not data:
+        return jsonify({'success': False, 'message': 'Nema podataka'}), 400
+
+    goal_id = data.get('goal_id')
+    task_text = data.get('task_text')
+
+    if not goal_id or not task_text:
+        return jsonify({'success': False, 'message': 'Nedostaju podaci'}), 400
+
+    try:
+        new_task = Task(
+            goal_id = int(goal_id),
+            text = task_text,
+            is_completed = False
+        )
+
+        db.session.add(new_task)
+        db.session.commit()
+
+        return jsonify({
+                'success': True, 
+                'message': 'Zadatak uspješno spremljen!',
+                'task_text': new_task.text,
+                'new_task_id': new_task.id
+            }), 200
     
-    new_task = Task(text=data.get('text', '').strip(), goal_id=goal.id)
-    db.session.add(new_task)
-    db.session.commit()
-    
-    goal.calculate_progress()
-    db.session.commit()
-    
-    return jsonify({
-        'id': new_task.id,
-        'text': new_task.text,
-        'is_completed': new_task.is_completed,
-        'progress_percentage': goal.progress_percentage
-    }), 201
+    except Exception as e:
+        db.session.rollback() # U slučaju greške poništavamo izmjene
+        print(f"SQLAlchemy greška: {e}")
+        return jsonify({'success': False, 'message': 'Greška pri upisu u bazu'}), 500

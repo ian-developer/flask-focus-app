@@ -37,6 +37,7 @@
         <div class="tasks-container" style="margin: 10px 0px; overflow: hidden;">
             {% if tasks %}
                 <ul style="list-style-type: none;">
+                    <div class="task-list-box">
                     {% for task in tasks %}
                         <li class="task-item task-box" style="display: flex; align-items: center; justify-content: space-between;">
                                         <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
@@ -59,12 +60,13 @@
                                         </button>
                                     </li>
                     {% endfor %}
+                    </div>
                     <div class="task-management-box" data-id={{goal.id}}>
                         <button class="new-task-btn">+ add task</button>
                         <div class="add-task-container hidden">
                             <input class="new-task-input" type="text" placeholder="New task">
                             <button class="add-task-btn">save</button>
-                            <button class="quit-task-btn">cancel</button>
+                            <button class="quit-task-btn" style="color: white; background-color: #da5151;">cancel</button>
                         </div>
                     </div>
                 </ul>
@@ -106,7 +108,7 @@
         <div style="display: flex; justify-content: flex-end;">
             <form action="{{ url_for('main.delete_goal', goal_id=goal.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete {{goal.title}}?');">
                 <button type="submit" style="background-color: #e53e3e; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 500;">
-                    Delete
+                    Delete Goal
                 </button>
             </form>
         </div>
