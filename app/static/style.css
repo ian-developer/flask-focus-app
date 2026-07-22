@@ -23,14 +23,69 @@ body {
     padding-top: calc(64px + 2rem); /* Dodaje prostor da navigacija ne prekrije formu */
 }
 
-/* Kada je forma skrivena, tablica zauzima cijeli prostor (1 stupac) */
+/* GLAVNI KONTEJNER - Sada je fleksibilan i rasteže se preko ekrana */
 .container {
-    width: 100%;
-    max-width: 1200px;
-    display: grid;
-    grid-template-columns: 1fr; 
-    gap: 2rem;
+    display: flex;
+    gap: 0px; /* Početno nema razmaka jer je forma skrivena */
+    width: 95%; /* Koristi gotovo cijelu širinu ekrana za maksimalnu prostranost */
+    max-width: 1400px; /* Gornja granica da ne bude prerastegnuto na ogromnim monitorima */
+    margin: 0 auto; /* Centrirano na ekranu s malo razmaka od vrha */
+    align-items: flex-start;
+    transition: gap 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* KADA SE FORMA OTVORI - Dodajemo razmak između elemenata */
+.container:has(#form_container:not(.hidden)) {
+    gap: 15px; 
+}
+
+/* DESNI ELEMENT (Tablica ili drugi sadržaj) */
+/* On automatski zauzima sav preostali prostor na ekranu */
+.container > :not(#form_container) {
+    width: 100%;
+    flex: 1;
+    min-width: 0;
+}
+
+#form_container {
+    flex-shrink: 0; /* Sprječava tablicu da zgnječi formu */
+    width: 380px; /* Savršena, fiksna širina za formu */
+    max-width: 380px;
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    transition:
+        max-width 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.4s ease,
+        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        margin 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+    overflow: hidden;
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--border-color);
+}
+
+/* KADA JE FORMA SKRIVENA (.hidden) */
+#form_container.hidden {
+    display: block !important; /* Ključno za animaciju */
+    width: 0px !important;
+    max-width: 0px !important;
+    opacity: 0;
+    transform: translateX(-40px); /* Uklizava blago s lijeve strane */
+    overflow: hidden; /* Skriva unutrašnji tekst forme dok je skrivena */
+    visibility: hidden;
+}
+
+/* Na mobitelima uvijek držimo jedno ispod drugog bez obzira na sve */
+@media (max-width: 768px) {
+    .container, .container:has(#form_container:not(.hidden)) { 
+        grid-template-columns: 1fr; 
+    } 
+}
+
 
 #goal_card {
     max-width: 100%;
@@ -41,30 +96,6 @@ body {
     border-radius: 12px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     border: 1px solid var(--border-color);
-}
-
-#form_container {
-    max-width: 100%;
-    min-width: 350px;
-    overflow: hidden;
-    background: var(--card-bg);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    border: 1px solid var(--border-color);
-}
-
-/* Ako kontejner sadrži element koji nema klasu .hidden (forma je vidljiva),
-   tada postavi omjer 1fr 2fr (forma je dvaput manja od tablice) */
-.container:has(#form_container:not(.hidden)) {
-    grid-template-columns: 1fr 2fr;
-}
-
-/* Na mobitelima uvijek držimo jedno ispod drugog bez obzira na sve */
-@media (max-width: 768px) {
-    .container, .container:has(#form_container:not(.hidden)) { 
-        grid-template-columns: 1fr; 
-    } 
 }
 
 h1, h2, h3, a, .goal-title {
@@ -489,21 +520,6 @@ button[type="submit"] {
     border-radius: 12px;
 }
 
-/* Kontejner za cijeli dashboard */
-.dashboard-wrapper {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* Rešetka koja drži točno 2 kartice u redu */
-.goals-grid-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 stupca jednake širine */
-    gap: 1.5rem; /* Razmak između kartica */
-    width: 100%;
-}
-
 .completed-task {
     text-decoration: line-through;
     color: #7f8c8d;
@@ -546,12 +562,3 @@ li {
     justify-content: flex-start;
     text-align: left;
 }
-
-/* Responzivnost za mobitele - prebaci u 1 stupac ako je ekran uži od 768px */
-@media (max-width: 768px) {
-    .goals-grid-container {
-        grid-template-columns: 1fr;
-    }
-}
-
-
