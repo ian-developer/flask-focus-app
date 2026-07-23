@@ -1,4 +1,3 @@
-
 // Pomoćna funkcija za formatiranje datuma (čisti kod od ponavljanja)
 const formatDate = (dateString) => {
     const dateObj = new Date(dateString);
@@ -20,7 +19,7 @@ const createTasksHtml = (goalId, tasks = []) => {
     return `
         <ul class="task-list" data-goal-id="${goalId}" style="list-style: none; padding: 0; margin: 0;">
             ${tasks.map(task => `
-                <li style="display: flex; align-items: left; justify-content: space-between; margin-bottom: 0px;">
+                <li class="task-cell" style="display: flex; align-items: left; justify-content: space-between; margin-bottom: 0px;">
                         <span style="${task.is_completed ? 'text-decoration: line-through; color: #7f8c8d;' : ''}">
                             ${task.text}
                         </span>
@@ -79,7 +78,7 @@ const addGoal = async (goalData) => {
                 <p style="color: #7f8c8d;">${goal.description || 'Nema opisa'}</p>
                 <small class="date">${prettyDate}</small>
             </td>
-            <td class="tasks-cell">${createTasksHtml(goal.id, goal.tasks)}</td>
+            <td>${createTasksHtml(goal.id, goal.tasks)}</td>
             <td>${goal.difficulty}</td>
             <td class="progress-cell">${Math.round(goal.progress_percentage)}%</td>
             <td class="status-cell" style="overflow: hidden; white-space: nowrap; padding: 3px;"><span class="${statusClass}">${statusText}</span></td>

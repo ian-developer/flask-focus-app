@@ -23,42 +23,50 @@ body {
     padding-top: calc(64px + 2rem); /* Dodaje prostor da navigacija ne prekrije formu */
 }
 
-/* GLAVNI KONTEJNER - Sada je fleksibilan i rasteže se preko ekrana */
+/* SHOW GOALS */
+
 .container {
     display: flex;
-    gap: 0px; /* Početno nema razmaka jer je forma skrivena */
-    width: 95%; /* Koristi gotovo cijelu širinu ekrana za maksimalnu prostranost */
-    max-width: 1400px; /* Gornja granica da ne bude prerastegnuto na ogromnim monitorima */
-    margin: 0 auto; /* Centrirano na ekranu s malo razmaka od vrha */
-    align-items: flex-start;
-    transition: gap 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* KADA SE FORMA OTVORI - Dodajemo razmak između elemenata */
-.container:has(#form_container:not(.hidden)) {
-    gap: 15px; 
-}
-
-/* DESNI ELEMENT (Tablica ili drugi sadržaj) */
-/* On automatski zauzima sav preostali prostor na ekranu */
-.container > :not(#form_container) {
     width: 100%;
+}
+
+.goal-container {
+    display: flex;
+    gap: 15px; /* Fiksni razmak osigurava stabilnost elemenata */
+    width: 95%;
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: flex-start;
+}
+
+.goal-container > :not(#form_container) {
     flex: 1;
+    width: 100%;
     min-width: 0;
 }
 
+/* DEFINICIJA ČISTE ANIMACIJE ZA UKLIZAVANJE S LIJEVA NA DESNO */
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%); /* Forma počinje potpuno izvan ekrana s lijeve strane */
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0); /* Forma glatko sjeda na svoje mjesto */
+        opacity: 1;
+    }
+}
+
+/* FORMA KONTEJNER (Kada je vidljiva) */
 #form_container {
-    flex-shrink: 0; /* Sprječava tablicu da zgnječi formu */
-    width: 380px; /* Savršena, fiksna širina za formu */
+    flex-shrink: 0; 
+    width: 380px; 
     max-width: 380px;
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(0);
-    transition:
-        max-width 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-        opacity 0.4s ease,
-        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-        margin 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    max-height: fit-content;
+    display: block; /* Osiguravamo da je vidljiva u dokumentu */
+
+    /* POKRETANJE ANIMACIJE: Čim forma nema klasu .hidden, ova se animacija pokreće */
+    animation: slideInFromLeft 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 
     overflow: hidden;
     background: var(--card-bg);
@@ -68,28 +76,19 @@ body {
     border: 1px solid var(--border-color);
 }
 
-/* KADA JE FORMA SKRIVENA (.hidden) */
-#form_container.hidden {
-    display: block !important; /* Ključno za animaciju */
-    width: 0px !important;
-    max-width: 0px !important;
-    opacity: 0;
-    transform: translateX(-40px); /* Uklizava blago s lijeve strane */
-    overflow: hidden; /* Skriva unutrašnji tekst forme dok je skrivena */
-    visibility: hidden;
+#form_container:hover {
+    outline: #007bff 2px solid;
 }
 
-/* Na mobitelima uvijek držimo jedno ispod drugog bez obzira na sve */
-@media (max-width: 768px) {
-    .container, .container:has(#form_container:not(.hidden)) { 
-        grid-template-columns: 1fr; 
-    } 
+/* KADA JE FORMA SKRIVENA (.hidden) */
+#form_container.hidden {
+    display: none !important; /* Vraćamo provjereni display: none jer `@keyframes` rješava skok */
+    animation: none; /* Gasimo animaciju dok je skrivena */
 }
 
 
 #goal_card {
-    max-width: 100%;
-    min-width: 450px;
+    width: 100%;
     overflow: hidden;
     background: var(--card-bg);
     padding: 2rem;
@@ -204,9 +203,17 @@ button[type="submit"]:hover {
     background-color: var(--primary-hover);
 }
 
+.close_form_btn {
+    color: white; background: rgb(244, 171, 171); border: none; border-radius: 2px; cursor: pointer; font-size: 1.2rem;
+}
+
+.close_form_btn:hover {
+    background-color: rgb(255, 0, 0);
+}
+
 .delete-task-btn{
     border: none;
-    color: #bcbcbc;
+    color: #ffffff;
     background: none;
     cursor: pointer;
     margin-left: 10px;
@@ -296,7 +303,7 @@ button[type="submit"]:hover {
 
 /* 3. Stil za Tablicu */
 .table-container {
-    max-width: 100%;
+    width: 1300px;
     background: var(--card-bg);
     border-radius: 12px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -330,7 +337,6 @@ th {
 
 td {
     text-align: center;
-    max-width: 300px;
     padding: 0.7rem 1rem;
     border-bottom: 1px solid var(--border-color);
     white-space: normal;     /*Omogućuje prelamanje teksta */
@@ -467,7 +473,7 @@ img {
 
 .date{
     color: #6c757d;
-    font-size: 0.7em;
+    font-size: 0.6em;
 }
 
 /* Novi stil za redak s dva polja (Prioritet i Težina) */
@@ -554,9 +560,11 @@ li {
 }
 
 .task-cell {
+    max-width: 200px;
     margin: 0;
     padding: 0.5rem;
-    color: rgb(64, 64, 64);
+    font-size: 0.8rem;
+    color: var(--text-main);
     background-color: #bbbbf0;
     display: flex;
     justify-content: flex-start;

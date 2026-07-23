@@ -4,17 +4,6 @@
 
 <div class="container">
     
-    <a href="{{ url_for('main.show_goals') }}"
-        style="text-decoration: none; color: var(--primary);
-        display: inline-flex;
-        align-items: center;
-        margin-bottom: 0 auto;
-        font-weight: 500;
-        width: fit-content;">
-            ← Go back to My Goals
-    </a>
-
-
     <!-- Kartica pojedinačnog cilja -->
     <div id="goal_card">
         
@@ -23,6 +12,12 @@
             <span class="badge badge-{{ goal.priority }} ">{{ goal.priority | upper }} priority</span>
             <span style="background: #edf2f7; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem; font-weight: 500;">
                 Difficulty: {{ goal.difficulty }}
+            </span>
+            <span style="display: inline; margin-left: auto; border-radius: 3px; padding: 3px;">
+                <a href="{{ url_for('main.show_goals') }}"
+                    style="text-decoration: none; color: var(--primary); font-weight: 600; font-size: 1rem;">
+                        ← Go back to My Goals
+                </a>
             </span>
         </div>
 
