@@ -9,6 +9,8 @@
     --primary-hover: #4338ca;
     --success: #22c55e;       /* Zelena za završeno */
     --pending: #f59e0b;       /* Narančasta za u tijeku */
+    --head-bg: #f3f2f4;
+    --card-border-color: #e4dcf0;
 }
 
 body {
@@ -150,10 +152,6 @@ p {
     font-weight: 600;
 }
 
-.tasks-container{
-    border: transparent solid 1px;
-}
-
 /* Input polja i labele */
 .form-group {
     margin-bottom: 1.25rem;
@@ -201,28 +199,6 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: var(--primary-hover);
-}
-
-.close_form_btn {
-    color: white; background: rgb(244, 171, 171); border: none; border-radius: 2px; cursor: pointer; font-size: 1.2rem;
-}
-
-.close_form_btn:hover {
-    background-color: rgb(255, 0, 0);
-}
-
-.delete-task-btn{
-    border: none;
-    color: #ffffff;
-    background: none;
-    cursor: pointer;
-    margin-left: 10px;
-    font-size: 1.0em;
-    padding: 0px 6px;
-}
-
-.delete-task-btn:hover{
-    color: red;
 }
 
 .add-task-container{
@@ -300,6 +276,14 @@ button[type="submit"]:hover {
     border-color: #007bff; /* Isticanje polja kada korisnik klikne unutra */
 }
 
+.bar-above-table{
+     padding: 1.25rem;
+     border-bottom: 1px solid var(--border-color);
+     display: flex; justify-content: space-between;
+     align-items: center;
+     /*background-color: var(--head-bg);*/
+     overflow: hidden;
+}
 
 /* 3. Stil za Tablicu */
 .table-container {
@@ -319,7 +303,7 @@ table {
 }
 
 th {
-    background-color: #f8fafc;
+    background-color: var(--head-bg);
     color: var(--text-muted);
     padding: 1rem;
     font-weight: 600;
@@ -543,30 +527,82 @@ li {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
+.add-task-container {
+    background: transparent 1px solid;
+}
+
 .task-box {
+    background: transparent;
     width: fit-content;
     max-width: 300px;
-    white-space: normal;   /*Omogućuje prelamanje teksta */
-    word-break: break-word;  /*Razbija dugačke riječi ako ne stanu */
-    background-color: #bbbbf0;
-    border-radius: 8px;
-    margin: 2px;
+    padding: 0.75rem 1rem;
+    margin: 2px 0;
+    color: var(--text-main);
+    border: 1px solid var(--card-border-color);
+    border-radius: 8px; /* Blago zakrivljeni kutovi izgledaju modernije */
     
-    /* Mala, mekana i diskretna sjena */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.05);
+    /* Modernija typografija i prelomi */
+    white-space: normal;
+    overflow-wrap: anywhere;
     
-    /* Unutarnji razmak da tekst ne dira rubove kutije */
-    padding: 5px 10px;
+    /* Mekana, slojevita sjena */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04), 
+                0 6px 12px rgba(0, 0, 0, 0.06);
+                
+    /* Glatka animacija na prelasku mišem */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    /* Prevents text selection across all modern browsers */
+    user-select: none;
+    -webkit-user-select: none; /* For Safari */
+}
+
+.task-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06), 
+              0 10px 16px rgba(0, 0, 0, 0.08);
 }
 
 .task-cell {
-    max-width: 200px;
-    margin: 0;
-    padding: 0.5rem;
-    font-size: 0.8rem;
-    color: var(--text-main);
-    background-color: #bbbbf0;
+    background: transparent;
     display: flex;
+    align-items: center; /* Vertikalno centrira sadržaj unutar ćelije */
     justify-content: flex-start;
-    text-align: left;
+    
+    max-width: 200px;
+    padding: 0.5rem 0.75rem;
+    margin: 0;
+    
+    font-size: 0.85rem;
+    color: var(--text-main);
+    
+    border: 1px solid var(--card-border-color);
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.114);
 }
+
+.delete-task-btn{
+    background-color: #FFFFFF;
+    border: 1px solid rgba(24, 24, 24, 0.101);
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    align-items: center;
+    border-radius: 3px;
+    color: #000;
+    cursor: pointer;
+    user-select: none;
+    margin-left: 15px;
+    font-size: 1rem;
+    padding: 0.1rem 0.3rem;
+}
+
+.delete-task-btn:hover,
+.delete-task-btn:focus {
+  border-color: rgba(138, 48, 48, 0.478);
+  box-shadow: rgba(0, 0, 0, 0.25) 0 4px 12px;
+  color: rgba(211, 28, 28, 0.65);
+}
+
+.delete-task-btn:hover {
+    transform: translateY(-1px);
+}
+

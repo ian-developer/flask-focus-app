@@ -11,7 +11,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
             <h2 style="margin: 0;">Add new goal: </h2>
             <!-- Close form button -->
-            <button type="button" id="close_form_btn" class="close_form_btn">&times;</button>
+            <button type="button" id="close_form_btn">&times;</button>
         </div>
 
         <form action="/add-goal" method="POST" id="new_goal_form">
@@ -57,8 +57,7 @@
 
     <!-------------------- SHOW GOALS TABLE ------------------------>
     <div class="table-container">
-
-        <div style=" padding: 1.25rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+        <div class="bar-above-table">
             <h1>active goals</h1>
             <button id="open_form_btn" style="background-color: var(--primary); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 500;">+ ADD GOAL</button>
         </div>
@@ -78,7 +77,7 @@
                 <!-- Petlja prolazi kroz sve ciljeve poslane iz app.py -->
                 {% for goal in goals %}
                 <tr class="clickable-row" data-href=" {{ url_for('main.view_goal', goal_id=goal.id) }}">
-                    <td><span class="badge badge-{{ goal.priority }}">{{ goal.priority }}</span></td>
+                    <td style="padding-left: 0px;"><span class="badge badge-{{ goal.priority }}">{{ goal.priority }}</span></td>
                     <td style="text-align: left; max-width: 200px;">
                         <h2 style="white-space: wrap; overflow: wrap;">{{ goal.title | truncate(30)}}</h2>
                         <p style="color: #7f8c8d; max-width: 250px; font-size: 0.8rem;">{{ goal.description or 'Nema opisa' }}</p>

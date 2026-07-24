@@ -47,12 +47,7 @@
                                                 {{ task.text }}
                                             </span>
                                         </label>
-                                        
-                                        <button type="button" 
-                                                class="delete-task-btn" 
-                                                data-task-id="{{ task.id }}">
-                                            x
-                                        </button>
+                                        <button class="delete-task-btn" aria-label="Delete task">&times;</button>
                                     </li>
                     {% endfor %}
                     </div>

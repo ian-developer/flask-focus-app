@@ -109,12 +109,12 @@ const openFormBtn = document.getElementById('open_form_btn');
 const closeFormBtn = document.getElementById('close_form_btn');
 const formContainer = document.getElementById('form_container');
 
-openFormBtn.addEventListener('click', () => formContainer.classList.remove('hidden'));
-closeFormBtn.addEventListener('click', () => formContainer.classList.add('hidden'));
+openFormBtn?.addEventListener('click', () => formContainer.classList.remove('hidden'));
+closeFormBtn?.addEventListener('click', () => formContainer.classList.add('hidden'));
 
 
 //------------------- Delegacija klikova unutar Tablice ------------------
-document.querySelector('table tbody').addEventListener('click', async (e) => {
+document.querySelector('table tbody')?.addEventListener('click', async (e) => {
     const target = e.target;
     const row = target.closest('.clickable-row');
     if (!row) return;
