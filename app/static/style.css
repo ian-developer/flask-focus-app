@@ -118,6 +118,7 @@ h2 {
     text-transform: capitalize;
     font-size: 1.1em;
     font-weight: bold;
+    margin: 0 auto;
 }
 
 h3 {
@@ -303,6 +304,7 @@ table {
 }
 
 th {
+    max-width: 300px;
     background-color: var(--head-bg);
     color: var(--text-muted);
     padding: 1rem;

@@ -57,6 +57,8 @@ if(tasksContainer){
             
             if (!confirm('Do you want to delete this task?')) return;
 
+            console.log(target.dataset.taskId);
+
             try {
                 const response = await fetch(`/api/tasks/${taskId}`, { method: 'DELETE' });
                 const data = await response.json();
@@ -164,8 +166,7 @@ if(tasksContainer){
                                             <input
                                                 style="margin-right: 10px;"
                                                 type="checkbox" 
-                                                class="task-toggle" 
-                                                data-task-id="${data.new_task_id}">                                            
+                                                class="task-toggle">                                            
                                             <span>
                                                 ${ data.task_text }
                                             </span>
@@ -174,7 +175,7 @@ if(tasksContainer){
                                         <button type="button" 
                                                 class="delete-task-btn" 
                                                 data-task-id="${data.new_task_id}">
-                                            x
+                                            &times;
                                         </button>`;
 
                         taskBox.append(newTask);

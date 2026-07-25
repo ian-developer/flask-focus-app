@@ -29,7 +29,7 @@ const createTasksHtml = (goalId, tasks = []) => {
     `;
 };
 
-// Glavna funkcija za dodavanje cilja
+// ADD NEW GOAL
 const addGoal = async (goalData) => {
     try {
         // Validacija praznih polja (izuzimajući tasks)
@@ -75,7 +75,7 @@ const addGoal = async (goalData) => {
             <td style="text-align: center;"><span class="badge badge-${goal.priority}">${goal.priority}</span></td>
             <td style="text-align: left;">
                 <h2>${goal.title}</h2>
-                <p style="color: #7f8c8d;">${goal.description || 'Nema opisa'}</p>
+                <p style="color: #7f8c8d; max-width: 250px; font-size: 0.8rem;">${goal.description || 'Nema opisa'}</p>
                 <small class="date">${prettyDate}</small>
             </td>
             <td>${createTasksHtml(goal.id, goal.tasks)}</td>
@@ -122,6 +122,7 @@ document.querySelector('table tbody')?.addEventListener('click', async (e) => {
 
     // 4. Standardni klik na redak za preusmjeravanje (ako nije kliknut link unutar retka)
     if (!target.closest('.goal-link') && !target.closest('a')) {
+
         const url = row.dataset.href;
         if (url) window.location.href = url;
     }
