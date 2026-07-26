@@ -80,7 +80,7 @@
                     <td style="padding-left: 0px;"><span class="badge badge-{{ goal.priority }}">{{ goal.priority }}</span></td>
                     <td style="text-align: left; max-width: 200px;">
                         <h2 style="white-space: wrap; overflow: wrap;">{{ goal.title | truncate(30)}}</h2>
-                        <p style="color: #7f8c8d; max-width: 250px; font-size: 0.8rem; margin: 5px 0px;">{{ goal.description or 'Nema opisa' }}</p>
+                        <p style="color: #7f8c8d; max-width: 250px; font-size: 0.8rem; margin: 5px 0px;">{{ goal.description | truncate(90) or 'Nema opisa' }}</p>
                         <small class="date">{{ goal.created_at.strftime('%d. %m. %Y. %H:%M') }}</small>
                     </td>
                     <td>
@@ -99,7 +99,7 @@
                             {% endfor %}
 
                             {% if goal.tasks|length > 3 %}
-                                <li style="display: flex; justify-content: flex-start; text-align: left; color: #95a4a5;">
+                                <li class="task-cell" style="color: #9ea0a0;">
                                     +{{ (goal.tasks|length) - 3 }} tasks...
                                 </li>
                             {% endif %}
