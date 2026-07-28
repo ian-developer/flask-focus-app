@@ -59,7 +59,7 @@
     <div class="table-container">
         <div class="bar-above-table">
             <h1>active goals</h1>
-            <button id="open_form_btn" style="background-color: var(--primary); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 500;">+ ADD GOAL</button>
+            <button id="open_form_btn">+ ADD GOAL</button>
         </div>
 
         <table>
@@ -77,7 +77,7 @@
                 <!-- Petlja prolazi kroz sve ciljeve poslane iz app.py -->
                 {% for goal in goals %}
                 <tr class="clickable-row" data-href=" {{ url_for('main.view_goal', goal_id=goal.id) }}">
-                    <td style="padding-left: 0px;"><span class="badge badge-{{ goal.priority }}">{{ goal.priority }}</span></td>
+                    <td><span class="badge badge-{{ goal.priority }}">{{ goal.priority }}</span></td>
                     <td style="text-align: left; max-width: 200px;">
                         <h2 style="white-space: wrap; overflow: wrap;">{{ goal.title | truncate(30)}}</h2>
                         <p style="color: #7f8c8d; max-width: 250px; font-size: 0.8rem; margin: 5px 0px;">{{ goal.description | truncate(90) or 'Nema opisa' }}</p>
