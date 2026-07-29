@@ -25,6 +25,39 @@ body {
     padding-top: calc(64px + 2rem); /* Dodaje prostor da navigacija ne prekrije formu */
 }
 
+/*HOME PAGE*/
+
+.home-container{
+    max-width: 1400px;
+    padding: 15px;
+    display: block;
+    width: 100%;
+    border: #cdcdcd 1px solid;
+    background-color: #ffffff;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.homepage-card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  
+    /* Adds spacing between the grid items */
+    gap: 1.5rem;
+    
+    width: 100%;
+    margin-top: 15px;
+}
+
+.homepage-card {
+        /* Styling for individual cards */
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
 /* SHOW GOALS */
 
 .container {
@@ -184,24 +217,6 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
 }
 
-/* Gumb */
-button[type="submit"] {
-    width: 100%;
-    background-color: var(--primary);
-    color: white;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-button[type="submit"]:hover {
-    background-color: var(--primary-hover);
-}
-
 .add-task-container{
     margin-top: 12px;
     display: flex;
@@ -256,9 +271,9 @@ button[type="submit"]:hover {
 .new-task-btn{
     margin-top: 12px;
     height: 36px;
-    border: none;
+    border: var(--border-color) 1px solid;
     border-radius: 4px;
-    background-color: #e2e8f2;
+    background-color: white;
     color: rgb(65, 65, 65);
     width: fit-content;
     padding: 0 15px;
@@ -267,6 +282,7 @@ button[type="submit"]:hover {
 
 .new-task-btn:hover {
     background-color: #d0d5de;
+    border: grey 1px solid;
 }
 
 .add-task-btn:hover {
@@ -448,13 +464,9 @@ ul {
 }
 
 /* Aktivni link (stranica na kojoj se korisnik trenutno nalazi) */
-.navbar-links a.active {
+.navbar-links a:active {
     color: var(--primary);
     background-color: rgba(79, 70, 229, 0.08);
-}
-
-img {
-    width: 300px;
 }
 
 .date{
@@ -475,26 +487,89 @@ img {
     margin-bottom: 0; /* Poništavamo donju marginu jer redak već ima marginu */
 }
 
-/* IZMIJENJENI GUMB: Smanjen i poravnat udesno */
+#open_form_btn {
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+#close_form_btn {
+    padding: 2px 6px;
+    font-size: 1.1em;
+    border: #9b9b9b 1px solid;
+    border-radius: 4px;
+
+    color: #6c6c6c;
+    border: 1px solid #d1d5db; /* Svijetlosivi rub za mekaniji prijelaz */
+    background-color: #ffffff;
+  
+    /* Diskretna i mekana sjena */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 
+              0 1px 2px rgba(0, 0, 0, 0.04);
+              
+    transition: all 0.2s ease;
+}
+
+#close_form_btn:hover {
+    background-color: rgb(221, 221, 221);
+    color: #4a4a4a;
+    border-color: #9ca3af;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08), 
+                0 2px 4px rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px); /* Blagi uzdizaj */
+}
+
 button[type="submit"] {
     width: auto;             /* Maknuto '100%' da gumb ne bude preko cijele kartice */
     min-width: 120px;        /* Minimalna širina da gumb izgleda stabilno */
     padding: 0.75rem 1.5rem; /* Više prostora s lijeve i desne strane teksta */
-    background-color: var(--primary);
-    color: white;
     border: none;
     border-radius: 6px;
     font-size: 0.95rem;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s;
     
     /* Gurnite gumb udesno (opcionalno, ako želite da bude na desnoj strani forme) */
     display: block;
     margin-left: auto; 
 }
 
-/* Klasa koja skriva formu */
+button[type="submit"]:hover {
+    background-color: var(--primary-hover);
+}
+
+button[type="submit"], #open_form_btn{
+    background-color: var(--primary);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+
+    /* 1. Meka, slojevita ljubičasta sjena u mirovanju */
+    box-shadow: 0 2px 5px rgba(124, 58, 237, 0.25), 
+                0 1px 2px rgba(0, 0, 0, 0.05);
+
+    /* 2. Glatka tranzicija za animaciju na hover i klik */
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+button[type="submit"]:hover, #open_form_btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px); /* Lagani uzdizaj */
+  
+    box-shadow: 0 6px 14px rgba(124, 58, 237, 0.35), 
+                0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+button[type="submit"]:active, #open_form_btn:active {
+    transform: translateY(0); /* Vraća se na originalnu visinu */
+    box-shadow: 0 2px 4px rgba(124, 58, 237, 0.2);
+}
+
 .hidden {
     display: none !important;
 }
@@ -560,8 +635,8 @@ li {
 }
 
 .task-box:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06), 
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06), 
               0 10px 16px rgba(0, 0, 0, 0.08);
 }
 
