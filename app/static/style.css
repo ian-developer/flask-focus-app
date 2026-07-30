@@ -255,9 +255,9 @@ input:focus, select:focus, textarea:focus {
 .quit-task-btn {
     margin-top: 0;
     height: 36px;
-    border: none;
+    border: rgb(190, 189, 189) 1px solid;
     border-radius: 4px;
-    background-color: #e8edf7;
+    background-color: #f7bec2;
     color: rgb(65, 65, 65);
     width: fit-content;
     padding: 0 10px;
@@ -265,7 +265,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 .quit-task-btn:hover {
-    color: red;
+    background-color: rgb(235, 131, 131);
 }
 
 .new-task-btn{
