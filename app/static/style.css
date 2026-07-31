@@ -245,11 +245,20 @@ input:focus, select:focus, textarea:focus {
     height: 36px;
     border: none;
     border-radius: 4px;
-    background-color: #e2e8f2;
-    color: rgb(65, 65, 65);
+    background-color: var(--card-bg);
+    border: var(--card-border-color) 1px solid;
+    color: var(--text-main);
     width: fit-content;
     padding: 0 15px;
     font-size: 0.9rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    transition: transform 0.2s ease;
+}
+
+.add-task-btn:hover {
+    background-color: rgb(240, 239, 239);
+    border: #747373 1px solid;
+    transform: translateY(-2px);
 }
 
 .quit-task-btn {
@@ -257,15 +266,19 @@ input:focus, select:focus, textarea:focus {
     height: 36px;
     border: rgb(190, 189, 189) 1px solid;
     border-radius: 4px;
-    background-color: #f7bec2;
+    background-color: var(--card-bg);
     color: rgb(65, 65, 65);
     width: fit-content;
     padding: 0 10px;
-    font-size: 0.9rem;
+    font-size: 1.0rem;
+    transition: transform 0.2s ease;
 }
 
 .quit-task-btn:hover {
-    background-color: rgb(235, 131, 131);
+    background-color: rgb(246, 235, 235);
+    color: red;
+    border: rgb(208, 58, 58) 1px solid;
+    transform: translateY(-2px);
 }
 
 .new-task-btn{
@@ -278,15 +291,13 @@ input:focus, select:focus, textarea:focus {
     width: fit-content;
     padding: 0 15px;
     font-size: 0.9rem;
+    transition: transform 0.2s ease;
 }
 
 .new-task-btn:hover {
-    background-color: #d0d5de;
-    border: grey 1px solid;
-}
-
-.add-task-btn:hover {
-    background-color: #b2d6e2;
+    background-color: #f1f3f7;
+    border: rgb(157, 157, 157) 1px solid;
+    transform: translateY(-2px);
 }
 
 .add-task-container input:focus {
