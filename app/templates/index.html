@@ -1,5 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1 class="goals_header" style="margin-bottom: 20px;">You have <strong style="color: red;"> {{ number_of_goals }} </strong>active goals in your account</h1>
+    <div class="home-container">
+        <h1 style="text-align: center;">
+            Dashboard
+        </h1>
+
+        <div class="homepage-card-container">
+            <div class="homepage-card">
+                <h2 style="border-bottom: var(--border-color) 2px solid; padding-bottom: 15px;">active goals ({{number_of_goals}})</h2>
+                <div>
+                {% for goal in goals %}
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span class="badge badge-{{ goal.priority }}">{{goal.priority}}</span>
+                        <h3 style="white-space: normal; overflow-wrap: anywhere; max-width: 100%;">{{goal.title}}</h3>
+                        <p style="padding: 0px;">{{goal.description | truncate(50)}}</p>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+            <div class="homepage-card">finished goals card</div>
+            <div class="homepage-card">history/milestones/statistics/</div>
+        </div>
+        
+    </div>
+    
 {% endblock %}
