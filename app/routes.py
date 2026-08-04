@@ -16,7 +16,7 @@ def home():
     for goal in goals:
         number_of_goals = number_of_goals + 1
     
-    return render_template("index.html", number_of_goals=number_of_goals)
+    return render_template("index.html", goals=goals, number_of_goals=number_of_goals)
 
 # ---------------DASHBOARD----------------
 

@@ -28,7 +28,8 @@ body {
 /*HOME PAGE*/
 
 .home-container{
-    max-width: 1400px;
+    max-width: 1200px;
+    min-width: 100%;
     padding: 15px;
     display: block;
     width: 100%;
@@ -36,6 +37,13 @@ body {
     background-color: #ffffff;
     border-radius: 15px;
     text-align: center;
+    box-sizing: border-box;
+}
+
+@media (min-width: 850px) {
+  .home-container {
+    min-width: 750px;
+  }
 }
 
 .homepage-card-container {
@@ -43,7 +51,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   
     /* Adds spacing between the grid items */
-    gap: 1.5rem;
+    gap: 1.2rem;
     
     width: 100%;
     margin-top: 15px;
@@ -593,8 +601,7 @@ button[type="submit"]:active, #open_form_btn:active {
 }
 
 .clickable-row:hover {
-    background-color: #f0eff5;
-    outline: #9a95c7 2px solid;
+    outline: #c9c6eb 2px solid;
     border-radius: 12px;
 }
 
