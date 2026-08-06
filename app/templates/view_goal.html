@@ -14,9 +14,9 @@
             <span style="background: #edf2f7; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem; font-weight: 500;">
                 Difficulty: {{ goal.difficulty }}
             </span>
-            <span style="display: inline; margin-left: auto; border-radius: 3px; padding: 3px;">
+            <span style="display: inline; margin-left: auto; border-radius: 3px; padding: 3px;" class="go-back-link">
                 <a href="{{ url_for('main.show_goals') }}"
-                    style="text-decoration: none; color: var(--primary); font-weight: 600; font-size: 1rem;">
+                    style="text-decoration: none; color: rgb(147, 117, 255); font-weight: 600; font-size: 1rem; padding-left: 3px; padding-right: 7px;">
                         ← Go back to My Goals
                 </a>
             </span>
@@ -98,10 +98,15 @@
         </div>
 
         <!-- Akcije (Gumb za brisanje) -->
-        <div style="display: flex; justify-content: flex-end;">
-            <form action="{{ url_for('main.delete_goal', goal_id=goal.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete {{goal.title}}?');">
-                <button type="submit" style="background-color: #e53e3e; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 500;">
-                    Delete Goal
+        <div style="display: flex;justify-content: flex-end; gap: 1em;">
+            <form action="{{ url_for('main.delete_goal', goal_id=goal.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete ({{goal.title}})?');">
+                <button type="submit" id="delete-goal-btn">
+                    Delete
+                </button>
+            </form>
+            <form action="">
+                <button type="submit" id="mark-goal-btn">
+                    Complete
                 </button>
             </form>
         </div>
