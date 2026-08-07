@@ -3,29 +3,32 @@
 {% block content %}
     <div class="home-container">
         <h1 style="text-align: center;">
-            Dashboard
+            Homepage
         </h1>
-
+            <p style="font-style: italic; font-size: 1.2em;">"We are what we repeatedly do. Excellence, then, is not an act, but a habit."</p>
         <div class="homepage-card-container">
             <div class="homepage-card">
-                <h2 style="border-bottom: var(--border-color) 2px solid; padding-bottom: 15px;">active goals ({{number_of_goals}})</h2>
+                <h2 style="border-bottom: var(--border-color) 2px solid; padding-bottom: 7px;">active goals</h2>
                 <div>
                 {% for goal in goals %}
                     <div style="display: flex; align-items: center; gap: 15px;">
                         <span class="badge badge-{{ goal.priority }}">{{goal.priority}}</span>
-                        <h3 style="white-space: normal; overflow-wrap: anywhere; max-width: 100%;">{{goal.title}}</h3>
-                        <p style="padding: 0px;">{{goal.description | truncate(50)}}</p>
+                        <h3 style="white-space: normal; overflow-wrap: anywhere; max-width: 100%; text-align: left;">{{goal.title}}</h3>
+                        <p style="padding: 0px; text-align: left;">{{goal.description | truncate(50)}}</p>
                     </div>
                 {% endfor %}
                 </div>
             </div>
             <div class="homepage-card">
-                <h2 style="border-bottom: var(--border-color) 2px solid; padding-bottom: 15px;">completed goals</h2>
-                
+                <h2 style="border-bottom: var(--border-color) 2px solid; padding-bottom: 7px;">completed goals</h2>
             </div>
             <div class="homepage-card">
-                <h2 style="border-bottom: var(--border-color) 2px solid; padding-bottom: 15px;">history/milestones/statistics/</h2>
-                
+                <h2 style="border-bottom: var(--border-color) 2px solid; padding-bottom: 7px;">history/milestones/statistics/</h2>
+                <ul>
+                    <li>Active goals: {{goal_count}}</li>
+                    <li>Achieved goals: (number)</li>
+                    <li>Streak flame: (number)</li>
+                </ul>
             </div>
         </div>
         
