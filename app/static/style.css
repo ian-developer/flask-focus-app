@@ -58,6 +58,7 @@ body {
 }
 
 .homepage-card {
+    text-align: left;
         /* Styling for individual cards */
     background-color: #ffffff;
     border: 1px solid #e2e8f0;
@@ -106,9 +107,8 @@ body {
     width: 380px; 
     max-width: 380px;
     max-height: fit-content;
-    display: block; /* Osiguravamo da je vidljiva u dokumentu */
+    display: block;
 
-    /* POKRETANJE ANIMACIJE: Čim forma nema klasu .hidden, ova se animacija pokreće */
     animation: slideInFromLeft 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 
     overflow: hidden;
@@ -117,10 +117,11 @@ body {
     border-radius: 12px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     border: 1px solid var(--border-color);
+    transform: outline 0.2s ease;
 }
 
 #form_container:hover {
-    outline: #007bff 2px solid;
+    outline: #c9c0ff 2px solid;
 }
 
 /* KADA JE FORMA SKRIVENA (.hidden) */
@@ -161,6 +162,11 @@ h2 {
     font-size: 1.1em;
     font-weight: bold;
     margin: 0 auto;
+}
+
+.homepage-card h2 {
+    color: #4b4b4b;
+    font-weight: 600;
 }
 
 h3 {
@@ -227,6 +233,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 .go-back-link {
+    user-select: none;
     background-color: var(--card-bg);
     border: 1px solid rgb(242, 239, 255);
     border-radius: 4px;
@@ -347,14 +354,14 @@ input:focus, select:focus, textarea:focus {
 }
 
 table {
-    width: 100%;
+    min-width: 500px;
+    max-width: 100%;
     border-collapse: collapse;
     text-align: left;
     font-size: 0.95rem;
 }
 
 th {
-    max-width: 300px;
     background-color: var(--head-bg);
     color: var(--text-muted);
     padding: 1rem;
@@ -363,6 +370,10 @@ th {
     text-transform: uppercase;
     letter-spacing: 0.05em;
     border-bottom: 1px solid var(--border-color);
+}
+
+table thead {
+    width: 800px;
 }
 
 .status-cell {
@@ -604,19 +615,42 @@ button[type="submit"]:active, #open_form_btn:active {
     box-shadow: 0 2px 4px rgba(124, 58, 237, 0.2);
 }
 
+#delete-goal-btn, #mark-goal-btn {
+    margin-top: 10px;
+    border-radius: 4px;
+    background-color: red;
+    box-shadow: 0 2px 5px rgba(237, 58, 58, 0.25), 
+                0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+#delete-goal-btn:hover, #mark-goal-btn:hover {
+    background-color: rgb(207, 1, 1);
+    box-shadow: 0 6px 14px rgba(237, 58, 58, 0.35), 
+                0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+#mark-goal-btn {
+    background-color: rgb(72, 228, 147);
+    box-shadow: 0 6px 14px rgba(58, 237, 142, 0.35), 
+                0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+#mark-goal-btn:hover {
+    background-color: rgb(68, 213, 138);
+    box-shadow: 0 6px 14px rgba(21, 217, 30, 0.35), 
+                0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+
 .hidden {
     display: none !important;
 }
 
-.clickable-row { 
+.clickable-row {
+    outline: transparent;
     cursor: pointer;
-    transition: background-color 0.2s ease;
-    outline: #fbfbfc;
-    transition: outline 0.2s ease;
-}
-
-.clickable-row:hover {
-    outline: #c9c6eb 2px solid;
+    transition: background-color 0.3s ease;
+    transition: outline 0.3s ease;
     border-radius: 12px;
 }
 
@@ -630,11 +664,8 @@ li {
     display: flex;
     justify-content: flex-start;
     text-align: left;
-    border: #eaeaea 1px solid;
-    background-color: #f8f9fa;
     border-radius: 8px;
     padding: 4px; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .add-task-container {
