@@ -2,21 +2,22 @@
 
 {% block content %}
     <div class="home-container">
-        <h1 style="text-align: center;">
+        <h1 style="text-align: left;">
             Homepage
         </h1>
-            <p style="font-style: italic; font-size: 1.2em;">"We are what we repeatedly do. Excellence, then, is not an act, but a habit."</p>
         <div class="homepage-card-container">
             <div class="homepage-card">
-                <h2 style="border-bottom: var(--border-color) 2px solid; padding-bottom: 7px;">active goals</h2>
-                <div>
-                {% for goal in goals %}
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <span class="badge badge-{{ goal.priority }}">{{goal.priority}}</span>
-                        <h3 style="white-space: normal; overflow-wrap: anywhere; max-width: 100%; text-align: left;">{{goal.title}}</h3>
-                        <p style="padding: 0px; text-align: left;">{{goal.description | truncate(50)}}</p>
-                    </div>
-                {% endfor %}
+                <div style="background-color: rgb(255, 100, 80); border-radius: 6px; margin-bottom: 15px; padding: 5px;">
+                    <h2 style="text-align: center;">Top proirity goals</h2>
+                </div>
+                <div class="active-goals-grid">
+                    {% for goal in goals %}
+                        <div class="goal-card">
+                            <span class="badge badge-{{ goal.priority }}" style="text-align: center;">{{ goal.priority }}</span>
+                            <h3 class="goal-title">{{ goal.title }}</h3>
+                            <p class="goal-description">{{ goal.description | truncate(50) }}</p>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="homepage-card">
