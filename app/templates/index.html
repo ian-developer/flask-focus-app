@@ -1,30 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <div class="homepage-header">
+            <h1>my dahsboard</h1>
+        </div>
     <div class="home-container">
-        <h1 style="text-align: left;">
-            Homepage
-        </h1>
         <div class="homepage-card-container">
             <div class="homepage-card">
-                <div style="background-color: rgb(255, 100, 80); border-radius: 6px; margin-bottom: 15px; padding: 5px;">
-                    <h2 style="text-align: center;">Top proirity goals</h2>
+                <div class="card-header">
+                    <h2>Top priority goals</h2>
                 </div>
                 <div class="active-goals-grid">
-                    {% for goal in goals %}
+                    {% for goal in goals[:5] %}
                         <div class="goal-card">
-                            <span class="badge badge-{{ goal.priority }}" style="text-align: center;">{{ goal.priority }}</span>
+                            <span class="badge badge-{{ goal.priority }}">{{ goal.priority }}</span>
                             <h3 class="goal-title">{{ goal.title }}</h3>
                             <p class="goal-description">{{ goal.description | truncate(50) }}</p>
                         </div>
                     {% endfor %}
+                    <div class="goal-card">manage your goals<button class="homepage-action-btn">MORE...</button></div>
                 </div>
             </div>
             <div class="homepage-card">
-                <h2 style="border-bottom: var(--border-color) 2px solid; padding-bottom: 7px;">completed goals</h2>
+                <div class="card-header">
+                    <h2>completed goals</h2>
+                </div>
             </div>
             <div class="homepage-card">
-                <h2 style="border-bottom: var(--border-color) 2px solid; padding-bottom: 7px;">history/milestones/statistics/</h2>
+                <div class="card-header">
+                    <h2>history/milestones/statistics/</h2>
+                </div>
                 <ul>
                     <li>Active goals: {{goal_count}}</li>
                     <li>Achieved goals: (number)</li>
