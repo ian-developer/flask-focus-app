@@ -71,30 +71,24 @@ body {
     border: 1px solid #e2e8f0;
     border-radius: 12px;
     padding: 1.25rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--border-color);
 }
 
 /* 1. Grid Container */
 .active-goals-grid {
   display: grid;
-  /* Automatically creates columns (min 280px wide) that wrap safely on mobile screens */
   grid-template-columns: repeat(auto-fit, minmax(min(120px, 100%), 1fr));
-  gap: 0.5rem; /* Space between cards */
+  gap: 0.7rem;
   width: 100%;
   box-sizing: border-box;
 }
 
-.card-header {
-    background-color: rgba(228, 225, 225, 0.207); border-radius: 2px; margin-bottom: 15px; padding: 5px;
-    background-color: #e77070;
-    color: #ffffff;
-    border: 1px solid #e55f5f;
-    box-shadow: 0 1px 3px #945252, 
-                    0 1px 2px rgba(120, 35, 35, 0.08);
-}
-
-.card-header h2 {
-    color: #ffffff;
-    font-weight: 500;
+.card-header h2{
+    font-size: 1.3rem;
+    color: #2d3748;
+    text-align: center;
+    margin-bottom: 15px;
 }
 
 .homepage-action-btn {
@@ -111,7 +105,7 @@ body {
     border-radius: 4px;
     background-color: var(--card-bg);
     box-shadow: 0 1px 3px rgba(161, 161, 161, 0.35), 
-                    0 1px 2px rgba(156, 156, 156, 0.08);
+                0 1px 2px rgba(156, 156, 156, 0.08);
  }
 
  .homepage-action-btn:hover {
@@ -130,7 +124,9 @@ body {
 
     display: flex;
     flex-direction: column;
-    align-items: flex-start; 
+    align-items: flex-start;
+
+    box-shadow: 1px 1px 1px 0px #e8e8e8; 
 }
 
 /* 3. Typography Styles */
