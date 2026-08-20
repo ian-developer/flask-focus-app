@@ -21,13 +21,24 @@
                 </div>
                     <div style="display: flex; align-items: center; padding: 0px 12px; margin: 20px 0px; margin-bottom: 0px;">
                         <a href="/goals" style="text-decoration: none; width: 120px; overflow: visible; margin: 0 auto;">
-                            <button class="homepage-action-btn">Check Goals</button>
+                            <button class="homepage-action-btn">See Goals</button>
                         </a>
                     </div>
             </div>
             <div class="homepage-card">
                 <div class="card-header">
-                    <h2>completed goals</h2>
+                    <h2>completed goals</h2> 
+                </div>
+                <div class="active-goals-grid">
+                    {% for goal in goals[:6] %}
+                        {% if goal.is_completed %}
+                            <div class="goal-card">
+                                <span class="badge badge-{{ goal.priority }}">{{ goal.priority }}</span>
+                                <h3 class="goal-title">{{ goal.title }}</h3>
+                                <p class="goal-description">{{ goal.description | truncate(50) }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
             <div class="homepage-card">
