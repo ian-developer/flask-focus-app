@@ -30,42 +30,50 @@
             </span>
         </div>
 
+        <div class="tasks-wrapper">
+            <div class="tasks-header">
+                <h3>my tasks</h3>
+            </div>
+            <div class="tasks-container" style="margin: 10px 0px; overflow: hidden;">
+                {% if tasks %}
+                    <ul style="list-style-type: none; padding: 0px; margin: 0px;" class="task-list-box">
+                        {% for task in tasks %}
+                            <li class="task-item task-box" style="display: flex; align-items: center; justify-content: space-between;">
+                                            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                                <input
+                                                    style="margin-right: 10px;"
+                                                    type="checkbox"
+                                                    class="task-toggle" 
+                                                    data-task-id="{{ task.id }}" 
+                                                    {% if task.is_completed %}checked{% endif %}>
+                                                
+                                                <span class="{% if task.is_completed %}completed-task{% endif %}">
+                                                    {{ task.text }}
+                                                </span>
+                                            </label>
+                                            <button class="delete-task-btn" aria-label="Delete task" data-task-id="{{ task.id }}">&times;</button>
+                                        </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p style="margin: 0; color: #a0aec0; padding-bottom: 15px;">There are no tasks here.</p>
+                {% endif %}
+                    
+            </div>
+        </div>
         <!-- Zadaci -->
-        <h3>tasks</h3>
-        <div class="tasks-container" style="margin: 10px 0px; overflow: hidden;">
-            {% if tasks %}
-                <ul style="list-style-type: none;">
-                    <div class="task-list-box">
-                    {% for task in tasks %}
-                        <li class="task-item task-box" style="display: flex; align-items: center; justify-content: space-between;">
-                                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                            <input
-                                                style="margin-right: 10px;"
-                                                type="checkbox" 
-                                                class="task-toggle" 
-                                                data-task-id="{{ task.id }}" 
-                                                {% if task.is_completed %}checked{% endif %}>
-                                            
-                                            <span class="{% if task.is_completed %}completed-task{% endif %}">
-                                                {{ task.text }}
-                                            </span>
-                                        </label>
-                                        <button class="delete-task-btn" aria-label="Delete task" data-task-id="{{ task.id }}">&times;</button>
-                                    </li>
-                    {% endfor %}
-                    </div>
-                    <div class="task-management-box" data-id={{goal.id}}>
-                        <button class="new-task-btn">+ add task</button>
-                        <div class="add-task-container hidden">
-                            <input class="new-task-input" type="text" placeholder="New task">
-                            <button class="add-task-btn">save</button>
-                            <button class="quit-task-btn">&times</button>
-                        </div>
-                    </div>
-                </ul>
-            {% else %}
-                <p style="margin: 0; color: #a0aec0; font-style: italic; padding-bottom: 15px;">There are no tasks here.</p>
-            {% endif %}
+        
+
+        <!--U JAVASCRIPTU, UMJESTO DA EVENT LISTENER SLUŠA DIV IZA OVOGA,
+        POSTAVITI DA SLUŠA TOČNO OVAJ DIV I DA SE DINAMIČKI DODAJU ZADACI-->
+        
+        <div class="task-management-box" data-id="{{goal.id}}" style="margin: 10px 0px;">
+            <button class="new-task-btn">+ add task</button>
+                <div class="add-task-container hidden">
+                    <input class="new-task-input" type="text" placeholder="New task">
+                    <button class="add-task-btn">save</button>
+                    <button class="quit-task-btn">&times</button>
+                </div>
         </div>
 
         <!-- Status -->
@@ -97,18 +105,18 @@
             <small class="date">created at: {{ goal.created_at.strftime('%d. %m. %Y. %H:%M') }}</small>
         </div>
 
-        <!-- Akcije (Gumb za brisanje) -->
+        <!-- Action Buttons-->
         <div style="display: flex;justify-content: flex-end; gap: 1em;">
             <form action="{{ url_for('main.delete_goal', goal_id=goal.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete ({{goal.title}})?');">
                 <button type="submit" id="delete-goal-btn">
                     Delete
                 </button>
             </form>
-            <form action="">
-                <button type="submit" id="mark-goal-btn">
-                    Complete
-                </button>
-            </form>
+                <form action="{{ url_for('main.finish_goal', goal_id=goal.id) }}" method="POST">
+                    <button type="submit" id="mark-goal-btn" class="finish-goal-btn" data-id="{{ goal.id }}">
+                        Finish
+                    </button>
+                </form>
         </div>
 
     </div>
