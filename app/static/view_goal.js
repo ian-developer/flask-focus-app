@@ -73,7 +73,7 @@ if(tasksContainer){
                     const noTasksMessage = document.createElement('p');
                     noTasksMessage.className = 'no-tasks-msg';
                     noTasksMessage.textContent = 'There is no tasks';
-                    noTasksMessage.innerHTML = '<p style="margin: 0; color: #a0aec0; font-style: italic; padding-bottom: 15px;">There are no tasks here.</p>';
+                    noTasksMessage.innerHTML = '<p style="margin: 0; color: #a0aec0; padding-bottom: 15px;">There are no tasks here.</p>';
                     
                     // Dodajemo poruku u kontejner gdje su bili zadaci
                     tasksContainer.appendChild(noTasksMessage);
@@ -87,7 +87,7 @@ if(tasksContainer){
 
         // SHOW NEW TASK CONTAINER
 
-        if(target.classList.contains('new-task-btn')){
+        /*if(target.classList.contains('new-task-btn')){
             e.stopPropagation();
 
             const newTaskBtn = target;
@@ -129,7 +129,6 @@ if(tasksContainer){
 
         if(target.classList.contains('add-task-btn')){
             e.stopPropagation();
-
             const addTaskContainer = target.closest('.add-task-container');
             const taskManageBox = target.closest('.task-management-box'); 
 
@@ -195,8 +194,173 @@ if(tasksContainer){
                     console.error('Greška u komunikaciji s poslužiteljem:', error);
                 });
             }
-        }
-
+        }*/
 
     });
 }
+
+// CONFIRM FINISH BUTTON EVENT LISTENER
+
+const finishGoalBtn = document.querySelector('.finish-goal-btn')
+
+finishGoalBtn.addEventListener('click', async(e) => {
+    e.preventDefault();
+    const target = e.target;
+
+    // ADD NEW TASK
+
+    if(target.classList.contains('finish-goal-btn')){
+
+        const goalId = target.dataset.id;
+
+        if (!goalId) {
+            console.error("Greška: Element nema 'data-id' atribut!");
+            return; 
+        }
+
+        // 2. SLANJE PODATAKA NA BACKEND (U BAZU) PREKO FETCH API-JA
+        fetch(`/goals/${goalId}/finish/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify({
+                goal_id: goalId,
+                goal_confirmed_finished: true
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log(data)
+                    alert('your goal is finished');
+                    // Optional: Reload page or update UI dynamically here
+                    window.location.reload(); 
+                } else {
+                    console.error('Server error:', data.message);
+                }
+            })
+            .catch(error => console.error('Fetch error:', error));
+        }
+})
+
+// ADD NEW TASK
+
+const taskManagementBox = document.querySelector('.task-management-box');
+
+taskManagementBox.addEventListener('click', async(e) =>{
+    e.preventDefault();
+    const target = e.target;
+
+    // SHOW NEW TASK CONTAINER
+
+    if(target.classList.contains('new-task-btn')){
+        e.stopPropagation();
+
+        const newTaskBtn = target;
+        const addTaskContainer = target.nextElementSibling;
+
+        if (addTaskContainer) {
+            newTaskBtn.classList.add('hidden');          // Sakrij gumb
+            addTaskContainer.classList.remove('hidden'); // Prikaži input i gumb za spremanje
+            
+            // Bonus: Automatski stavi fokus (kurzor) u input polje
+            const inputField = addTaskContainer.querySelector('input');
+            if (inputField) inputField.focus();
+        }
+
+    }
+
+    // CLOSE NEW TASK CONTAINER
+
+    if(target.classList.contains('quit-task-btn')){
+        e.stopPropagation();
+
+        const addTaskContainer = target.closest('.add-task-container');
+        const taskManageBox = target.closest('.task-management-box');
+
+        if (taskManageBox && addTaskContainer) {
+            const newTaskBtn = taskManageBox.querySelector('.new-task-btn');
+            const inputField = addTaskContainer.querySelector('input');
+
+            // Ponovno prikaži početni gumb, sakrij formu
+            if (newTaskBtn) newTaskBtn.classList.remove('hidden');
+            addTaskContainer.classList.add('hidden');
+
+            // Čisti tekst koji je korisnik upisao da ne ostane za idući put
+            if (inputField) inputField.value = '';
+        }
+    }
+
+    if(target.classList.contains('add-task-btn')){
+        console.log(target);
+        e.stopPropagation();
+        const addTaskContainer = target.closest('.add-task-container');
+        const taskManageBox = target.closest('.task-management-box'); 
+
+        if (taskManageBox && addTaskContainer) {  
+            const inputField = addTaskContainer.querySelector('.new-task-input');
+            const taskText = inputField.value.trim();
+
+            const goalId = taskManageBox.dataset.id;
+
+            if (taskText === '') {
+                alert('Molimo upišite tekst zadatka!');
+                return;
+            }
+
+            // 2. SLANJE PODATAKA NA BACKEND (U BAZU) PREKO FETCH API-JA
+            fetch(`/api/tasks/${goalId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    goal_id: goalId,   // Vaš dohvaćeni ID
+                    task_text: taskText // Tekst zadatka
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const newTask = document.createElement('li');
+                    newTask.className = "task-item task-box";
+                    newTask.style.cssText = "display: flex; align-items: center; justify-content: space-between;";
+
+                    newTask.innerHTML = `<label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                        <input
+                                            style="margin-right: 10px;"
+                                            type="checkbox" 
+                                            class="task-toggle">                                            
+                                        <span>
+                                            ${ data.task_text }
+                                        </span>
+                                    </label>
+                                    
+                                    <button type="button" 
+                                            class="delete-task-btn" 
+                                            data-task-id="${data.new_task_id}">
+                                        &times;
+                                    </button>`;
+
+                    taskBox.append(newTask);
+                    
+                    // Sakrijte formu i očistite input nakon uspješnog spremanja
+                    const newTaskBtn = taskManageBox.querySelector('.new-task-btn');
+                    if (newTaskBtn) newTaskBtn.classList.remove('hidden');
+                    addTaskContainer.classList.add('hidden');
+                    inputField.value = '';
+                } else {
+                    //alert('Greška pri spremanju zadatka u bazu.');
+                    alert('Greška sa servera: ' + (data.message || 'Nepoznata greška'));
+                    console.error('Detalji greške s Flask-a:', data);
+                }
+            })
+            .catch(error => {
+                console.error('Greška u komunikaciji s poslužiteljem:', error);
+            });
+        }
+    }
+
+//end of event listener
+})

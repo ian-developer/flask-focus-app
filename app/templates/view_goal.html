@@ -60,21 +60,20 @@
                 {% endif %}
                     
             </div>
-        </div>
-        <!-- Zadaci -->
-        
 
-        <!--U JAVASCRIPTU, UMJESTO DA EVENT LISTENER SLUŠA DIV IZA OVOGA,
-        POSTAVITI DA SLUŠA TOČNO OVAJ DIV I DA SE DINAMIČKI DODAJU ZADACI-->
+                    <!-- Zadaci -->
         
-        <div class="task-management-box" data-id="{{goal.id}}" style="margin: 10px 0px;">
-            <button class="new-task-btn">+ add task</button>
-                <div class="add-task-container hidden">
-                    <input class="new-task-input" type="text" placeholder="New task">
-                    <button class="add-task-btn">save</button>
-                    <button class="quit-task-btn">&times</button>
-                </div>
+            <div class="task-management-box" data-id="{{goal.id}}">
+                <button class="new-task-btn">+ add new task</button>
+                    <div class="add-task-container hidden">
+                        <input class="new-task-input" type="text" placeholder="New task">
+                        <button class="add-task-btn">save</button>
+                        <button class="quit-task-btn">&times</button>
+                    </div>
+            </div>
+
         </div>
+
 
         <!-- Status -->
         <div class="goal-status">

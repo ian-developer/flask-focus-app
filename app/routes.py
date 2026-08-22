@@ -114,6 +114,32 @@ def delete_goal(goal_id):
         
     return redirect(url_for('main.show_goals'))
 
+#---------- FINISH SPECIFIC GOAL ---------------
+
+@main.route('/goals/<int:goal_id>/finish/', methods=['POST'])
+def finish_goal(goal_id):
+    data = request.get_json() or {}
+
+    if not data:
+        return jsonify({'success': False, 'message': 'Nema podataka'}), 400
+
+    # You can extract data from the incoming JSON body
+    goal_id_from_body = data.get('goal_id')
+    is_confirmed_finished = data.get('goal_confirmed_finished')
+
+    if not goal_id_from_body:
+        return jsonify({'success': False, 'message': 'Nedostaju podaci'}), 400
+
+    # 1. DATABASE UPDATE LOGIC GOES HERE
+    # Example using SQLAlchemy:
+    goal = Goal.query.get_or_404(goal_id)
+    goal.is_confirmed_finished = is_confirmed_finished
+    db.session.commit()
+        
+    # Return JSON success instead of a redirect for Fetch API
+    return jsonify({'success': True, 'message': 'Cilj uspješno završen'})
+
+
 #---- TOGGLE TASK CHECKBOX STATUS -------
 
 @main.route('/api/tasks/<int:task_id>/toggle', methods=['PATCH'])

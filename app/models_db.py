@@ -17,6 +17,7 @@ class Goal(db.Model):
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
     is_completed = db.Column(db.Boolean, default=False)
+    is_confirmed_finished = db.Column(db.Boolean, default=False)
     progress_percentage = db.Column(db.Float, default=0.0)
     difficulty = db.Column(db.String(20), nullable=False, default='Medium')
     priority = db.Column(db.String(1), nullable=False, default='b')
