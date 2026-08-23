@@ -58,7 +58,7 @@
     <!-------------------- SHOW GOALS TABLE ------------------------>
     <div class="table-container">
         <div class="bar-above-table">
-            <h1>active goals</h1>
+            <h1>my goals</h1>
             <button id="open_form_btn">+ ADD GOAL</button>
         </div>
 
@@ -87,7 +87,7 @@
                             </td>
                             <td>
                                 {% if goal.tasks %}
-                                <ul>
+                                <ul style="padding: 0px;">
                                     {% for task in goal.tasks[:3] %}
                                         {% if task %}
                                             <li class="task-cell">

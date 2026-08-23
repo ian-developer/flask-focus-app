@@ -417,7 +417,6 @@ input:focus, select:focus, textarea:focus {
     border-bottom: 1px solid var(--border-color);
     display: flex; justify-content: space-between;
     align-items: center;
-    overflow: visible;
 }
 
 /* 3. Stil za Tablicu */
@@ -449,9 +448,10 @@ table {
 }
 
 th {
-    background-color: var(--head-bg);
+    background-color: #e7e7ee;
     color: var(--text-muted);
-    padding: 0.5rem;
+    padding: 0.7rem;
+    padding-left: 1rem;
     font-weight: 600;
     font-size: 0.85rem;
     text-transform: uppercase;
@@ -483,15 +483,16 @@ tr:hover {
 
 /* Liste unutar tablice (Zadaci) */
 table ul {
-    text-align: center;
+    text-align: left;
     margin: 0;
     color: var(--text-muted);
     font-size: 0.875rem;
 }
 
 ul {
-    display: flex; flex-direction:
-    column; gap: 0rem;
+    display: flex;
+    flex-direction:column;
+    gap: 0rem;
 }
 
 /* 4. Badges (Značke za prioritet i status) */
@@ -781,12 +782,12 @@ li {
 .task-cell {
     background: transparent;
     display: flex;
-    align-items: center; /* Vertikalno centrira sadržaj unutar ćelije */
+    align-items: center;
     justify-content: flex-start;
     
     max-width: 200px;
-    padding: 0.5rem 0.75rem;
-    margin: 0;
+    padding: 0.3rem 0.75rem;
+    margin: 0px;
     
     font-size: 0.85rem;
     color: var(--text-main);
