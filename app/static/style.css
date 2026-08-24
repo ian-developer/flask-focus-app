@@ -213,7 +213,7 @@ body {
 
 
 #goal_card {
-    min-width: 450px;
+    min-width: 400px;
     width: 100%;
     overflow: hidden;
     background: var(--card-bg);
@@ -311,17 +311,18 @@ input:focus, select:focus, textarea:focus {
 
 .go-back-link {
     user-select: none;
-    background-color: var(--card-bg);
+    background-color: transparent;
     border: 1px solid rgb(242, 239, 255);
     border-radius: 4px;
     transition: 0.2s ease;
 }
 
-.go-back-link:hover {
-    background-color: rgb(248, 246, 255);
-    transform: translateX(-2px);
-    border: 1px solid var(--primary);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+.go-back-link a {
+    color: var(--primary);
+}
+
+.go-back-link a:hover {
+    color: var(--primary-hover);
 }
 
 .task-management-box {

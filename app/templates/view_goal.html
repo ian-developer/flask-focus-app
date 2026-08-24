@@ -5,20 +5,25 @@
 
 <div class="container">
     
-    <!-- Kartica pojedinačnog cilja -->
+    <!-- Kartica pojedinačnog cilja 
+     <div style="margin-bottom: 20px;">
+        <span style="display: inline; border-radius: 3px; padding: 3px; justify-content: flex-start;" class="go-back-link">
+                <a href="{{ url_for('main.show_goals') }}"
+                    style="text-decoration: none; font-weight: 600; font-size: 1rem; padding-left: 3px; padding-right: 7px;">
+                        ← Go back to My Goals
+                </a>
+        </span>
+    </div>-->
+            
     <div id="goal_card">
         
         <!-- Prioritet i Težina -->
+
         <div style="display: flex; gap: 0.5rem; align-items: center;">
-            <span class="badge badge-{{ goal.priority }} ">{{ goal.priority | upper }} priority</span>
+            
+            <span class="badge badge-{{ goal.priority }} " style="justify-content: flex-end;">{{ goal.priority | upper }} priority</span>
             <span style="background: #edf2f7; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem; font-weight: 500;">
                 Difficulty: {{ goal.difficulty }}
-            </span>
-            <span style="display: inline; margin-left: auto; border-radius: 3px; padding: 3px;" class="go-back-link">
-                <a href="{{ url_for('main.show_goals') }}"
-                    style="text-decoration: none; color: rgb(147, 117, 255); font-weight: 600; font-size: 1rem; padding-left: 3px; padding-right: 7px;">
-                        ← Go back to My Goals
-                </a>
             </span>
         </div>
 
