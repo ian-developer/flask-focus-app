@@ -4,36 +4,38 @@
 {% block content %}
 
 <div class="container">
-    
-    <!-- Kartica pojedinačnog cilja 
-     <div style="margin-bottom: 20px;">
-        <span style="display: inline; border-radius: 3px; padding: 3px; justify-content: flex-start;" class="go-back-link">
+    <!-- GO BACK BUTTON -->
+    <!--<div>
+        <span style="display: inline; border-radius: 3px; padding: 3px;" class="go-back-link">
                 <a href="{{ url_for('main.show_goals') }}"
                     style="text-decoration: none; font-weight: 600; font-size: 1rem; padding-left: 3px; padding-right: 7px;">
                         ← Go back to My Goals
                 </a>
         </span>
     </div>-->
-            
-    <div id="goal_card">
         
-        <!-- Prioritet i Težina -->
+    <!-- GOAL CARD -->        
+    <div id="goal_card">
 
-        <div style="display: flex; gap: 0.5rem; align-items: center;">
+        <!-- Naslov i Opis -->
+        <div style="overflow: wrap; max-width: 500px;">
+            <h2 style="margin: 0 0 0.5rem 0; font-size: 1.8rem; color: #2d3748; padding-top: 10px;">{{ goal.title }}</h2>
             
+        </div>
+
+                <!-- Prioritet i Težina -->
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
             <span class="badge badge-{{ goal.priority }} " style="justify-content: flex-end;">{{ goal.priority | upper }} priority</span>
             <span style="background: #edf2f7; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem; font-weight: 500;">
                 Difficulty: {{ goal.difficulty }}
             </span>
         </div>
 
-        <!-- Naslov i Opis -->
-        <div style="overflow: wrap; max-width: 500px;">
-            <h2 style="margin: 0 0 0.5rem 0; font-size: 1.8rem; color: #2d3748; padding-top: 10px;">{{ goal.title }}</h2>
-            <span style="color: #718096; width: 100%; white-space: normal; overflow-wrap: anywhere;">
-                {{ goal.description or 'Nema opisa.' }}
-            </span>
-        </div>
+        <span style="color: #718096; width: 100%; white-space: normal; overflow-wrap: anywhere;">
+            {{ goal.description or 'Nema opisa.' }}
+        </span>
+
+        <!-- SHOW TASKS -->
 
         <div class="tasks-wrapper">
             <div class="tasks-header">
@@ -66,7 +68,7 @@
                     
             </div>
 
-                    <!-- Zadaci -->
+            <!-- TASK BUTTONS -->
         
             <div class="task-management-box" data-id="{{goal.id}}">
                 <button class="new-task-btn">+ add new task</button>
@@ -76,25 +78,18 @@
                         <button class="quit-task-btn">&times</button>
                     </div>
             </div>
-
         </div>
 
-
-        <!-- Status -->
-        <div class="goal-status">
-            {% if goal.is_completed %}
-                <span style="color: #38a169; font-weight: bold;">Completed</span>
-            {% else %}
-                <span style="color: #dd6b20; font-weight: bold;">In Progress</span>
-            {% endif %}
-        </div>
-
-        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 0.5rem 0;">
-
-                <!-- Napredak (Zaokružen) -->
-        <div style="background: #f7fafc; padding: 1rem; border-radius: 6px; margin-top: 10px; margin-bottom: 10px;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 600;">
-                <span>Progress:</span>
+        <!-- SHOW PROGRESS BAR -->
+        <div style="background: #f7fafc; padding: 1rem; border-radius: 6px; margin-top: 10px; margin-bottom: 10px;">  
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 500;">
+                <div class="goal-status">
+                    {% if goal.is_completed %}
+                        <span style="color: #38a169; font-weight: 500;">Completed</span>
+                    {% else %}
+                        <span style="color: #dd6b20; font-weight: 500;">In Progress</span>
+                    {% endif %}
+                </div>
                 <span class="progress-percentage">{{ goal.progress_percentage | round | int }}%</span>
             </div>
             <!-- Vizualna progres traka (Opcionalno) -->

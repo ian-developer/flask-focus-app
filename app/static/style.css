@@ -153,6 +153,7 @@ body {
 .container {
     display: flex;
     width: 100%;
+    max-width: 550px;
 }
 
 .goal-container {
@@ -213,7 +214,7 @@ body {
 
 
 #goal_card {
-    min-width: 400px;
+    min-width: 450px;
     width: 100%;
     overflow: hidden;
     background: var(--card-bg);
@@ -310,19 +311,19 @@ input:focus, select:focus, textarea:focus {
 }
 
 .go-back-link {
+    margin-bottom: 20px;
     user-select: none;
     background-color: transparent;
-    border: 1px solid rgb(242, 239, 255);
     border-radius: 4px;
     transition: 0.2s ease;
 }
 
 .go-back-link a {
-    color: var(--primary);
+    color: var(--primary-hover);
 }
 
 .go-back-link a:hover {
-    color: var(--primary-hover);
+    color: #896bff;
 }
 
 .task-management-box {

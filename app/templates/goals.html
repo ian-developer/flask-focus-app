@@ -83,7 +83,7 @@
                             <td style="text-align: left; max-width: 200px;">
                                 <h2 style="white-space: wrap; overflow: wrap;">{{ goal.title | truncate(30)}}</h2>
                                 <p style="color: #7f8c8d; max-width: 250px; font-size: 0.8rem; margin: 5px 0px;">{{ goal.description | truncate(90) or 'Nema opisa' }}</p>
-                                <small class="date">{{ goal.created_at.strftime('%d. %m. %Y. %H:%M') }}</small>
+                                <!--<small class="date">{{ goal.created_at.strftime('%d. %m. %Y. %H:%M') }}</small>-->
                             </td>
                             <td>
                                 {% if goal.tasks %}
