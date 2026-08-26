@@ -18,9 +18,8 @@
     <div id="goal_card">
 
         <!-- Naslov i Opis -->
-        <div style="overflow: wrap; max-width: 500px;">
-            <h2 style="margin: 0 0 0.5rem 0; font-size: 1.8rem; color: #2d3748; padding-top: 10px;">{{ goal.title }}</h2>
-            
+        <div style="overflow: wrap; max-width: 500px; margin-bottom: 0.7rem;">
+            <h2 style="margin: 0px; font-size: 1.8rem; color: #2d3748; padding: 0px;">{{ goal.title }}</h2>
         </div>
 
                 <!-- Prioritet i Težina -->
@@ -31,9 +30,12 @@
             </span>
         </div>
 
-        <span style="color: #718096; width: 100%; white-space: normal; overflow-wrap: anywhere;">
-            {{ goal.description or 'Nema opisa.' }}
-        </span>
+        <div style="padding: 0.7rem 0rem 0.2rem;">
+            <span style="color: #718096; width: 100%; white-space: normal; overflow-wrap: anywhere; font-size: 0.9rem;">
+                {{ goal.description or 'Nema opisa.' }}
+            </span>
+        </div>
+        
 
         <!-- SHOW TASKS -->
 
@@ -43,7 +45,7 @@
             </div>
             <div class="tasks-container" style="margin: 10px 0px; overflow: hidden;">
                 {% if tasks %}
-                    <ul style="list-style-type: none; padding: 0px; margin: 0px;" class="task-list-box">
+                    <ul class="task-list-box">
                         {% for task in tasks %}
                             <li class="task-item task-box" style="display: flex; align-items: center; justify-content: space-between;">
                                             <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
@@ -63,12 +65,14 @@
                         {% endfor %}
                     </ul>
                 {% else %}
-                    <p style="margin: 0; color: #a0aec0; padding-bottom: 15px;">There are no tasks here.</p>
-                {% endif %}
-                    
+                    <p class="no-tasks-msg">There are no tasks here.</p>
+                {% endif %}      
             </div>
 
             <!-- TASK BUTTONS -->
+
+            <!-- PROBLEM!!! NAKON STA SE OBRIŠU SVI TASKOVI ONDA NE RADI DINAMICKO DODAVANJE TASKOVA DOK SE NE REFRESHA STRANICA -->
+
         
             <div class="task-management-box" data-id="{{goal.id}}">
                 <button class="new-task-btn">+ add new task</button>
@@ -81,7 +85,7 @@
         </div>
 
         <!-- SHOW PROGRESS BAR -->
-        <div style="background: #f7fafc; padding: 1rem; border-radius: 6px; margin-top: 10px; margin-bottom: 10px;">  
+        <div style="background: #f7fafc; padding: 1rem; border-radius: 6px;" class="progress-bar-wrapper">  
             <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 500;">
                 <div class="goal-status">
                     {% if goal.is_completed %}
@@ -100,9 +104,9 @@
         </div>
 
         <!-- Date -->
-        <div>
+        <!--<div>
             <small class="date">created at: {{ goal.created_at.strftime('%d. %m. %Y. %H:%M') }}</small>
-        </div>
+        </div>-->
 
         <!-- Action Buttons-->
         <div style="display: flex;justify-content: flex-end; gap: 1em;">

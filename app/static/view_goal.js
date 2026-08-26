@@ -57,8 +57,6 @@ if(tasksContainer){
             
             if (!confirm('Do you want to delete this task?')) return;
 
-            console.log(target.dataset.taskId);
-
             try {
                 const response = await fetch(`/api/tasks/${taskId}`, { method: 'DELETE' });
                 const data = await response.json();
@@ -69,14 +67,13 @@ if(tasksContainer){
         
                 if (remainingTasks.length === 0) {
                     tasksContainer.innerHTML = '';
-                    // Kreiramo novi element za poruku
-                    const noTasksMessage = document.createElement('p');
-                    noTasksMessage.className = 'no-tasks-msg';
-                    noTasksMessage.textContent = 'There is no tasks';
-                    noTasksMessage.innerHTML = '<p style="margin: 0; color: #a0aec0; padding-bottom: 15px;">There are no tasks here.</p>';
+                    const noTasksMsg = document.createElement('p');
+                    noTasksMsg.className = 'no-tasks-msg';
+                    noTasksMsg.textContent = 'There is no tasks';
+                    noTasksMsg.innerHTML = 'There are no tasks here.';
                     
                     // Dodajemo poruku u kontejner gdje su bili zadaci
-                    tasksContainer.appendChild(noTasksMessage);
+                    tasksContainer.appendChild(noTasksMsg);
                 }
                 
             } catch (err) {
@@ -84,118 +81,6 @@ if(tasksContainer){
             }
             return;
         }
-
-        // SHOW NEW TASK CONTAINER
-
-        /*if(target.classList.contains('new-task-btn')){
-            e.stopPropagation();
-
-            const newTaskBtn = target;
-            const addTaskContainer = target.nextElementSibling;
-
-            if (addTaskContainer) {
-                newTaskBtn.classList.add('hidden');          // Sakrij gumb
-                addTaskContainer.classList.remove('hidden'); // Prikaži input i gumb za spremanje
-                
-                // Bonus: Automatski stavi fokus (kurzor) u input polje
-                const inputField = addTaskContainer.querySelector('input');
-                if (inputField) inputField.focus();
-            }
-
-        }
-
-        // CLOSE NEW TASK CONTAINER
-
-        if(target.classList.contains('quit-task-btn')){
-            e.stopPropagation();
-
-            const addTaskContainer = target.closest('.add-task-container');
-            const taskManageBox = target.closest('.task-management-box');
-
-            if (taskManageBox && addTaskContainer) {
-                const newTaskBtn = taskManageBox.querySelector('.new-task-btn');
-                const inputField = addTaskContainer.querySelector('input');
-
-                // Ponovno prikaži početni gumb, sakrij formu
-                if (newTaskBtn) newTaskBtn.classList.remove('hidden');
-                addTaskContainer.classList.add('hidden');
-
-                // Čisti tekst koji je korisnik upisao da ne ostane za idući put
-                if (inputField) inputField.value = '';
-            }
-        }
-
-        // ADD NEW TASK
-
-        if(target.classList.contains('add-task-btn')){
-            e.stopPropagation();
-            const addTaskContainer = target.closest('.add-task-container');
-            const taskManageBox = target.closest('.task-management-box'); 
-
-            if (taskManageBox && addTaskContainer) {  
-                const inputField = addTaskContainer.querySelector('.new-task-input');
-                const taskText = inputField.value.trim();
-
-                const goalId = taskManageBox.dataset.id;
-
-                if (taskText === '') {
-                    alert('Molimo upišite tekst zadatka!');
-                    return;
-                }
-
-                // 2. SLANJE PODATAKA NA BACKEND (U BAZU) PREKO FETCH API-JA
-                fetch(`/api/tasks/${goalId}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        goal_id: goalId,   // Vaš dohvaćeni ID
-                        task_text: taskText // Tekst zadatka
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        const newTask = document.createElement('li');
-                        newTask.className = "task-item task-box";
-                        newTask.style.cssText = "display: flex; align-items: center; justify-content: space-between;";
-
-                        newTask.innerHTML = `<label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                            <input
-                                                style="margin-right: 10px;"
-                                                type="checkbox" 
-                                                class="task-toggle">                                            
-                                            <span>
-                                                ${ data.task_text }
-                                            </span>
-                                        </label>
-                                        
-                                        <button type="button" 
-                                                class="delete-task-btn" 
-                                                data-task-id="${data.new_task_id}">
-                                            &times;
-                                        </button>`;
-
-                        taskBox.append(newTask);
-                        
-                        // Sakrijte formu i očistite input nakon uspješnog spremanja
-                        const newTaskBtn = taskManageBox.querySelector('.new-task-btn');
-                        if (newTaskBtn) newTaskBtn.classList.remove('hidden');
-                        addTaskContainer.classList.add('hidden');
-                        inputField.value = '';
-                    } else {
-                        //alert('Greška pri spremanju zadatka u bazu.');
-                        alert('Greška sa servera: ' + (data.message || 'Nepoznata greška'));
-                        console.error('Detalji greške s Flask-a:', data);
-                    }
-                })
-                .catch(error => {
-                    console.error('Greška u komunikaciji s poslužiteljem:', error);
-                });
-            }
-        }*/
-
     });
 }
 
@@ -232,7 +117,6 @@ finishGoalBtn.addEventListener('click', async(e) => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    console.log(data)
                     alert('your goal is finished');
                     // Optional: Reload page or update UI dynamically here
                     window.location.reload(); 
@@ -292,8 +176,9 @@ taskManagementBox.addEventListener('click', async(e) =>{
         }
     }
 
+    // ADD NEW TASK
+
     if(target.classList.contains('add-task-btn')){
-        console.log(target);
         e.stopPropagation();
         const addTaskContainer = target.closest('.add-task-container');
         const taskManageBox = target.closest('.task-management-box'); 
@@ -323,6 +208,16 @@ taskManagementBox.addEventListener('click', async(e) =>{
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
+
+                    const taskBox = document.createElement('ul');
+                    const noTaskMsg = tasksContainer.querySelector('p');
+                    if (noTaskMsg) {
+                        noTaskMsg.remove();
+                    }
+
+                    taskBox.classList.add('task-list-box');
+                    tasksContainer.appendChild(taskBox);
+
                     const newTask = document.createElement('li');
                     newTask.className = "task-item task-box";
                     newTask.style.cssText = "display: flex; align-items: center; justify-content: space-between;";
