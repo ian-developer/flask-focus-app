@@ -9,15 +9,17 @@
         <div class="homepage-card-container">
             <div class="homepage-card">
                 <div class="card-header">
-                    <h2>Top priority goals</h2>
+                    <h2>active goals</h2>
                 </div>
                 <div class="active-goals-grid">
                     {% for goal in goals[:6] %}
-                        <div class="goal-card">
-                            <span class="badge badge-{{ goal.priority }}">{{ goal.priority }}</span>
-                            <h3 class="goal-title">{{ goal.title }}</h3>
-                            <p class="goal-description">{{ goal.description | truncate(50) }}</p>
-                        </div>
+                        {% if not goal.is_confirmed_finished %}
+                            <div class="goal-card">
+                                <span class="badge badge-{{ goal.priority }}">{{ goal.priority }}</span>
+                                <h3 class="goal-title">{{ goal.title }}</h3>
+                                <p class="goal-description">{{ goal.description | truncate(50) }}</p>
+                            </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
                     <div style="display: flex; align-items: center; padding: 0px 12px; margin: 20px 0px; margin-bottom: 0px;">
@@ -32,7 +34,7 @@
                 </div>
                 <div class="active-goals-grid">
                     {% for goal in goals[:6] %}
-                        {% if goal.is_completed %}
+                        {% if goal.is_confirmed_finished %}
                             <div class="goal-card">
                                 <span class="badge badge-{{ goal.priority }}">{{ goal.priority }}</span>
                                 <h3 class="goal-title">{{ goal.title }}</h3>
@@ -47,8 +49,8 @@
                     <h2>stats</h2>
                 </div>
                 <ul>
-                    <li>Active goals: {{goal_count}}</li>
-                    <li>Achieved goals: (number)</li>
+                    <li>Active goals: {{active_goals_count}}</li>
+                    <li>Completed goals: {{finished_goals_count}}</li>
                     <li>Streak flame: (number)</li>
                 </ul>
             </div>

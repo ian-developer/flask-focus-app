@@ -6,24 +6,32 @@ from .models_db import Goal, Task
 
 main = Blueprint("main", __name__)
 
-# ---------------HOMEPAGE----------------
+# ---------------DASHBOARD----------------
 
 @main.route("/")
 def home():
     goals = Goal.query.order_by(Goal.priority.asc()).all()
-    goal_count = Goal.query.count()
+    active_goals_count = Goal.query.count()
 
     
-    return render_template("index.html", goals=goals, goal_count=goal_count)
+    return render_template("index.html", goals=goals, active_goals_count=active_goals_count)
 
 # ---------------DASHBOARD----------------
 
 @main.route("/dashboard", methods=['GET', 'POST'])
 def dashboard():
     goals = Goal.query.order_by(Goal.priority.asc()).all()
-    goal_count = Goal.query.count()
 
-    return render_template('dashboard.html', goals=goals, goal_count=goal_count)
+    active_goals_count = 0
+    finished_goals_count = 0
+    
+    for goal in goals:
+        if goal.is_confirmed_finished == True:
+            finished_goals_count += 1
+        if goal.is_confirmed_finished == False:
+            active_goals_count += 1
+
+    return render_template('dashboard.html', goals=goals, active_goals_count=active_goals_count, finished_goals_count=finished_goals_count)
 
 # ----------------GOALS-----------------
 
