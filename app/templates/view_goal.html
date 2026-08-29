@@ -3,125 +3,132 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container" style="padding-top: 0px;">
+    <div>
     <!-- GO BACK BUTTON -->
-    <!--<div>
-        <span style="display: inline; border-radius: 3px; padding: 3px;" class="go-back-link">
-                <a href="{{ url_for('main.show_goals') }}"
-                    style="text-decoration: none; font-weight: 600; font-size: 1rem; padding-left: 3px; padding-right: 7px;">
-                        ← Go back to My Goals
-                </a>
-        </span>
-    </div>-->
-        
-    <!-- GOAL CARD -->        
-    <div id="goal_card">
-
-        <!-- Naslov i Opis -->
-        <div style="overflow: wrap; max-width: 500px; margin-bottom: 0.7rem;">
-            <h2 style="margin: 0px; font-size: 1.8rem; color: #2d3748; padding: 0px;">{{ goal.title }}</h2>
-        </div>
-
-                <!-- Prioritet i Težina -->
-        <div style="display: flex; gap: 0.5rem; align-items: center;">
-            <span class="badge badge-{{ goal.priority }} " style="justify-content: flex-end;">{{ goal.priority | upper }} priority</span>
-            <span style="background: #edf2f7; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem; font-weight: 500;">
-                Difficulty: {{ goal.difficulty }}
+        <div style="padding-bottom: 15px;">
+            <span class="go-back-link">
+                    <a href="{{ url_for('main.show_goals') }}"
+                        style="text-decoration: none; font-weight: 600; font-size: 1rem; padding-left: 3px; padding-right: 7px;">
+                            ← Go back to My Goals
+                    </a>
             </span>
         </div>
+            
+        <!-- GOAL CARD -->        
+        <div id="goal_card">
 
-        <div style="padding: 0.7rem 0rem 0.2rem;">
-            <span style="color: #718096; width: 100%; white-space: normal; overflow-wrap: anywhere; font-size: 0.9rem;">
-                {{ goal.description or 'Nema opisa.' }}
-            </span>
-        </div>
-        
-
-        <!-- SHOW TASKS -->
-
-        <div class="tasks-wrapper">
-            <div class="tasks-header">
-                <h3>my tasks</h3>
-            </div>
-            <div class="tasks-container" style="margin: 10px 0px; overflow: hidden;">
-                {% if tasks %}
-                    <ul class="task-list-box">
-                        {% for task in tasks %}
-                            <li class="task-item task-box" style="display: flex; align-items: center; justify-content: space-between;">
-                                            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                                <input
-                                                    style="margin-right: 10px;"
-                                                    type="checkbox"
-                                                    class="task-toggle" 
-                                                    data-task-id="{{ task.id }}" 
-                                                    {% if task.is_completed %}checked{% endif %}>
-                                                
-                                                <span class="{% if task.is_completed %}completed-task{% endif %}">
-                                                    {{ task.text }}
-                                                </span>
-                                            </label>
-                                            <button class="delete-task-btn" aria-label="Delete task" data-task-id="{{ task.id }}">&times;</button>
-                                        </li>
-                        {% endfor %}
-                    </ul>
+            <!-- Naslov i Opis -->
+            <div style="overflow: wrap; max-width: 500px; margin-bottom: 0.7rem;">
+                {% if not goal.is_confirmed_finished %}
+                <h2 style="margin: 0px; font-size: 1.8rem; color: #2d3748; padding: 0px;">{{ goal.title }}</h2>
                 {% else %}
-                    <p class="no-tasks-msg">There are no tasks here.</p>
-                {% endif %}      
+                <h2 style="margin: 0px; font-size: 1.8rem; color: #2d3748; padding: 0px;">{{ goal.title }}</h2>
+                <h2 style="margin: 0px; font-size: 1.8rem; color: #2d3748; padding: 0px;">(Finished)</h2>
+                {% endif %}
             </div>
 
-            <!-- TASK BUTTONS -->
-
-            <!-- PROBLEM!!! NAKON STA SE OBRIŠU SVI TASKOVI ONDA NE RADI DINAMICKO DODAVANJE TASKOVA DOK SE NE REFRESHA STRANICA -->
-
-        
-            <div class="task-management-box" data-id="{{goal.id}}">
-                <button class="new-task-btn">+ add new task</button>
-                    <div class="add-task-container hidden">
-                        <input class="new-task-input" type="text" placeholder="New task">
-                        <button class="add-task-btn">save</button>
-                        <button class="quit-task-btn">&times</button>
-                    </div>
+                    <!-- Prioritet i Težina -->
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <span class="badge badge-{{ goal.priority }} " style="justify-content: flex-end;">{{ goal.priority | upper }} priority</span>
+                <span style="background: #edf2f7; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem; font-weight: 500;">
+                    Difficulty: {{ goal.difficulty }}
+                </span>
             </div>
-        </div>
 
-        <!-- SHOW PROGRESS BAR -->
-        <div style="background: #f7fafc; padding: 1rem; border-radius: 6px;" class="progress-bar-wrapper">  
-            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 500;">
-                <div class="goal-status">
-                    {% if goal.is_completed %}
-                        <span style="color: #38a169; font-weight: 500;">Completed</span>
-                    {% else %}
-                        <span style="color: #dd6b20; font-weight: 500;">In Progress</span>
-                    {% endif %}
+            <div style="padding: 0.7rem 0rem 0.2rem;">
+                <span style="color: #718096; width: 100%; white-space: normal; overflow-wrap: anywhere; font-size: 0.9rem;">
+                    {{ goal.description or 'Nema opisa.' }}
+                </span>
+            </div>
+            
+
+            <!-- SHOW TASKS -->
+
+            <div class="tasks-wrapper">
+                <div class="tasks-header">
+                    <h3>my tasks</h3>
                 </div>
-                <span class="progress-percentage">{{ goal.progress_percentage | round | int }}%</span>
-            </div>
-            <!-- Vizualna progres traka (Opcionalno) -->
-            <div class="progress-bar" style="width: 100%; background: #e2e8f0; height: 8px; border-radius: 4px; overflow: hidden;">
-                <!-- Postotak spremamo u --progress, a width čita tu varijablu -->
-                <div style="--progress: {{ goal.progress_percentage|int }}%; width: var(--progress); background: lightgreen; height: 100%; transition: width 0.3s ease;"></div>
-            </div>
-        </div>
+                <div class="tasks-container" style="margin: 10px 0px; overflow: hidden;">
+                    {% if tasks %}
+                        <ul class="task-list-box">
+                            {% for task in tasks %}
+                                <li class="task-item task-box" style="display: flex; align-items: center; justify-content: space-between;">
+                                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                                    <input
+                                                        style="margin-right: 10px;"
+                                                        type="checkbox"
+                                                        class="task-toggle" 
+                                                        data-task-id="{{ task.id }}" 
+                                                        {% if task.is_completed %}checked{% endif %}>
+                                                    
+                                                    <span class="{% if task.is_completed %}completed-task{% endif %}">
+                                                        {{ task.text }}
+                                                    </span>
+                                                </label>
+                                                <button class="delete-task-btn" aria-label="Delete task" data-task-id="{{ task.id }}">&times;</button>
+                                            </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="no-tasks-msg">There are no tasks here.</p>
+                    {% endif %}      
+                </div>
 
-        <!-- Date -->
-        <!--<div>
-            <small class="date">created at: {{ goal.created_at.strftime('%d. %m. %Y. %H:%M') }}</small>
-        </div>-->
+                <!-- TASK BUTTONS -->
 
-        <!-- Action Buttons-->
-        <div style="display: flex;justify-content: flex-end; gap: 1em;">
-            <form action="{{ url_for('main.delete_goal', goal_id=goal.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete ({{goal.title}})?');">
-                <button type="submit" id="delete-goal-btn">
-                    Delete
-                </button>
-            </form>
-                <form action="{{ url_for('main.finish_goal', goal_id=goal.id) }}" method="POST">
-                    <button type="submit" id="mark-goal-btn" class="finish-goal-btn" data-id="{{ goal.id }}">
-                        Finish
+                <!-- PROBLEM!!! NAKON STA SE OBRIŠU SVI TASKOVI ONDA NE RADI DINAMICKO DODAVANJE TASKOVA DOK SE NE REFRESHA STRANICA -->
+
+            
+                <div class="task-management-box" data-id="{{goal.id}}">
+                    <button class="new-task-btn">+ add new task</button>
+                        <div class="add-task-container hidden">
+                            <input class="new-task-input" type="text" placeholder="New task">
+                            <button class="add-task-btn">save</button>
+                            <button class="quit-task-btn">&times</button>
+                        </div>
+                </div>
+            </div>
+
+            <!-- SHOW PROGRESS BAR -->
+            <div style="background: #f7fafc; padding: 1rem; border-radius: 6px;" class="progress-bar-wrapper">  
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 500;">
+                    <div class="goal-status">
+                        {% if goal.is_completed %}
+                            <span style="color: #38a169; font-weight: 500;">Completed</span>
+                        {% else %}
+                            <span style="color: #dd6b20; font-weight: 500;">In Progress</span>
+                        {% endif %}
+                    </div>
+                    <span class="progress-percentage">{{ goal.progress_percentage | round | int }}%</span>
+                </div>
+                <!-- Vizualna progres traka (Opcionalno) -->
+                <div class="progress-bar" style="width: 100%; background: #e2e8f0; height: 8px; border-radius: 4px; overflow: hidden;">
+                    <!-- Postotak spremamo u --progress, a width čita tu varijablu -->
+                    <div style="--progress: {{ goal.progress_percentage|int }}%; width: var(--progress); background: lightgreen; height: 100%; transition: width 0.3s ease;"></div>
+                </div>
+            </div>
+
+            <!-- Date -->
+            <!--<div>
+                <small class="date">created at: {{ goal.created_at.strftime('%d. %m. %Y. %H:%M') }}</small>
+            </div>-->
+
+            <!-- Action Buttons-->
+            <div style="display: flex;justify-content: center; gap: 0.7em;">
+                <form action="{{ url_for('main.delete_goal', goal_id=goal.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete ({{goal.title}})?');">
+                    <button type="submit" id="delete-goal-btn">
+                        Delete
                     </button>
                 </form>
-        </div>
+                    <form action="{{ url_for('main.finish_goal', goal_id=goal.id) }}" method="POST">
+                        <button type="submit" id="mark-goal-btn" class="finish-goal-btn" data-id="{{ goal.id }}">
+                            Finish
+                        </button>
+                    </form>
+            </div>
 
+        </div>
     </div>
 </div>
 <script src="{{ url_for('static', filename='view_goal.js') }}"></script>

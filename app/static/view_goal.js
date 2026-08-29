@@ -117,9 +117,9 @@ finishGoalBtn.addEventListener('click', async(e) => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('your goal is finished');
+                    confirm('Do you really want to finish this goal?');
                     // Optional: Reload page or update UI dynamically here
-                    window.location.reload(); 
+                    window.location.reload();
                 } else {
                     console.error('Server error:', data.message);
                 }
