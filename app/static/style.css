@@ -426,7 +426,6 @@ input:focus, select:focus, textarea:focus {
     align-items: center;
 }
 
-/* 3. Stil za Tablicu */
 .table-container {
     z-index: 2;
     width: 100%;
@@ -886,3 +885,49 @@ li {
     margin-left: 15px;
 }
 
+.homepage-container {
+    width: 100%;
+    min-height: 30rem;
+    padding: 25px;
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    text-align: center;
+    box-sizing: border-box;
+
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+}
+
+@media (min-width: 850px) {
+    .homepage-container {
+        padding: 30px;
+    }
+}
+
+#homepage-header {
+    font-size: 1.7rem;
+    color: #230096;
+}
+
+.homepage-card {
+    
+    min-height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 100px;
+    width: 100%;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+}
+
+.homepage-card-wrapper {
+    display: flex;
+    gap: 2rem;
+}

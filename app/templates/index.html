@@ -1,7 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="">
-        <span style="font-size: 1.7rem;">Welcome Ian, what goals are you working on today?</span>
-    </div>    
+    <div class="homepage-container">
+        <span id="homepage-header">Welcome Ian,
+            what goals are you working on today?
+        </span>
+        <div class="homepage-card-wrapper">
+            <div class="homepage-card">
+                <h3>This card shows mini goals table</h3>
+            </div>
+            <div class="homepage-card">
+                <h3>Make a daily goal review</h3>
+                <button>review my goals</button>
+            </div>
+        </div>
+        <div class="homepage-card-wrapper">
+            <div class="homepage-card">
+                <h3>Latest top proirity goal</h3>
+            </div>
+            <div class="homepage-card">
+                <h3>Work on your goals in Goals workspace</h3>
+                <button>review my goals</button>
+            </div>
+        </div>
+    </div>
 {% endblock %}
