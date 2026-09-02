@@ -885,6 +885,10 @@ li {
     margin-left: 15px;
 }
 
+.grey-out {
+    color: #71767e;
+}
+
 /* HOMEPAGE */
 
 .homepage-container {
