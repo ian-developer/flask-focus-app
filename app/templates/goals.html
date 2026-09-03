@@ -81,10 +81,8 @@
                         <tr class="clickable-row" data-href=" {{ url_for('main.view_goal', goal_id=goal.id) }}">
                             <td><span class="badge badge-{{ goal.priority }}">{{ goal.priority }}</span></td>
                             <td style="text-align: left; max-width: 200px;">
-                                <h2 style="white-space: wrap; overflow: wrap;">{{ goal.title | truncate(30)}}
-                                    {% if goal.is_confirmed_finished %}
-                                        (Finished)
-                                    {% endif %}
+                                <h2 style="white-space: wrap; overflow: wrap;" class="{{'grey-out' if goal.is_confirmed_finished}}">
+                                    {{ goal.title | truncate(30)}}
                                 </h2>
                                 <p style="color: #7f8c8d; max-width: 250px; font-size: 0.8rem; margin: 5px 0px;">{{ goal.description | truncate(90) or 'Nema opisa' }}</p>
                                 <!--<small class="date">{{ goal.created_at.strftime('%d. %m. %Y. %H:%M') }}</small>-->
