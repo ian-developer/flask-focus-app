@@ -103,7 +103,13 @@ finishGoalBtn.addEventListener('click', async(e) => {
             return; 
         }
 
-        // 2. SLANJE PODATAKA NA BACKEND (U BAZU) PREKO FETCH API-JA
+        const isConfirmed = confirm('Do you really want to finish this goal?');
+
+        if (!isConfirmed) {
+            return;
+        }
+
+        // SENT DATA TO BACKEND WITH FETCH
         fetch(`/goals/${goalId}/finish/`, {
             method: 'POST',
             headers: {
@@ -117,10 +123,11 @@ finishGoalBtn.addEventListener('click', async(e) => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    confirm('Do you really want to finish this goal?');
-                    // Optional: Reload page or update UI dynamically here
                     window.location.reload();
                 } else {
+                    if (data.tasks_incomplete) {
+                        alert('Its not possible to finish goal, please complete all tasks first')
+                    }
                     console.error('Server error:', data.message);
                 }
             })
