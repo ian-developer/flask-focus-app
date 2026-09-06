@@ -10,11 +10,8 @@ main = Blueprint("main", __name__)
 
 @main.route("/")
 def home():
-    goals = Goal.query.order_by(Goal.priority.asc()).all()
-    active_goals_count = Goal.query.count()
-
     
-    return render_template("index.html", goals=goals, active_goals_count=active_goals_count)
+    return render_template("index.html")
 
 # ---------------DASHBOARD----------------
 
@@ -138,14 +135,21 @@ def finish_goal(goal_id):
     if not goal_id_from_body:
         return jsonify({'success': False, 'message': 'Nedostaju podaci'}), 400
 
-    # 1. DATABASE UPDATE LOGIC GOES HERE
-    # Example using SQLAlchemy:
     goal = Goal.query.get_or_404(goal_id)
-    goal.is_confirmed_finished = is_confirmed_finished
-    db.session.commit()
-        
-    # Return JSON success instead of a redirect for Fetch API
-    return jsonify({'success': True, 'message': 'Cilj uspješno završen'})
+    has_incomplete_tasks = not goal.is_completed
+    was_confirmed_finished = goal.is_confirmed_finished
+
+    if has_incomplete_tasks:
+        return jsonify({'success': False, 'message': 'Some tasks remain unfinished', 'tasks_incomplete': has_incomplete_tasks}), 400
+
+    elif was_confirmed_finished:
+        return jsonify({'success': False, 'message': 'Goal is already completed', 'tasks_incomplete': has_incomplete_tasks}), 400
+
+    else:
+        goal.is_confirmed_finished = is_confirmed_finished
+        db.session.commit()
+
+        return jsonify({'success': True, 'message': 'Cilj uspješno završen'})
 
 
 #---- TOGGLE TASK CHECKBOX STATUS -------
@@ -230,3 +234,11 @@ def add_single_task(goal_id):
         db.session.rollback() # U slučaju greške poništavamo izmjene
         print(f"SQLAlchemy greška: {e}")
         return jsonify({'success': False, 'message': 'Greška pri upisu u bazu'}), 500
+
+
+# ------------------ GOAL BOARD ---------------------
+
+@main.route('/goal_board')
+def goal_board():
+
+    return render_template("goal_board.html")

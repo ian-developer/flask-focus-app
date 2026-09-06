@@ -31,14 +31,14 @@ if(tasksContainer){
                 taskText.classList.toggle('completed-task', isCompleted);
                 progressBar.innerHTML = `
                     <div class="progress-bar" style="width: 100%; background: #e2e8f0; height: 8px; border-radius: 4px; overflow: hidden;">
-                        <div style="--progress: ${Math.round(data.progress_percentage)}%; width: var(--progress); background: lightgreen; height: 100%; transition: width 0.3s ease;"></div>
+                        <div style="--progress: ${Math.round(data.progress_percentage)}%; width: var(--progress); background: var(--primary); height: 100%; transition: width 0.3s ease;"></div>
                     </div>`
                 if(data.progress_percentage == 100){
-                    statusCell.style.color = "#38a169";
+                    statusCell.style.color = "var(--primary)";
                     statusCell.innerText = "Completed";
                 }
                 else{
-                    statusCell.style.color = "#dd6b20";
+                    statusCell.style.color = "#c17a7c";
                     statusCell.innerText = "In Progress";
                 }
             }
@@ -126,7 +126,7 @@ finishGoalBtn.addEventListener('click', async(e) => {
                     window.location.reload();
                 } else {
                     if (data.tasks_incomplete) {
-                        alert('Its not possible to finish goal, please complete all tasks first')
+                        alert(`Unable to finish goal due to unchecked tasks.`);
                     }
                     console.error('Server error:', data.message);
                 }
