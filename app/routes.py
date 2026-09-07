@@ -241,4 +241,15 @@ def add_single_task(goal_id):
 @main.route('/goal_board')
 def goal_board():
 
-    return render_template("goal_board.html")
+    columns = [
+        {"id" : 0, "name" : "A level", "color":"red"},
+        {"id" : 1, "name" : "B level", "color":"yellow"},
+        {"id" : 2, "name" : "C level", "color":"blue"},
+        {"id" : 3, "name" : "D level", "color":"purple"}
+        ]
+
+
+    goals = Goal.query.order_by(Goal.priority.asc()).all()
+
+    return render_template("goal_board.html", goals=goals, columns=columns)
+    
