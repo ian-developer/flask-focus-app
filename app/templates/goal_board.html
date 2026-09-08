@@ -1,9 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="goal_board_wrapper">
-    hello
-</div>
+    <div class="board-container">
+    {% for column in columns %}
+    <div class="board-column" data-column-id="{{ column.id }}" style="--column-color: {{ column.color }}; background-color: var(--column-color);">
+        
+        <div class="column-header">
+            <h3>{{ column.name }}</h3>
+        </div>
+
+        <!-- Kontejner u koji se ispuštaju kartice -->
+        <div class="kanban-cards" id="column-{{ column.id }}">
+            {% for goal in goals %}
+            <div class="goal-card" 
+                 draggable="true" 
+                 data-goal-id="{{ goal.id }}">
+                
+                <h4 class="goal-title">{{ goal.title }}</h4>
+                
+                {% if goal.tasks %}
+                <p class="goal-meta">Zadataka: {{ goal.tasks|length }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        </div>
+    {% endfor %}
+    </div>
 
 <script src="{{ url_for('static', filename='goal_board.js') }}"></script>
 {% endblock %}

@@ -99,8 +99,8 @@ def add_goal():
 @main.route('/goals/<int:goal_id>')
 def view_goal(goal_id):
     goal = Goal.query.get_or_404(goal_id)
-
     tasks_list = goal.tasks
+    goal.calculate_progress()
 
     return render_template('view_goal.html', goal=goal, tasks=tasks_list)
 
@@ -181,15 +181,16 @@ def delete_task(task_id):
     goal_id = task.goal_id
     
     try:
-        # 3. Obriši iz baze
         db.session.delete(task)
+        task.goal.calculate_progress()
         db.session.commit()
         
         # 4. Vrati uspješan JSON odgovor (najbolja praksa za API i JavaScript DELETE zahtjeve)
         return jsonify({
             "status": "success", 
             "message": "Zadatak uspješno obrisan",
-            "redirect_url": url_for('main.view_goal', goal_id=goal_id)
+            "redirect_url": url_for('main.view_goal', goal_id=goal_id),
+            "progress_percentage": task.goal.progress_percentage
         }), 200
 
     except Exception as e:
@@ -202,7 +203,6 @@ def delete_task(task_id):
 @main.route('/api/tasks/<int:goal_id>', methods=['POST'])
 def add_single_task(goal_id):
     data = request.get_json() or {}
-
 
     if not data:
         return jsonify({'success': False, 'message': 'Nema podataka'}), 400
@@ -223,11 +223,16 @@ def add_single_task(goal_id):
         db.session.add(new_task)
         db.session.commit()
 
+        goal = Goal.query.get_or_404(goal_id)
+        goal.calculate_progress()
+        db.session.commit()
+
         return jsonify({
                 'success': True, 
                 'message': 'Zadatak uspješno spremljen!',
                 'task_text': new_task.text,
-                'new_task_id': new_task.id
+                'new_task_id': new_task.id,
+                'progress_percentage': goal.progress_percentage
             }), 200
     
     except Exception as e:

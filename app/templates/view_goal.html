@@ -59,14 +59,20 @@
                                                         type="checkbox"
                                                         {% if goal.is_confirmed_finished %}disabled{% endif %}
                                                         class="task-toggle" 
-                                                        data-task-id="{{ task.id }}" 
+                                                        data-task-id="{{ task.id }}"
                                                         {% if task.is_completed %}checked{% endif %}>
                                                     
                                                     <span class="{% if task.is_completed %}completed-task{% endif %}">
                                                         {{ task.text }}
                                                     </span>
                                                 </label>
-                                                <button class="delete-task-btn" aria-label="Delete task" data-task-id="{{ task.id }}">&times;</button>
+                                                <button
+                                                    class="delete-task-btn"
+                                                    aria-label="Delete task"
+                                                    data-task-id="{{ task.id }}"
+                                                    {% if goal.is_confirmed_finished %}disabled{% endif %}>
+                                                    &times;
+                                            </button>
                                             </li>
                             {% endfor %}
                         </ul>
@@ -80,8 +86,10 @@
                 <!-- PROBLEM!!! NAKON STA SE OBRIŠU SVI TASKOVI ONDA NE RADI DINAMICKO DODAVANJE TASKOVA DOK SE NE REFRESHA STRANICA -->
 
             
-                <div class="task-management-box" data-id="{{goal.id}}">
-                    <button class="new-task-btn">+ add new task</button>
+                <div class="task-management-box {% if goal.is_confirmed_finished %}hidden{% endif %}" data-id="{{goal.id}}">
+                    <button class="new-task-btn">
+                        + add new task
+                    </button>
                         <div class="add-task-container hidden">
                             <input class="new-task-input" type="text" placeholder="New task">
                             <button class="add-task-btn">save</button>
@@ -97,7 +105,7 @@
                         {% if goal.is_completed %}
                             <span style="color: var(--primary); font-weight: 500;">Completed</span>
                         {% else %}
-                            <span style="color: #c17aa4; font-weight: 500;">In Progress</span>
+                            <span style="color: #b364de; font-weight: 500;">In Progress</span>
                         {% endif %}
                     </div>
                     <span class="progress-percentage">{{ goal.progress_percentage | round | int }}%</span>
@@ -105,7 +113,7 @@
                 <!-- Vizualna progres traka (Opcionalno) -->
                 <div class="progress-bar" style="width: 100%; background: #e2e8f0; height: 8px; border-radius: 4px; overflow: hidden;">
                     <!-- Postotak spremamo u --progress, a width čita tu varijablu -->
-                    <div style="--progress: {{ goal.progress_percentage|int }}%; width: var(--progress); background: var(--primary); height: 100%; transition: width 0.3s ease;"></div>
+                    <div class="progress-bar-fill" style="--progress: {{ goal.progress_percentage|int }}%; width: var(--progress); background: var(--primary); height: 100%; transition: width 0.3s ease;"></div>
                 </div>
             </div>
 

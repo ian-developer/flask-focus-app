@@ -1,7 +1,22 @@
 const tasksContainer = document.querySelector('.tasks-container');
 const progressPercentage = document.querySelector('.progress-percentage');
 const statusCell = document.querySelector('.goal-status span');
-const taskBox = document.querySelector('.task-list-box');
+const progressBar = document.querySelector('.progress-bar');
+const progressBarFill = document.querySelector('.progress-bar-fill');
+
+function changeProgress(percentage){
+    progressPercentage.innerText = percentage + '%';
+    progressBarFill.style.setProperty('--progress', percentage + '%');
+
+    if(percentage == 100){
+                    statusCell.style.color = "var(--primary)";
+                    statusCell.innerText = "Completed";
+                }
+                else{
+                    statusCell.style.color = "#b364de";
+                    statusCell.innerText = "In Progress";
+                }
+}
 
 if(tasksContainer){
     tasksContainer.addEventListener('click', async (e) => {
@@ -15,7 +30,7 @@ if(tasksContainer){
             const isCompleted = taskCheckbox.checked;
             const taskId = taskCheckbox.dataset.taskId;
             const taskText = taskItem.querySelector('label span');
-            const progressBar = document.querySelector('.progress-bar');
+
 
             try {
             const response = await fetch(`/api/tasks/${taskId}/toggle`, {
@@ -24,23 +39,12 @@ if(tasksContainer){
                 body: JSON.stringify({ is_completed: isCompleted })
             });
             const data = await response.json();
-
-            progressPercentage.innerText = data.progress_percentage + '%';
             
             if (taskText) {
                 taskText.classList.toggle('completed-task', isCompleted);
-                progressBar.innerHTML = `
-                    <div class="progress-bar" style="width: 100%; background: #e2e8f0; height: 8px; border-radius: 4px; overflow: hidden;">
-                        <div style="--progress: ${Math.round(data.progress_percentage)}%; width: var(--progress); background: var(--primary); height: 100%; transition: width 0.3s ease;"></div>
-                    </div>`
-                if(data.progress_percentage == 100){
-                    statusCell.style.color = "var(--primary)";
-                    statusCell.innerText = "Completed";
-                }
-                else{
-                    statusCell.style.color = "#c17a7c";
-                    statusCell.innerText = "In Progress";
-                }
+
+                changeProgress(data.progress_percentage);
+
             }
             
             } catch (err) {
@@ -54,6 +58,8 @@ if(tasksContainer){
             e.stopPropagation();
             const taskId = target.dataset.taskId;
             const taskItem = target.closest('.task-item');
+
+            if (target.disabled) return;
             
             if (!confirm('Do you want to delete this task?')) return;
 
@@ -63,6 +69,8 @@ if(tasksContainer){
 
                 taskItem.remove();
 
+                changeProgress(data.progress_percentage);
+                
                 const remainingTasks = tasksContainer.querySelectorAll('.task-item');
         
                 if (remainingTasks.length === 0) {
@@ -91,8 +99,6 @@ const finishGoalBtn = document.querySelector('.finish-goal-btn')
 finishGoalBtn.addEventListener('click', async(e) => {
     e.preventDefault();
     const target = e.target;
-
-    // ADD NEW TASK
 
     if(target.classList.contains('finish-goal-btn')){
 
@@ -233,7 +239,8 @@ taskManagementBox.addEventListener('click', async(e) =>{
                                         <input
                                             style="margin-right: 10px;"
                                             type="checkbox" 
-                                            class="task-toggle">                                            
+                                            class="task-toggle"
+                                            data-task-id="${ data.new_task_id}">                      
                                         <span>
                                             ${ data.task_text }
                                         </span>
@@ -246,6 +253,8 @@ taskManagementBox.addEventListener('click', async(e) =>{
                                     </button>`;
 
                     taskBox.append(newTask);
+
+                    changeProgress(data.progress_percentage);
                     
                     // Sakrijte formu i očistite input nakon uspješnog spremanja
                     const newTaskBtn = taskManageBox.querySelector('.new-task-btn');

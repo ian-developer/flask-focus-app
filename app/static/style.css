@@ -1006,3 +1006,67 @@ li {
 
 /* Utility class to hide */
 .hidden { display: none !important; }
+
+/* Kontejner čitave ploče */
+.board-container {
+    max-width: 1400px;
+    border: #d1d0d0 1px solid;
+    background-color: #f4f3f8;
+    border-radius: 12px;
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    align-items: flex-start;
+    overflow-x: auto;
+    min-height: calc(100vh - 100px);
+}
+
+/* Pojedinačni stupac */
+.board-column {
+    background-color: var(--bg-color);
+    border-radius: 8px;
+    width: 300px;
+    min-width: 300px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+
+    border: var(--card-border-color) 1px solid;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #f7fafc;
+    border-radius: 6px;
+    display: flow-root;
+    margin-top: 10px;
+}
+
+.column-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+/* Kontejner za kartice unutar stupca */
+.kanban-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 150px; /* Bitno za prazne stupce kako bi se imalo gdje ispustiti */
+    padding: 4px;
+}
+
+/* Pojedinačna kartica cilja */
+.goal-card {
+    background: #ffffff;
+    padding: 14px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: grab;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.goal-card:active {
+    cursor: grabbing;
+}
