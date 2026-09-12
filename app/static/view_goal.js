@@ -3,16 +3,20 @@ const progressPercentage = document.querySelector('.progress-percentage');
 const statusCell = document.querySelector('.goal-status span');
 const progressBar = document.querySelector('.progress-bar');
 const progressBarFill = document.querySelector('.progress-bar-fill');
+const finishGoalBtn = document.querySelector('.finish-goal-btn');
+const cardActions = document.querySelector('.card-actions');
 
 function changeProgress(percentage){
     progressPercentage.innerText = percentage + '%';
     progressBarFill.style.setProperty('--progress', percentage + '%');
 
-    if(percentage == 100){
+    if(percentage >= 100){
+                    finishGoalBtn.style.backgroundColor = "var(--primary)";
                     statusCell.style.color = "var(--primary)";
                     statusCell.innerText = "Completed";
                 }
                 else{
+                    finishGoalBtn.style.backgroundColor = "gray";
                     statusCell.style.color = "#b364de";
                     statusCell.innerText = "In Progress";
                 }
@@ -94,9 +98,7 @@ if(tasksContainer){
 
 // CONFIRM FINISH BUTTON EVENT LISTENER
 
-const finishGoalBtn = document.querySelector('.finish-goal-btn')
-
-finishGoalBtn.addEventListener('click', async(e) => {
+cardActions.addEventListener('click', async(e) => {
     e.preventDefault();
     const target = e.target;
 
@@ -139,9 +141,25 @@ finishGoalBtn.addEventListener('click', async(e) => {
             })
             .catch(error => console.error('Fetch error:', error));
         }
-})
+    
+    // 1. CLICKED THE THREE DOTS BUTTON
+    if (e.target.matches('.three-dots-btn')) {
+        e.stopPropagation();
+        
+        const currentDropdown = e.target.nextElementSibling;
 
-// ADD NEW TASK
+        // Toggle the current dropdown
+        currentDropdown.classList.toggle('hidden');
+        return;
+    }
+    // 3. CLICKED ANYWHERE ELSE ON THE PAGE
+    // Automatically hide all open dropdown menus
+    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+        menu.classList.add('hidden');
+    });
+});
+
+// TASK ACTIONS
 
 const taskManagementBox = document.querySelector('.task-management-box');
 
