@@ -144,7 +144,7 @@ cardActions.addEventListener('click', async(e) => {
     
     // 1. CLICKED THE THREE DOTS BUTTON
     if (e.target.matches('.three-dots-btn')) {
-        e.stopPropagation();
+        //e.stopPropagation();
         
         const currentDropdown = e.target.nextElementSibling;
 
