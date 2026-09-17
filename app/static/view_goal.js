@@ -11,12 +11,10 @@ function changeProgress(percentage){
     progressBarFill.style.setProperty('--progress', percentage + '%');
 
     if(percentage >= 100){
-                    finishGoalBtn.style.backgroundColor = "var(--primary)";
                     statusCell.style.color = "var(--primary)";
                     statusCell.innerText = "Completed";
                 }
                 else{
-                    finishGoalBtn.style.backgroundColor = "gray";
                     statusCell.style.color = "#b364de";
                     statusCell.innerText = "In Progress";
                 }
@@ -152,8 +150,27 @@ cardActions.addEventListener('click', async(e) => {
         currentDropdown.classList.toggle('hidden');
         return;
     }
-    // 3. CLICKED ANYWHERE ELSE ON THE PAGE
-    // Automatically hide all open dropdown menus
+    // DELETE GOAL BUTTON ACTION IF I WANT TO ADD JAVASCRIPT IN THE FUTURE
+
+    /*if (e.target.matches('#delete-goal-btn')) {
+        const goalId = target.dataset.id;
+        fetch(`/goals/${goalId}/delete/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                goal_id: goalId
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log(data)
+            }
+        })
+    }*/
+    
     document.querySelectorAll('.dropdown-menu').forEach(menu => {
         menu.classList.add('hidden');
     });
