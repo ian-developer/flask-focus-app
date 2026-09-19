@@ -171,6 +171,7 @@ cardActions.addEventListener('click', async(e) => {
         })
     }*/
 
+        
     document.querySelectorAll('.dropdown-menu').forEach(menu => {
         menu.classList.add('hidden');
     });
