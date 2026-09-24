@@ -15,3 +15,9 @@ A full-stack web application designed to help users improve their productivity b
 * **Clean Architecture:** Separated frontend and backend logic with an organized database models structure.
 
 ### 🚀 Getting Started
+
+* **create virtual environment "python -m venv venv"
+* **activate virtual environment "source venv/Scripts/activate"
+* **install dependencies "pip install -r requirements.txt"
+* **run server"flask run"
+* **visit "localhost:5000" in a web browser
