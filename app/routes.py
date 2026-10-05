@@ -109,6 +109,10 @@ def view_goal(goal_id):
 @main.route('/goals/<int:goal_id>/delete/', methods=['POST'])
 def delete_goal(goal_id):
     goal = Goal.query.get_or_404(goal_id)
+
+    #goal_id = request.get_json() or {}
+
+    #return jsonify({'success': True, 'message': 'sucessful'})
     
     try:
         db.session.delete(goal)

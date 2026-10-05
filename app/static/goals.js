@@ -76,7 +76,6 @@ const addGoal = async (goalData) => {
             <td style="text-align: left; max-width: 200px;">
                 <h2 style="white-space: wrap; overflow: wrap;">${goal.title}</h2>
                 <p style="color: #7f8c8d; max-width: 250px; font-size: 0.8rem; margin: 5px 0px;">${goal.description || 'No description'}</p>
-                <small class="date">${prettyDate}</small>
             </td>
             <td>${createTasksHtml(goal.id, goal.tasks)}</td>
             <td>${goal.difficulty}</td>

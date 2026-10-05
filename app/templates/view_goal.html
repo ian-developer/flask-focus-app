@@ -123,21 +123,46 @@
             </div>-->
 
             <!-- Action Buttons-->
-            <div style="display: flex; justify-content: center; gap: 0.7em;">
-                <form
-                action="{{ url_for('main.delete_goal', goal_id=goal.id) }}"
-                method="POST"
-                onsubmit="return confirm('Are you sure you want to delete this goal?');">
-                    <button type="submit" id="delete-goal-btn">
-                        Delete
-                    </button>
-                </form>
-                    <form action="{{ url_for('main.finish_goal', goal_id=goal.id) }}" method="POST" class="{{ 'hidden' if goal.is_confirmed_finished }}">
-                        <button type="submit" id="mark-goal-btn" class="finish-goal-btn" data-id="{{ goal.id }}">
-                            Finish
+
+            <div style="display: flex; justify-content: space-between; width: 100%; height: 50px; gap: 0.5em;"
+                class="card-actions">
+                        
+                <div class="options-dropdown">
+                    <button class="three-dots-btn" aria-label="Goal options">⋮</button>
+                    <div class="dropdown-menu hidden">
+                        <form
+                        action="{{ url_for('main.delete_goal', goal_id=goal.id) }}"
+                        method="POST"
+                        onsubmit="return confirm('Are you sure you want to delete this goal?');"
+                        style="background: none;">
+                            <button type="submit"
+                                class="delete-goal-btn"
+                                data-id="{{goal.id}}"
+                                onclick="event.stopPropagation();">
+                                Delete Goal
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                    
+
+                    <form action="{{ url_for('main.finish_goal', goal_id=goal.id) }}"
+                    method="POST" class="{{ 'hidden' if goal.is_confirmed_finished or goal.progress_percentage >= 100 }}"
+                    style="width: 50%; height: 100%; padding-right: 2px;">
+                        <button type="submit"
+                                id="mark-goal-btn"
+                                class="finish-goal-btn"
+                                data-id="{{ goal.id }}"
+                                {% if goal.progress_percentage == 100 and goal.is_confirmed_finished %} style='background-color:var(--primary)!important;' {% endif %}>
+                            Submit Goal
+                            {% if goal.is_confirmed_finished %}
+                            True
+                            {% endif %}
                         </button>
                     </form>
             </div>
+            
+
             <div id="custom-modal-overlay" class="modal-overlay hidden">
 
             <!-- MODAL TO BE ADDED ON LATER
